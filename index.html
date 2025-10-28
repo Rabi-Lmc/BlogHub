@@ -1,0 +1,2309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogHub | Share Your Stories</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary-bg: #0a0a1a;
+            --secondary-bg: #15152b;
+            --accent-color: #3498db;
+            --accent-dark: #2980b9;
+            --text-color: #ffffff;
+            --text-secondary: #b0b0cc;
+            --card-bg: #1e1e3a;
+            --hover-color: #4aa8e8;
+            --transition: all 0.3s ease;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --error-color: #e74c3c;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--accent-color);
+            transition: var(--transition);
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--secondary-bg);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(52, 152, 219, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(to right, var(--accent-color), #4aa8e8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo i {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: var(--text-color);
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: var(--transition);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--accent-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-bg);
+        }
+
+        /* Main Content Styles */
+        main {
+            min-height: calc(100vh - 160px);
+            padding: 2rem 0;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Login/Signup Page */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        .auth-card {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .auth-card h2 {
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 0.8rem;
+            background: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .auth-tab.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--secondary-bg);
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: var(--text-color);
+        }
+
+        .form-group input:focus {
+            border-color: var(--accent-color);
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--accent-color);
+            color: var(--primary-bg);
+            border-radius: 4px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .auth-btn:hover {
+            background-color: var(--hover-color);
+        }
+
+        .social-login {
+            margin-top: 1.5rem;
+            border-top: 1px solid #333;
+            padding-top: 1.5rem;
+        }
+
+        .social-login p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border-radius: 4px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .google-btn {
+            background-color: #db4437;
+            color: white;
+        }
+
+        .facebook-btn {
+            background-color: #4267B2;
+            color: white;
+        }
+
+        .social-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* Home Page */
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(rgba(10,10,26,0.8), rgba(10,10,26,0.8)), url('https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: var(--text-secondary);
+        }
+
+        .cta-btn {
+            background-color: var(--accent-color);
+            color: var(--primary-bg);
+            padding: 0.8rem 2rem;
+            border-radius: 4px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .cta-btn:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-3px);
+        }
+
+        .section-title {
+            margin: 2rem 0 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        .quote-of-day {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .quote-content {
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .quote-author {
+            text-align: right;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .category {
+            background-color: var(--card-bg);
+            padding: 0.8rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .category:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-bg);
+            transform: translateY(-3px);
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .article-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.1);
+        }
+
+        .article-img {
+            height: 180px;
+            background-color: #333;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .article-content {
+            padding: 1.5rem;
+        }
+
+        .article-content h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-excerpt {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .article-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .read-more {
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .read-more:hover {
+            color: var(--hover-color);
+        }
+
+        .rating {
+            display: flex;
+            gap: 5px;
+        }
+
+        .star {
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .star:hover, .star.active {
+            color: var(--warning-color);
+        }
+
+        /* About Page */
+        .about-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .writer-info {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .writer-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--accent-color);
+            flex-shrink: 0;
+        }
+
+        .writer-details {
+            flex: 1;
+        }
+
+        .writer-details h2 {
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .writer-details p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .social-links-about {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link-about {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .social-link-about:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        /* Articles Page */
+        .search-bar {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.5rem;
+            background-color: var(--secondary-bg);
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: var(--text-color);
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        /* Article Detail Page */
+        .article-detail {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .article-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-meta-detail {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .article-image {
+            width: 100%;
+            height: 400px;
+            background-color: #333;
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-body {
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .article-body p {
+            margin-bottom: 1rem;
+        }
+
+        .article-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tag {
+            background-color: var(--secondary-bg);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .article-actions-detail {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #333;
+        }
+
+        .rating-detail {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 5px;
+        }
+
+        .rating-count {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .comments-section {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+        }
+
+        .comments-title {
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .comment-form {
+            margin-bottom: 2rem;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--secondary-bg);
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .comment-submit {
+            background-color: var(--accent-color);
+            color: var(--primary-bg);
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .comment-submit:hover {
+            background-color: var(--hover-color);
+        }
+
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .comment {
+            padding: 1rem;
+            background-color: var(--secondary-bg);
+            border-radius: 8px;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .comment-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .comment-text {
+            color: var(--text-color);
+        }
+
+        /* Profile Page */
+        .profile-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .profile-details h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-details p {
+            color: var(--text-secondary);
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 1rem;
+            background-color: var(--secondary-bg);
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .profile-bio {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background-color: var(--secondary-bg);
+            border-radius: 8px;
+        }
+
+        .profile-bio h3 {
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        .profile-articles {
+            margin-top: 2rem;
+        }
+
+        .profile-articles h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        /* Settings Page */
+        .settings-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .settings-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .settings-group h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: var(--transition);
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: var(--transition);
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .logout-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+        }
+
+        .logout-btn-settings {
+            background-color: var(--error-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .logout-btn-settings:hover {
+            background-color: #c0392b;
+        }
+
+        /* Connect Page */
+        .connect-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+
+        .users-list {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .users-list h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .user-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .user-item:hover {
+            background-color: var(--secondary-bg);
+        }
+
+        .user-item.active {
+            background-color: var(--secondary-bg);
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .user-avatar-small {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .user-details-small h4 {
+            margin-bottom: 0.2rem;
+        }
+
+        .user-details-small p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .chat-container {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #333;
+            margin-bottom: 1rem;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            max-width: 70%;
+        }
+
+        .message.sent {
+            align-self: flex-end;
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .message.received {
+            align-self: flex-start;
+            background-color: var(--secondary-bg);
+        }
+
+        .message-time {
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            opacity: 0.7;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 0.8rem;
+            background-color: var(--secondary-bg);
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: var(--text-color);
+        }
+
+        .chat-send {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .chat-send:hover {
+            background-color: var(--hover-color);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--secondary-bg);
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .writer-info {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .writer-photo {
+                width: 150px;
+                height: 150px;
+                font-size: 3rem;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .connect-container {
+                grid-template-columns: 1fr;
+            }
+
+            .message {
+                max-width: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-blog"></i>
+                <h1>BlogHub</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link" data-page="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-page="about">About Us</a></li>
+                    <li><a href="#" class="nav-link" data-page="articles">Articles</a></li>
+                    <li><a href="#" class="nav-link" data-page="connect">Connect</a></li>
+                    <li><a href="#" class="nav-link" data-page="profile">Profile</a></li>
+                    <li><a href="#" class="nav-link" data-page="settings">Settings</a></li>
+                </ul>
+            </nav>
+            <div class="user-info" id="userInfo">
+                <div class="user-avatar" id="userAvatar">U</div>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Login/Signup Page -->
+        <section id="auth" class="page active">
+            <div class="container auth-container">
+                <div class="auth-card">
+                    <h2>Welcome to BlogHub</h2>
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" data-tab="login">Login</button>
+                        <button class="auth-tab" data-tab="signup">Sign Up</button>
+                    </div>
+                    
+                    <form id="loginForm" class="auth-form active">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" id="loginEmail" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" placeholder="Enter your password">
+                        </div>
+                        <button type="submit" class="auth-btn">Login</button>
+                    </form>
+                    
+                    <form id="signupForm" class="auth-form">
+                        <div class="form-group">
+                            <label for="signupName">Full Name</label>
+                            <input type="text" id="signupName" placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="signupEmail">Email</label>
+                            <input type="email" id="signupEmail" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <input type="password" id="signupPassword" placeholder="Create a password">
+                        </div>
+                        <div class="form-group">
+                            <label for="signupBio">Bio (Optional)</label>
+                            <textarea id="signupBio" placeholder="Tell us about yourself" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="auth-btn">Sign Up</button>
+                    </form>
+                    
+                    <div class="social-login">
+                        <p>Or continue with</p>
+                        <div class="social-buttons">
+                            <button class="social-btn google-btn" id="googleLogin">
+                                <i class="fab fa-google"></i> Google
+                            </button>
+                            <button class="social-btn facebook-btn" id="facebookLogin">
+                                <i class="fab fa-facebook-f"></i> Facebook
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Home Page -->
+        <section id="home" class="page">
+            <div class="container">
+                <div class="hero">
+                    <h2>Share Your Stories with the World</h2>
+                    <p>BlogHub is your platform to express ideas, share experiences, and connect with like-minded readers and writers.</p>
+                    <a href="#" class="cta-btn nav-link" data-page="articles">Explore Articles</a>
+                </div>
+                
+                <div class="quote-of-day">
+                    <p class="quote-content">"The only way to do great work is to love what you do."</p>
+                    <p class="quote-author">- Steve Jobs</p>
+                </div>
+                
+                <h2 class="section-title">Categories</h2>
+                <div class="categories">
+                    <div class="category">Technology</div>
+                    <div class="category">Lifestyle</div>
+                    <div class="category">Travel</div>
+                    <div class="category">Food</div>
+                    <div class="category">Health</div>
+                    <div class="category">Business</div>
+                    <div class="category">Entertainment</div>
+                    <div class="category">Science</div>
+                </div>
+                
+                <h2 class="section-title">Featured Articles</h2>
+                <div class="articles-grid" id="featuredArticles">
+                    <!-- Featured articles will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Page -->
+        <section id="about" class="page">
+            <div class="container">
+                <h2 class="section-title">About Us</h2>
+                <div class="about-content">
+                    <div class="writer-info">
+                        <div class="writer-photo">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="writer-details">
+                            <h2>Rabi</h2>
+                            <p>Rabi is a passionate writer and content creator with over 5 years of experience in the blogging industry. With a background in literature and digital marketing, Rabi brings a unique perspective to every piece of content.</p>
+                            <p>When not writing, Rabi enjoys photography, hiking, and exploring new coffee shops around the city. The goal is to create a community where ideas can be shared freely and creativity can flourish.</p>
+                            <p>Through BlogHub, Rabi hopes to inspire others to share their stories and connect with a global audience of readers and writers.</p>
+                            <div class="social-links-about">
+                                <a href="#" class="social-link-about">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="social-link-about">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <a href="https://www.youtube.com/@Why-o2j" class="social-link-about" target="_blank">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                                <a href="#" class="social-link-about">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Articles Page -->
+        <section id="articles" class="page">
+            <div class="container">
+                <h2 class="section-title">All Articles</h2>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search articles...">
+                </div>
+                <div class="articles-grid" id="allArticles">
+                    <!-- All articles will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Article Detail Page -->
+        <section id="article-detail" class="page">
+            <div class="container">
+                <div class="article-detail">
+                    <div class="article-header">
+                        <h1 class="article-title" id="detailTitle">Article Title</h1>
+                        <div class="article-meta-detail">
+                            <span id="detailAuthor">Author Name</span>
+                            <span id="detailDate">May 15, 2023</span>
+                            <span id="detailCategory">Technology</span>
+                        </div>
+                    </div>
+                    <div class="article-image" id="detailImage"></div>
+                    <div class="article-body" id="detailBody">
+                        <!-- Article content will be dynamically loaded here -->
+                    </div>
+                    <div class="article-tags" id="detailTags">
+                        <!-- Tags will be dynamically loaded here -->
+                    </div>
+                    <div class="article-actions-detail">
+                        <div class="rating-detail">
+                            <div class="rating-stars" id="detailRating">
+                                <!-- Rating stars will be dynamically loaded here -->
+                            </div>
+                            <div class="rating-count" id="detailRatingCount">(0 ratings)</div>
+                        </div>
+                        <div class="share-buttons">
+                            <button class="share-btn"><i class="fas fa-share-alt"></i> Share</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="comments-section">
+                    <h3 class="comments-title">Comments</h3>
+                    <div class="comment-form">
+                        <textarea class="comment-input" placeholder="Add your comment..."></textarea>
+                        <button class="comment-submit">Post Comment</button>
+                    </div>
+                    <div class="comments-list" id="commentsList">
+                        <!-- Comments will be dynamically loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Connect Page -->
+        <section id="connect" class="page">
+            <div class="container">
+                <h2 class="section-title">Connect with Readers</h2>
+                <div class="connect-container">
+                    <div class="users-list">
+                        <h3>Active Users</h3>
+                        <div class="users-container" id="usersContainer">
+                            <!-- Users will be dynamically loaded here -->
+                        </div>
+                    </div>
+                    <div class="chat-container">
+                        <div class="chat-header">
+                            <div class="user-avatar-small" id="chatUserAvatar">U</div>
+                            <div class="user-details-small">
+                                <h4 id="chatUserName">Select a user to chat</h4>
+                                <p id="chatUserStatus">Online</p>
+                            </div>
+                        </div>
+                        <div class="chat-messages" id="chatMessages">
+                            <!-- Messages will be dynamically loaded here -->
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" id="chatInput" placeholder="Type a message..." disabled>
+                            <button class="chat-send" id="chatSend" disabled>Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Page -->
+        <section id="profile" class="page">
+            <div class="container">
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar" id="profileAvatar">U</div>
+                        <div class="profile-details">
+                            <h2 id="profileName">User Name</h2>
+                            <p id="profileEmail">user@example.com</p>
+                            <p id="profileJoinDate">Member since January 2023</p>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-bio">
+                        <h3>About Me</h3>
+                        <p id="profileBio">This is where the user's bio will appear. They can edit this in their settings.</p>
+                    </div>
+                    
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Articles</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">356</div>
+                            <div class="stat-label">Followers</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">124</div>
+                            <div class="stat-label">Following</div>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-articles">
+                        <h3>My Articles</h3>
+                        <div class="articles-grid" id="profileArticles">
+                            <!-- User's articles will be dynamically loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Page -->
+        <section id="settings" class="page">
+            <div class="container">
+                <div class="settings-card">
+                    <h2 class="section-title">Settings</h2>
+                    
+                    <div class="settings-group">
+                        <h3>Account Settings</h3>
+                        <div class="setting-item">
+                            <span>Email Notifications</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <span>Push Notifications</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <span>Newsletter Subscription</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-group">
+                        <h3>Privacy</h3>
+                        <div class="setting-item">
+                            <span>Public Profile</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <span>Show Email</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <span>Allow Direct Messages</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-group">
+                        <h3>Theme</h3>
+                        <div class="setting-item">
+                            <span>Dark Mode</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-group">
+                        <h3>Profile Information</h3>
+                        <div class="form-group">
+                            <label for="settingsName">Full Name</label>
+                            <input type="text" id="settingsName" placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="settingsBio">Bio</label>
+                            <textarea id="settingsBio" placeholder="Tell us about yourself" rows="3"></textarea>
+                        </div>
+                        <button class="auth-btn" id="saveProfileBtn">Save Changes</button>
+                    </div>
+                    
+                    <div class="logout-section">
+                        <button class="logout-btn-settings" id="logoutBtnSettings">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="social-links">
+                <a href="#" class="social-link">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="social-link">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.youtube.com/@Why-o2j" class="social-link" target="_blank">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="#" class="social-link">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 BlogHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB5o_yjIq0_CNLYwsCtDTWRs0cIKhI8tlI",
+            authDomain: "bloghub-cbcc4.firebaseapp.com",
+            projectId: "bloghub-cbcc4",
+            storageBucket: "bloghub-cbcc4.firebasestorage.app",
+            messagingSenderId: "103514268951",
+            appId: "1:103514268951:web:12ecf3c88e5672217e0352"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // DOM Elements
+        const authPage = document.getElementById('auth');
+        const homePage = document.getElementById('home');
+        const aboutPage = document.getElementById('about');
+        const articlesPage = document.getElementById('articles');
+        const articleDetailPage = document.getElementById('article-detail');
+        const connectPage = document.getElementById('connect');
+        const profilePage = document.getElementById('profile');
+        const settingsPage = document.getElementById('settings');
+        const userInfo = document.getElementById('userInfo');
+        const userAvatar = document.getElementById('userAvatar');
+        const profileAvatar = document.getElementById('profileAvatar');
+        const profileName = document.getElementById('profileName');
+        const profileEmail = document.getElementById('profileEmail');
+        const profileBio = document.getElementById('profileBio');
+        const profileJoinDate = document.getElementById('profileJoinDate');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const logoutBtnSettings = document.getElementById('logoutBtnSettings');
+        const authTabs = document.querySelectorAll('.auth-tab');
+        const authForms = document.querySelectorAll('.auth-form');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const googleLoginBtn = document.getElementById('googleLogin');
+        const facebookLoginBtn = document.getElementById('facebookLogin');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const featuredArticlesGrid = document.getElementById('featuredArticles');
+        const allArticlesGrid = document.getElementById('allArticles');
+        const profileArticlesGrid = document.getElementById('profileArticles');
+        const searchInput = document.getElementById('searchInput');
+        const usersContainer = document.getElementById('usersContainer');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const chatSend = document.getElementById('chatSend');
+        const chatUserName = document.getElementById('chatUserName');
+        const chatUserAvatar = document.getElementById('chatUserAvatar');
+        const saveProfileBtn = document.getElementById('saveProfileBtn');
+        const settingsName = document.getElementById('settingsName');
+        const settingsBio = document.getElementById('settingsBio');
+
+        // Sample Articles Data
+        const articles = [
+            {
+                id: 1,
+                title: "The Future of Web Development",
+                excerpt: "Exploring the latest trends and technologies shaping the future of web development.",
+                author: "Rabi",
+                date: "May 15, 2023",
+                category: "Technology",
+                image: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                content: "<p><b>Web Development</b></p><p>Web development is the work involved in developing a intranet (a private network). website for the Internet ( World Wide Web). Web development can range from developing a simple single plain text to complex web applications, static page of electronic businesses, and social network services. A more comprehensive list of tasks to which Web development commonly refers, may include Web engineering, Web design, Web content development, client liaison, client-side/ network security configuration, and e-commerce development. </p><p>server-side scripting, Web server and Among Web professionals,'web Development' usually refers to the main non-design aspects of building Web sites: writing markup and coding.  Web development often utilizes content management systems (CMS) to simplify content changes and make them accessible with basic technical skills.</p><p>For larger organizations and businesses, Web development teams can consist of hundreds of people ( developers) and follow standard methods like Web. Agile methodologies while developing Web sites. Smaller organizations may only require a single permanent or contracting developer, or secondary assignment to related job positions such as a graphic designer or information systems technician. Web development may be a collaborative effort between departments rather than the domain of a designated department. There are three kinds of Web developer specialization: developer, and full-stack developer. Front-end developers are responsible for behavior and visuals that run in the user browser, while back-end developers deal with the servers. Since the commercialization of the Web, the industry has boomed and has become one of the most used technologies ever.</p><p> <b>Evolution of the World Wide Web and web development</b></p><p><b>Origin/ Web 1.0</b></p><p> Tim Berners-Lee </p>",
+                tags: ["Web Development", "Technology", "Future"],
+                rating: 4.5,
+                ratingCount: 12
+            },
+            {
+                id: 2,
+                title: "Sustainable Living Tips",
+                excerpt: "Practical ways to reduce your environmental footprint and live more sustainably.",
+                author: "Rabi",
+                date: "April 28, 2023",
+                category: "Lifestyle",
+                image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                content: "<p>Sustainable living is becoming increasingly important as we face environmental challenges. Here are practical tips to reduce your environmental footprint.</p><p>From reducing single-use plastics to conserving energy at home, small changes can make a big difference when adopted by many.</p><p>Consider growing your own vegetables, using public transportation, and supporting local businesses to further reduce your impact on the environment.</p>",
+                tags: ["Sustainability", "Environment", "Lifestyle"],
+                rating: 4.2,
+                ratingCount: 8
+            },
+            {
+                id: 3,
+                title: "Minimalist Workspace Setup",
+                excerpt: "How to create a productive and clutter-free workspace that inspires creativity.",
+                author: "Rabi",
+                date: "April 12, 2023",
+                category: "Productivity",
+                image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                content: "<p>A minimalist workspace can significantly boost productivity and creativity by reducing distractions and creating a calm environment.</p><p>Start by decluttering your desk, keeping only the essentials. Invest in quality over quantity when it comes to office supplies and equipment.</p><p>Consider the ergonomics of your setup, proper lighting, and adding a touch of nature with plants to create an inspiring workspace.</p>",
+                tags: ["Minimalism", "Productivity", "Workspace"],
+                rating: 4.7,
+                ratingCount: 15
+            },
+            {
+                id: 4,
+                title: "The Art of Storytelling",
+                excerpt: "Learn how to craft compelling narratives that captivate your audience.",
+                author: "Rabi",
+                date: "March 30, 2023",
+                category: "Writing",
+                image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                content: "<p>Storytelling is a powerful tool that can transform how you communicate ideas, whether in writing, presentations, or everyday conversations.</p><p>Effective stories have a clear structure with a beginning, middle, and end. They create emotional connections and make information more memorable.</p><p>Practice incorporating storytelling techniques into your writing to engage readers and make your content more impactful.</p>",
+                tags: ["Storytelling", "Writing", "Communication"],
+                rating: 4.3,
+                ratingCount: 10
+            },
+            {
+                id: 5,
+                title: "Mindfulness Meditation Guide",
+                excerpt: "A beginner's guide to mindfulness meditation and its benefits for mental health.",
+                author: "Rabi",
+                date: "March 18, 2023",
+                category: "Wellness",
+                image: "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                content: "<p>Mindfulness meditation is a practice that involves focusing your attention on the present moment without judgment.</p><p>Regular practice can reduce stress, improve focus, and enhance overall well-being. Start with just a few minutes each day and gradually increase the duration.</p><p>Find a quiet space, sit comfortably, and focus on your breath. When your mind wanders, gently bring your attention back to your breathing.</p>",
+                tags: ["Meditation", "Mindfulness", "Wellness"],
+                rating: 4.8,
+                ratingCount: 20
+            },
+            {
+                id: 6,
+                title: "Digital Photography Tips",
+                excerpt: "Essential techniques for capturing stunning photos with your digital camera.",
+                author: "Rabi",
+                date: "February 25, 2023",
+                category: "Photography",
+                image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                content: "<p>Digital photography has made it easier than ever to capture beautiful images, but understanding some fundamental techniques can significantly improve your results.</p><p>Learn about composition rules like the rule of thirds, how to use natural light to your advantage, and the basics of exposure settings.</p><p>Practice regularly and don't be afraid to experiment with different perspectives and techniques to develop your unique photographic style.</p>",
+                tags: ["Photography", "Tips", "Digital"],
+                rating: 4.4,
+                ratingCount: 14
+            },
+            {
+                id: 7,
+            }
+
+        ];
+
+        // Sample Users for Connect Page
+        const users = [
+            {
+                id: 1,
+                name: "Alex Johnson",
+                email: "alex@example.com",
+                bio: "Passionate about technology and writing",
+                status: "Online"
+            },
+            {
+                id: 2,
+                name: "Sarah Miller",
+                email: "sarah@example.com",
+                bio: "Travel enthusiast and food blogger",
+                status: "Online"
+            },
+            {
+                id: 3,
+                name: "Michael Chen",
+                email: "michael@example.com",
+                bio: "Photographer and visual storyteller",
+                status: "Away"
+            },
+            {
+                id: 4,
+                name: "Emma Wilson",
+                email: "emma@example.com",
+                bio: "Fitness coach and wellness advocate",
+                status: "Online"
+            },
+            {
+                id: 5,
+                name: "David Brown",
+                email: "david@example.com",
+                bio: "Business strategist and entrepreneur",
+                status: "Offline"
+            }
+        ];
+
+        // Sample Messages for Chat
+        const sampleMessages = [
+            {
+                id: 1,
+                sender: 1,
+                receiver: 0,
+                text: "Hi there! I really enjoyed your article on web development.",
+                timestamp: "2023-05-20T10:30:00"
+            },
+            {
+                id: 2,
+                sender: 0,
+                receiver: 1,
+                text: "Thank you! I'm glad you found it helpful. Are you working on any web projects currently?",
+                timestamp: "2023-05-20T10:32:00"
+            },
+            {
+                id: 3,
+                sender: 1,
+                receiver: 0,
+                text: "Yes, I'm building a portfolio website using React. Your tips on performance optimization were really useful.",
+                timestamp: "2023-05-20T10:35:00"
+            }
+        ];
+
+        // Current User and Selected Chat User
+        let currentUser = null;
+        let selectedChatUser = null;
+
+        // Initialize the app
+        function initApp() {
+            // Check if user is logged in
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    // User is signed in
+                    currentUser = user;
+                    showMainPages();
+                    updateUserInfo(user);
+                    loadUserProfile(user);
+                } else {
+                    // User is signed out
+                    currentUser = null;
+                    showAuthPage();
+                }
+            });
+
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Render articles
+            renderArticles();
+            
+            // Render users for connect page
+            renderUsers();
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Auth tab switching
+            authTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabName = tab.getAttribute('data-tab');
+                    
+                    // Update active tab
+                    authTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // Show corresponding form
+                    authForms.forEach(form => {
+                        form.classList.remove('active');
+                        if (form.id === `${tabName}Form`) {
+                            form.classList.add('active');
+                        }
+                    });
+                });
+            });
+
+            // Login form submission
+            loginForm.addEventListener('submit', e => {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                auth.signInWithEmailAndPassword(email, password)
+                    .then(userCredential => {
+                        // Signed in successfully
+                        console.log('User logged in:', userCredential.user);
+                    })
+                    .catch(error => {
+                        console.error('Login error:', error);
+                        alert('Login failed: ' + error.message);
+                    });
+            });
+
+            // Signup form submission
+            signupForm.addEventListener('submit', e => {
+                e.preventDefault();
+                const name = document.getElementById('signupName').value;
+                const email = document.getElementById('signupEmail').value;
+                const password = document.getElementById('signupPassword').value;
+                const bio = document.getElementById('signupBio').value;
+                
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then(userCredential => {
+                        // Signed up successfully
+                        console.log('User signed up:', userCredential.user);
+                        
+                        // Save additional user data to Firestore
+                        return db.collection('users').doc(userCredential.user.uid).set({
+                            name: name,
+                            email: email,
+                            bio: bio,
+                            joinDate: new Date().toISOString(),
+                            articles: 0,
+                            followers: 0,
+                            following: 0
+                        });
+                    })
+                    .then(() => {
+                        console.log('User data saved to Firestore');
+                    })
+                    .catch(error => {
+                        console.error('Signup error:', error);
+                        alert('Signup failed: ' + error.message);
+                    });
+            });
+
+            // Google login
+            googleLoginBtn.addEventListener('click', () => {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                auth.signInWithPopup(provider)
+                    .then(result => {
+                        console.log('Google login successful:', result.user);
+                        
+                        // Check if user exists in Firestore, if not create a record
+                        const userRef = db.collection('users').doc(result.user.uid);
+                        userRef.get().then(doc => {
+                            if (!doc.exists) {
+                                userRef.set({
+                                    name: result.user.displayName,
+                                    email: result.user.email,
+                                    bio: '',
+                                    joinDate: new Date().toISOString(),
+                                    articles: 0,
+                                    followers: 0,
+                                    following: 0
+                                });
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Google login error:', error);
+                        alert('Google login failed: ' + error.message);
+                    });
+            });
+
+            // Facebook login
+            facebookLoginBtn.addEventListener('click', () => {
+                const provider = new firebase.auth.FacebookAuthProvider();
+                auth.signInWithPopup(provider)
+                    .then(result => {
+                        console.log('Facebook login successful:', result.user);
+                        
+                        // Check if user exists in Firestore, if not create a record
+                        const userRef = db.collection('users').doc(result.user.uid);
+                        userRef.get().then(doc => {
+                            if (!doc.exists) {
+                                userRef.set({
+                                    name: result.user.displayName,
+                                    email: result.user.email,
+                                    bio: '',
+                                    joinDate: new Date().toISOString(),
+                                    articles: 0,
+                                    followers: 0,
+                                    following: 0
+                                });
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Facebook login error:', error);
+                        alert('Facebook login failed: ' + error.message);
+                    });
+            });
+
+            // Logout
+            logoutBtn.addEventListener('click', () => {
+                auth.signOut()
+                    .then(() => {
+                        console.log('User signed out');
+                    })
+                    .catch(error => {
+                        console.error('Logout error:', error);
+                    });
+            });
+
+            // Logout from settings
+            logoutBtnSettings.addEventListener('click', () => {
+                auth.signOut()
+                    .then(() => {
+                        console.log('User signed out');
+                    })
+                    .catch(error => {
+                        console.error('Logout error:', error);
+                    });
+            });
+
+            // Navigation
+            navLinks.forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    const page = link.getAttribute('data-page');
+                    showPage(page);
+                });
+            });
+
+            // Search functionality
+            searchInput.addEventListener('input', filterArticles);
+
+            // Chat functionality
+            chatSend.addEventListener('click', sendMessage);
+            chatInput.addEventListener('keypress', e => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            // Save profile changes
+            saveProfileBtn.addEventListener('click', saveProfileChanges);
+        }
+
+        // Show authentication page
+        function showAuthPage() {
+            authPage.classList.add('active');
+            homePage.classList.remove('active');
+            aboutPage.classList.remove('active');
+            articlesPage.classList.remove('active');
+            articleDetailPage.classList.remove('active');
+            connectPage.classList.remove('active');
+            profilePage.classList.remove('active');
+            settingsPage.classList.remove('active');
+            userInfo.style.display = 'none';
+        }
+
+        // Show main pages after login
+        function showMainPages() {
+            authPage.classList.remove('active');
+            homePage.classList.add('active');
+            userInfo.style.display = 'flex';
+        }
+
+        // Show specific page
+        function showPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show the selected page
+            document.getElementById(pageName).classList.add('active');
+            
+            // If showing connect page, initialize chat
+            if (pageName === 'connect') {
+                initializeChat();
+            }
+        }
+
+        // Update user information in the UI
+        function updateUserInfo(user) {
+            const displayName = user.displayName || 'User';
+            const email = user.email || 'user@example.com';
+            const firstLetter = displayName.charAt(0).toUpperCase();
+            
+            userAvatar.textContent = firstLetter;
+            profileAvatar.textContent = firstLetter;
+            profileName.textContent = displayName;
+            profileEmail.textContent = email;
+        }
+
+        // Load user profile from Firestore
+        function loadUserProfile(user) {
+            const userRef = db.collection('users').doc(user.uid);
+            userRef.get().then(doc => {
+                if (doc.exists) {
+                    const userData = doc.data();
+                    profileName.textContent = userData.name || user.displayName || 'User';
+                    profileBio.textContent = userData.bio || 'This is where the user\'s bio will appear. They can edit this in their settings.';
+                    
+                    if (userData.joinDate) {
+                        const joinDate = new Date(userData.joinDate);
+                        profileJoinDate.textContent = `Member since ${joinDate.toLocaleString('default', { month: 'long' })} ${joinDate.getFullYear()}`;
+                    }
+                    
+                    // Update settings form
+                    settingsName.value = userData.name || user.displayName || '';
+                    settingsBio.value = userData.bio || '';
+                }
+            }).catch(error => {
+                console.error('Error loading user profile:', error);
+            });
+        }
+
+        // Save profile changes
+        function saveProfileChanges() {
+            if (!currentUser) return;
+            
+            const name = settingsName.value;
+            const bio = settingsBio.value;
+            
+            const userRef = db.collection('users').doc(currentUser.uid);
+            userRef.update({
+                name: name,
+                bio: bio
+            }).then(() => {
+                alert('Profile updated successfully!');
+                loadUserProfile(currentUser);
+            }).catch(error => {
+                console.error('Error updating profile:', error);
+                alert('Error updating profile: ' + error.message);
+            });
+        }
+
+        // Render articles to the page
+        function renderArticles() {
+            // Clear existing articles
+            featuredArticlesGrid.innerHTML = '';
+            allArticlesGrid.innerHTML = '';
+            profileArticlesGrid.innerHTML = '';
+            
+            // Render featured articles (first 3)
+            articles.slice(0, 3).forEach(article => {
+                featuredArticlesGrid.appendChild(createArticleCard(article));
+            });
+            
+            // Render all articles
+            articles.forEach(article => {
+                allArticlesGrid.appendChild(createArticleCard(article));
+            });
+            
+            // Render user's articles (first 3 for demo)
+            articles.slice(0, 3).forEach(article => {
+                profileArticlesGrid.appendChild(createArticleCard(article));
+            });
+        }
+
+        // Create article card element
+        function createArticleCard(article) {
+            const card = document.createElement('div');
+            card.className = 'article-card';
+            card.setAttribute('data-id', article.id);
+            card.innerHTML = `
+                <div class="article-img" style="background-image: url('${article.image}')"></div>
+                <div class="article-content">
+                    <h3>${article.title}</h3>
+                    <div class="article-meta">
+                        <span>${article.author}</span>
+                        <span>${article.date}</span>
+                    </div>
+                    <p class="article-excerpt">${article.excerpt}</p>
+                    <div class="article-actions">
+                        <a href="#" class="read-more" data-id="${article.id}">Read More <i class="fas fa-arrow-right"></i></a>
+                        <div class="rating">
+                            ${createRatingStars(article.rating)}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Add click event to read more button
+            const readMoreBtn = card.querySelector('.read-more');
+            readMoreBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showArticleDetail(article.id);
+            });
+            
+            return card;
+        }
+
+        // Create rating stars
+        function createRatingStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star star active"></i>';
+            }
+            
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt star active"></i>';
+            }
+            
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star star"></i>';
+            }
+            
+            return stars;
+        }
+
+        // Show article detail
+        function showArticleDetail(articleId) {
+            const article = articles.find(a => a.id === parseInt(articleId));
+            if (!article) return;
+            
+            // Update article detail page
+            document.getElementById('detailTitle').textContent = article.title;
+            document.getElementById('detailAuthor').textContent = article.author;
+            document.getElementById('detailDate').textContent = article.date;
+            document.getElementById('detailCategory').textContent = article.category;
+            document.getElementById('detailImage').style.backgroundImage = `url('${article.image}')`;
+            document.getElementById('detailBody').innerHTML = article.content;
+            
+            // Update tags
+            const tagsContainer = document.getElementById('detailTags');
+            tagsContainer.innerHTML = '';
+            article.tags.forEach(tag => {
+                const tagElement = document.createElement('span');
+                tagElement.className = 'tag';
+                tagElement.textContent = tag;
+                tagsContainer.appendChild(tagElement);
+            });
+            
+            // Update rating
+            const ratingContainer = document.getElementById('detailRating');
+            ratingContainer.innerHTML = createRatingStars(article.rating);
+            
+            // Update rating count
+            document.getElementById('detailRatingCount').textContent = `(${article.ratingCount} ratings)`;
+            
+            // Show article detail page
+            showPage('article-detail');
+            
+            // Load comments
+            loadComments(articleId);
+        }
+
+        // Load comments for an article
+        function loadComments(articleId) {
+            // In a real app, you would fetch comments from a database
+            // For this demo, we'll use sample comments
+            const commentsList = document.getElementById('commentsList');
+            commentsList.innerHTML = '';
+            
+            const sampleComments = [
+                {
+                    id: 1,
+                    author: "Alex Johnson",
+                    text: "This is a great article! Very informative and well-written.",
+                    date: "2 days ago"
+                },
+                {
+                    id: 2,
+                    author: "Sarah Miller",
+                    text: "I learned a lot from this. Thanks for sharing your insights!",
+                    date: "1 day ago"
+                }
+            ];
+            
+            sampleComments.forEach(comment => {
+                const commentElement = document.createElement('div');
+                commentElement.className = 'comment';
+                commentElement.innerHTML = `
+                    <div class="comment-header">
+                        <span class="comment-author">${comment.author}</span>
+                        <span class="comment-date">${comment.date}</span>
+                    </div>
+                    <p class="comment-text">${comment.text}</p>
+                `;
+                commentsList.appendChild(commentElement);
+            });
+        }
+
+        // Filter articles based on search input
+        function filterArticles() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filteredArticles = articles.filter(article => 
+                article.title.toLowerCase().includes(searchTerm) || 
+                article.excerpt.toLowerCase().includes(searchTerm) ||
+                article.category.toLowerCase().includes(searchTerm)
+            );
+            
+            // Clear existing articles
+            allArticlesGrid.innerHTML = '';
+            
+            // Render filtered articles
+            filteredArticles.forEach(article => {
+                allArticlesGrid.appendChild(createArticleCard(article));
+            });
+        }
+
+        // Render users for connect page
+        function renderUsers() {
+            usersContainer.innerHTML = '';
+            
+            users.forEach(user => {
+                const userElement = document.createElement('div');
+                userElement.className = 'user-item';
+                userElement.setAttribute('data-id', user.id);
+                userElement.innerHTML = `
+                    <div class="user-avatar-small">${user.name.charAt(0)}</div>
+                    <div class="user-details-small">
+                        <h4>${user.name}</h4>
+                        <p>${user.bio}</p>
+                    </div>
+                `;
+                
+                userElement.addEventListener('click', () => {
+                    selectUser(user);
+                });
+                
+                usersContainer.appendChild(userElement);
+            });
+        }
+
+        // Initialize chat
+        function initializeChat() {
+            // Clear chat messages
+            chatMessages.innerHTML = '';
+            chatInput.disabled = true;
+            chatSend.disabled = true;
+            
+            // Show default message
+            const defaultMessage = document.createElement('div');
+            defaultMessage.className = 'message';
+            defaultMessage.textContent = 'Select a user to start chatting';
+            defaultMessage.style.alignSelf = 'center';
+            defaultMessage.style.textAlign = 'center';
+            defaultMessage.style.width = 'auto';
+            chatMessages.appendChild(defaultMessage);
+        }
+
+        // Select user for chat
+        function selectUser(user) {
+            selectedChatUser = user;
+            
+            // Update UI
+            document.querySelectorAll('.user-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector(`.user-item[data-id="${user.id}"]`).classList.add('active');
+            
+            // Update chat header
+            chatUserName.textContent = user.name;
+            chatUserAvatar.textContent = user.name.charAt(0);
+            
+            // Enable chat input
+            chatInput.disabled = false;
+            chatSend.disabled = false;
+            
+            // Load chat messages
+            loadChatMessages(user.id);
+        }
+
+        // Load chat messages
+        function loadChatMessages(userId) {
+            // Clear chat messages
+            chatMessages.innerHTML = '';
+            
+            // In a real app, you would fetch messages from a database
+            // For this demo, we'll use sample messages
+            sampleMessages.forEach(message => {
+                const messageElement = document.createElement('div');
+                const isSent = message.sender === 0; // 0 represents current user
+                messageElement.className = `message ${isSent ? 'sent' : 'received'}`;
+                
+                const timestamp = new Date(message.timestamp);
+                const timeString = timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                
+                messageElement.innerHTML = `
+                    <div class="message-text">${message.text}</div>
+                    <div class="message-time">${timeString}</div>
+                `;
+                
+                chatMessages.appendChild(messageElement);
+            });
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Send message
+        function sendMessage() {
+            if (!selectedChatUser || !chatInput.value.trim()) return;
+            
+            const messageText = chatInput.value.trim();
+            
+            // Create message element
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message sent';
+            
+            const timestamp = new Date();
+            const timeString = timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            messageElement.innerHTML = `
+                <div class="message-text">${messageText}</div>
+                <div class="message-time">${timeString}</div>
+            `;
+            
+            chatMessages.appendChild(messageElement);
+            
+            // Clear input
+            chatInput.value = '';
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // In a real app, you would save the message to a database
+            // and then update the UI when the other user responds
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
