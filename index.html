@@ -1067,9 +1067,8 @@
             text-align: center;
         }
 
-<<<<<<< HEAD
         /* New Styles for Enhanced Features */
-        .follow-btn, .message-btn {
+        .follow-btn, .message-btn, .friend-btn {
             padding: 0.5rem 1rem;
             border-radius: 4px;
             font-weight: 500;
@@ -1098,6 +1097,19 @@
         .message-btn:hover {
             background-color: var(--accent-color);
             color: white;
+        }
+
+        .friend-btn {
+            background-color: var(--warning-color);
+            color: white;
+        }
+
+        .friend-btn:hover {
+            background-color: #e67e22;
+        }
+
+        .friend-btn.requested {
+            background-color: var(--text-secondary);
         }
 
         .user-actions {
@@ -1206,8 +1218,52 @@
             position: relative;
         }
 
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
+        /* Friend Requests Section */
+        .friend-requests-section {
+            margin-top: 2rem;
+        }
+
+        .friend-requests-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .friend-request-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+        }
+
+        .friend-request-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .friend-request-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .accept-btn {
+            background-color: var(--success-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        .decline-btn {
+            background-color: var(--error-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
         /* Responsive Styles */
         @media (max-width: 768px) {
             .header-content {
@@ -1254,13 +1310,10 @@
             .message {
                 max-width: 85%;
             }
-<<<<<<< HEAD
 
             .suggestions-grid {
                 grid-template-columns: 1fr;
             }
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
         }
     </style>
 </head>
@@ -1277,14 +1330,14 @@
                     <li><a href="#" class="nav-link" data-page="home">Home</a></li>
                     <li><a href="#" class="nav-link" data-page="about">About Us</a></li>
                     <li><a href="#" class="nav-link" data-page="articles">Articles</a></li>
-<<<<<<< HEAD
                     <li class="nav-item-with-badge">
                         <a href="#" class="nav-link" data-page="connect">Connect</a>
                         <span class="notification-badge" id="messageNotification" style="display: none;">0</span>
                     </li>
-=======
-                    <li><a href="#" class="nav-link" data-page="connect">Connect</a></li>
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
+                    <li class="nav-item-with-badge">
+                        <a href="#" class="nav-link" data-page="friends">Friends</a>
+                        <span class="notification-badge" id="friendRequestNotification" style="display: none;">0</span>
+                    </li>
                     <li><a href="#" class="nav-link" data-page="profile">Profile</a></li>
                     <li><a href="#" class="nav-link" data-page="settings">Settings</a></li>
                 </ul>
@@ -1385,7 +1438,6 @@
                 <div class="articles-grid" id="featuredArticles">
                     <!-- Featured articles will be dynamically loaded here -->
                 </div>
-<<<<<<< HEAD
 
                 <!-- User Suggestions for First-Time Users -->
                 <div class="suggestions-section" id="suggestionsSection" style="display: none;">
@@ -1395,8 +1447,6 @@
                         <!-- User suggestions will be dynamically loaded here -->
                     </div>
                 </div>
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
             </div>
         </section>
 
@@ -1407,19 +1457,11 @@
                 <div class="about-content">
                     <div class="writer-info">
                         <div class="writer-photo">
-<<<<<<< HEAD
-                            <img src="image/rabi.jpg" alt="Description of image" width="250" height="250">
-                        </div>
-                        <div class="writer-details">
-                            <h2>Rabi</h2>
-                            <p>Rabi is a passionate writer and content creator with over 1 years of experience in the blogging industry. With a background in Arts and digital marketing, Rabi brings a unique perspective to every piece of content.</p>
-=======
                             <i class="fas fa-user"></i>
                         </div>
                         <div class="writer-details">
                             <h2>Rabi</h2>
                             <p>Rabi is a passionate writer and content creator with over 5 years of experience in the blogging industry. With a background in literature and digital marketing, Rabi brings a unique perspective to every piece of content.</p>
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
                             <p>When not writing, Rabi enjoys photography, hiking, and exploring new coffee shops around the city. The goal is to create a community where ideas can be shared freely and creativity can flourish.</p>
                             <p>Through BlogHub, Rabi hopes to inspire others to share their stories and connect with a global audience of readers and writers.</p>
                             <div class="social-links-about">
@@ -1467,7 +1509,6 @@
                             <span id="detailDate">May 15, 2023</span>
                             <span id="detailCategory">Technology</span>
                         </div>
-<<<<<<< HEAD
                         <div class="engagement-metrics">
                             <div class="metric">
                                 <div class="metric-value" id="detailReadCount">0</div>
@@ -1482,8 +1523,6 @@
                                 <div class="metric-label">Comments</div>
                             </div>
                         </div>
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
                     </div>
                     <div class="article-image" id="detailImage"></div>
                     <div class="article-body" id="detailBody">
@@ -1501,10 +1540,7 @@
                         </div>
                         <div class="share-buttons">
                             <button class="share-btn"><i class="fas fa-share-alt"></i> Share</button>
-<<<<<<< HEAD
                             <button class="like-btn" id="likeBtn"><i class="far fa-heart"></i> Like</button>
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
                         </div>
                     </div>
                 </div>
@@ -1512,7 +1548,6 @@
                 <div class="comments-section">
                     <h3 class="comments-title">Comments</h3>
                     <div class="comment-form">
-<<<<<<< HEAD
                         <textarea class="comment-input" id="commentInput" placeholder="Add your comment..."></textarea>
                         <div class="comment-rating">
                             <span>Rate this article:</span>
@@ -1525,10 +1560,6 @@
                             </div>
                         </div>
                         <button class="comment-submit" id="commentSubmit">Post Comment</button>
-=======
-                        <textarea class="comment-input" placeholder="Add your comment..."></textarea>
-                        <button class="comment-submit">Post Comment</button>
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
                     </div>
                     <div class="comments-list" id="commentsList">
                         <!-- Comments will be dynamically loaded here -->
@@ -1565,7 +1596,6 @@
                         </div>
                     </div>
                 </div>
-<<<<<<< HEAD
 
                 <!-- Followed Users Section -->
                 <div class="suggestions-section" style="margin-top: 3rem;">
@@ -1574,8 +1604,34 @@
                         <!-- Followed users will be dynamically loaded here -->
                     </div>
                 </div>
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
+            </div>
+        </section>
+
+        <!-- Friends Page -->
+        <section id="friends" class="page">
+            <div class="container">
+                <h2 class="section-title">Friends</h2>
+                
+                <div class="friend-requests-section">
+                    <h3>Friend Requests</h3>
+                    <div class="friend-requests-list" id="friendRequestsList">
+                        <!-- Friend requests will be dynamically loaded here -->
+                    </div>
+                </div>
+                
+                <div class="suggestions-section">
+                    <h3>Your Friends</h3>
+                    <div class="suggestions-grid" id="friendsGrid">
+                        <!-- Friends will be dynamically loaded here -->
+                    </div>
+                </div>
+                
+                <div class="suggestions-section">
+                    <h3>Suggested Friends</h3>
+                    <div class="suggestions-grid" id="suggestedFriendsGrid">
+                        <!-- Suggested friends will be dynamically loaded here -->
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -1589,13 +1645,11 @@
                             <h2 id="profileName">User Name</h2>
                             <p id="profileEmail">user@example.com</p>
                             <p id="profileJoinDate">Member since January 2023</p>
-<<<<<<< HEAD
                             <div class="user-actions">
                                 <button class="follow-btn" id="profileFollowBtn" style="display: none;">Follow</button>
+                                <button class="friend-btn" id="profileFriendBtn" style="display: none;">Add Friend</button>
                                 <button class="message-btn" id="profileMessageBtn" style="display: none;">Message</button>
                             </div>
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
                         </div>
                     </div>
                     
@@ -1606,7 +1660,6 @@
                     
                     <div class="profile-stats">
                         <div class="stat">
-<<<<<<< HEAD
                             <div class="stat-value" id="profileArticlesCount">12</div>
                             <div class="stat-label">Articles</div>
                         </div>
@@ -1616,17 +1669,6 @@
                         </div>
                         <div class="stat">
                             <div class="stat-value" id="profileFollowingCount">124</div>
-=======
-                            <div class="stat-value">12</div>
-                            <div class="stat-label">Articles</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">356</div>
-                            <div class="stat-label">Followers</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">124</div>
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
                             <div class="stat-label">Following</div>
                         </div>
                     </div>
@@ -1775,6 +1817,7 @@
         const articlesPage = document.getElementById('articles');
         const articleDetailPage = document.getElementById('article-detail');
         const connectPage = document.getElementById('connect');
+        const friendsPage = document.getElementById('friends');
         const profilePage = document.getElementById('profile');
         const settingsPage = document.getElementById('settings');
         const userInfo = document.getElementById('userInfo');
@@ -1784,14 +1827,12 @@
         const profileEmail = document.getElementById('profileEmail');
         const profileBio = document.getElementById('profileBio');
         const profileJoinDate = document.getElementById('profileJoinDate');
-<<<<<<< HEAD
         const profileArticlesCount = document.getElementById('profileArticlesCount');
         const profileFollowersCount = document.getElementById('profileFollowersCount');
         const profileFollowingCount = document.getElementById('profileFollowingCount');
         const profileFollowBtn = document.getElementById('profileFollowBtn');
+        const profileFriendBtn = document.getElementById('profileFriendBtn');
         const profileMessageBtn = document.getElementById('profileMessageBtn');
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
         const logoutBtn = document.getElementById('logoutBtn');
         const logoutBtnSettings = document.getElementById('logoutBtnSettings');
         const authTabs = document.querySelectorAll('.auth-tab');
@@ -1814,11 +1855,11 @@
         const saveProfileBtn = document.getElementById('saveProfileBtn');
         const settingsName = document.getElementById('settingsName');
         const settingsBio = document.getElementById('settingsBio');
-<<<<<<< HEAD
         const suggestionsSection = document.getElementById('suggestionsSection');
         const suggestionsGrid = document.getElementById('suggestionsGrid');
         const followedUsersGrid = document.getElementById('followedUsersGrid');
         const messageNotification = document.getElementById('messageNotification');
+        const friendRequestNotification = document.getElementById('friendRequestNotification');
         const likeBtn = document.getElementById('likeBtn');
         const commentInput = document.getElementById('commentInput');
         const commentRating = document.getElementById('commentRating');
@@ -1826,8 +1867,9 @@
         const detailReadCount = document.getElementById('detailReadCount');
         const detailLikeCount = document.getElementById('detailLikeCount');
         const detailCommentCount = document.getElementById('detailCommentCount');
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
+        const friendRequestsList = document.getElementById('friendRequestsList');
+        const friendsGrid = document.getElementById('friendsGrid');
+        const suggestedFriendsGrid = document.getElementById('suggestedFriendsGrid');
 
         // Sample Articles Data
         const articles = [
@@ -1842,14 +1884,10 @@
                 content: "<p><b>Web Development</b></p><p>Web development is the work involved in developing a intranet (a private network). website for the Internet ( World Wide Web). Web development can range from developing a simple single plain text to complex web applications, static page of electronic businesses, and social network services. A more comprehensive list of tasks to which Web development commonly refers, may include Web engineering, Web design, Web content development, client liaison, client-side/ network security configuration, and e-commerce development. </p><p>server-side scripting, Web server and Among Web professionals,'web Development' usually refers to the main non-design aspects of building Web sites: writing markup and coding.  Web development often utilizes content management systems (CMS) to simplify content changes and make them accessible with basic technical skills.</p><p>For larger organizations and businesses, Web development teams can consist of hundreds of people ( developers) and follow standard methods like Web. Agile methodologies while developing Web sites. Smaller organizations may only require a single permanent or contracting developer, or secondary assignment to related job positions such as a graphic designer or information systems technician. Web development may be a collaborative effort between departments rather than the domain of a designated department. There are three kinds of Web developer specialization: developer, and full-stack developer. Front-end developers are responsible for behavior and visuals that run in the user browser, while back-end developers deal with the servers. Since the commercialization of the Web, the industry has boomed and has become one of the most used technologies ever.</p><p> <b>Evolution of the World Wide Web and web development</b></p><p><b>Origin/ Web 1.0</b></p><p> Tim Berners-Lee </p>",
                 tags: ["Web Development", "Technology", "Future"],
                 rating: 4.5,
-<<<<<<< HEAD
                 ratingCount: 12,
                 readCount: 245,
                 likeCount: 42,
                 commentCount: 8
-=======
-                ratingCount: 12
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
             },
             {
                 id: 2,
@@ -1862,14 +1900,10 @@
                 content: "<p>Sustainable living is becoming increasingly important as we face environmental challenges. Here are practical tips to reduce your environmental footprint.</p><p>From reducing single-use plastics to conserving energy at home, small changes can make a big difference when adopted by many.</p><p>Consider growing your own vegetables, using public transportation, and supporting local businesses to further reduce your impact on the environment.</p>",
                 tags: ["Sustainability", "Environment", "Lifestyle"],
                 rating: 4.2,
-<<<<<<< HEAD
                 ratingCount: 8,
                 readCount: 189,
                 likeCount: 31,
                 commentCount: 5
-=======
-                ratingCount: 8
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
             },
             {
                 id: 3,
@@ -1882,14 +1916,10 @@
                 content: "<p>A minimalist workspace can significantly boost productivity and creativity by reducing distractions and creating a calm environment.</p><p>Start by decluttering your desk, keeping only the essentials. Invest in quality over quantity when it comes to office supplies and equipment.</p><p>Consider the ergonomics of your setup, proper lighting, and adding a touch of nature with plants to create an inspiring workspace.</p>",
                 tags: ["Minimalism", "Productivity", "Workspace"],
                 rating: 4.7,
-<<<<<<< HEAD
                 ratingCount: 15,
                 readCount: 312,
                 likeCount: 56,
                 commentCount: 12
-=======
-                ratingCount: 15
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
             },
             {
                 id: 4,
@@ -1902,14 +1932,10 @@
                 content: "<p>Storytelling is a powerful tool that can transform how you communicate ideas, whether in writing, presentations, or everyday conversations.</p><p>Effective stories have a clear structure with a beginning, middle, and end. They create emotional connections and make information more memorable.</p><p>Practice incorporating storytelling techniques into your writing to engage readers and make your content more impactful.</p>",
                 tags: ["Storytelling", "Writing", "Communication"],
                 rating: 4.3,
-<<<<<<< HEAD
                 ratingCount: 10,
                 readCount: 201,
                 likeCount: 38,
                 commentCount: 7
-=======
-                ratingCount: 10
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
             },
             {
                 id: 5,
@@ -1922,14 +1948,10 @@
                 content: "<p>Mindfulness meditation is a practice that involves focusing your attention on the present moment without judgment.</p><p>Regular practice can reduce stress, improve focus, and enhance overall well-being. Start with just a few minutes each day and gradually increase the duration.</p><p>Find a quiet space, sit comfortably, and focus on your breath. When your mind wanders, gently bring your attention back to your breathing.</p>",
                 tags: ["Meditation", "Mindfulness", "Wellness"],
                 rating: 4.8,
-<<<<<<< HEAD
                 ratingCount: 20,
                 readCount: 421,
                 likeCount: 89,
                 commentCount: 15
-=======
-                ratingCount: 20
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
             },
             {
                 id: 6,
@@ -1942,20 +1964,11 @@
                 content: "<p>Digital photography has made it easier than ever to capture beautiful images, but understanding some fundamental techniques can significantly improve your results.</p><p>Learn about composition rules like the rule of thirds, how to use natural light to your advantage, and the basics of exposure settings.</p><p>Practice regularly and don't be afraid to experiment with different perspectives and techniques to develop your unique photographic style.</p>",
                 tags: ["Photography", "Tips", "Digital"],
                 rating: 4.4,
-<<<<<<< HEAD
                 ratingCount: 14,
                 readCount: 278,
                 likeCount: 47,
                 commentCount: 9
             }
-=======
-                ratingCount: 14
-            },
-            {
-                id: 7,
-            }
-
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
         ];
 
         // Sample Users for Connect Page
@@ -1965,70 +1978,50 @@
                 name: "Alex Johnson",
                 email: "alex@example.com",
                 bio: "Passionate about technology and writing",
-<<<<<<< HEAD
                 status: "Online",
                 followers: 245,
                 following: 128,
                 articles: 15
-=======
-                status: "Online"
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
             },
             {
                 id: 2,
                 name: "Sarah Miller",
                 email: "sarah@example.com",
                 bio: "Travel enthusiast and food blogger",
-<<<<<<< HEAD
                 status: "Online",
                 followers: 189,
                 following: 95,
                 articles: 12
-=======
-                status: "Online"
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
             },
             {
                 id: 3,
                 name: "Michael Chen",
                 email: "michael@example.com",
                 bio: "Photographer and visual storyteller",
-<<<<<<< HEAD
                 status: "Away",
                 followers: 312,
                 following: 201,
                 articles: 8
-=======
-                status: "Away"
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
             },
             {
                 id: 4,
                 name: "Emma Wilson",
                 email: "emma@example.com",
                 bio: "Fitness coach and wellness advocate",
-<<<<<<< HEAD
                 status: "Online",
                 followers: 421,
                 following: 156,
                 articles: 21
-=======
-                status: "Online"
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
             },
             {
                 id: 5,
                 name: "David Brown",
                 email: "david@example.com",
                 bio: "Business strategist and entrepreneur",
-<<<<<<< HEAD
                 status: "Offline",
                 followers: 156,
                 following: 89,
                 articles: 7
-=======
-                status: "Offline"
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
             }
         ];
 
@@ -2060,13 +2053,13 @@
         // Current User and Selected Chat User
         let currentUser = null;
         let selectedChatUser = null;
-<<<<<<< HEAD
         let currentArticleId = null;
         let selectedRating = 0;
         let userFollowing = [];
+        let userFriends = [];
+        let friendRequests = [];
         let unreadMessages = 0;
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
+        let unreadFriendRequests = 0;
 
         // Initialize the app
         function initApp() {
@@ -2078,12 +2071,12 @@
                     showMainPages();
                     updateUserInfo(user);
                     loadUserProfile(user);
-<<<<<<< HEAD
                     loadUserFollowing(user);
+                    loadUserFriends(user);
+                    loadFriendRequests(user);
                     checkFirstTimeUser(user);
                     loadUnreadMessages(user);
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
+                    loadUnreadFriendRequests(user);
                 } else {
                     // User is signed out
                     currentUser = null;
@@ -2160,12 +2153,9 @@
                             joinDate: new Date().toISOString(),
                             articles: 0,
                             followers: 0,
-<<<<<<< HEAD
                             following: 0,
+                            friends: 0,
                             firstTimeUser: true
-=======
-                            following: 0
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
                         });
                     })
                     .then(() => {
@@ -2195,12 +2185,9 @@
                                     joinDate: new Date().toISOString(),
                                     articles: 0,
                                     followers: 0,
-<<<<<<< HEAD
                                     following: 0,
+                                    friends: 0,
                                     firstTimeUser: true
-=======
-                                    following: 0
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
                                 });
                             }
                         });
@@ -2229,12 +2216,9 @@
                                     joinDate: new Date().toISOString(),
                                     articles: 0,
                                     followers: 0,
-<<<<<<< HEAD
                                     following: 0,
+                                    friends: 0,
                                     firstTimeUser: true
-=======
-                                    following: 0
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
                                 });
                             }
                         });
@@ -2289,7 +2273,6 @@
 
             // Save profile changes
             saveProfileBtn.addEventListener('click', saveProfileChanges);
-<<<<<<< HEAD
 
             // Like button
             likeBtn.addEventListener('click', toggleLike);
@@ -2304,8 +2287,22 @@
 
             // Comment submission
             commentSubmit.addEventListener('click', submitComment);
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
+
+            // Follow button
+            profileFollowBtn.addEventListener('click', toggleFollow);
+
+            // Friend button
+            profileFriendBtn.addEventListener('click', toggleFriendRequest);
+
+            // Message button
+            profileMessageBtn.addEventListener('click', () => {
+                if (selectedChatUser) {
+                    showPage('connect');
+                    setTimeout(() => {
+                        selectUser(selectedChatUser);
+                    }, 100);
+                }
+            });
         }
 
         // Show authentication page
@@ -2316,6 +2313,7 @@
             articlesPage.classList.remove('active');
             articleDetailPage.classList.remove('active');
             connectPage.classList.remove('active');
+            friendsPage.classList.remove('active');
             profilePage.classList.remove('active');
             settingsPage.classList.remove('active');
             userInfo.style.display = 'none';
@@ -2341,8 +2339,13 @@
             // If showing connect page, initialize chat
             if (pageName === 'connect') {
                 initializeChat();
-<<<<<<< HEAD
                 renderFollowedUsers();
+            }
+            
+            // If showing friends page, load friend data
+            if (pageName === 'friends') {
+                renderFriends();
+                renderSuggestedFriends();
             }
             
             // If showing profile page, check if it's the current user's profile
@@ -2350,10 +2353,9 @@
                 if (currentUser) {
                     // It's the current user's profile
                     profileFollowBtn.style.display = 'none';
+                    profileFriendBtn.style.display = 'none';
                     profileMessageBtn.style.display = 'none';
                 }
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
             }
         }
 
@@ -2377,12 +2379,9 @@
                     const userData = doc.data();
                     profileName.textContent = userData.name || user.displayName || 'User';
                     profileBio.textContent = userData.bio || 'This is where the user\'s bio will appear. They can edit this in their settings.';
-<<<<<<< HEAD
                     profileArticlesCount.textContent = userData.articles || 0;
                     profileFollowersCount.textContent = userData.followers || 0;
                     profileFollowingCount.textContent = userData.following || 0;
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
                     
                     if (userData.joinDate) {
                         const joinDate = new Date(userData.joinDate);
@@ -2398,7 +2397,6 @@
             });
         }
 
-<<<<<<< HEAD
         // Load user's following list
         function loadUserFollowing(user) {
             const followingRef = db.collection('users').doc(user.uid).collection('following');
@@ -2410,6 +2408,40 @@
             }).catch(error => {
                 console.error('Error loading following list:', error);
             });
+        }
+
+        // Load user's friends list
+        function loadUserFriends(user) {
+            const friendsRef = db.collection('users').doc(user.uid).collection('friends');
+            friendsRef.get().then(snapshot => {
+                userFriends = [];
+                snapshot.forEach(doc => {
+                    userFriends.push(doc.id);
+                });
+            }).catch(error => {
+                console.error('Error loading friends list:', error);
+            });
+        }
+
+        // Load friend requests
+        function loadFriendRequests(user) {
+            const requestsRef = db.collection('friendRequests');
+            requestsRef.where('toUid', '==', user.uid)
+                .where('status', '==', 'pending')
+                .get()
+                .then(snapshot => {
+                    friendRequests = [];
+                    snapshot.forEach(doc => {
+                        friendRequests.push({
+                            id: doc.id,
+                            ...doc.data()
+                        });
+                    });
+                    renderFriendRequests();
+                })
+                .catch(error => {
+                    console.error('Error loading friend requests:', error);
+                });
         }
 
         // Check if user is first-time user and show suggestions
@@ -2442,6 +2474,14 @@
             updateMessageNotification();
         }
 
+        // Load unread friend requests count
+        function loadUnreadFriendRequests(user) {
+            // In a real app, you would query Firestore for unread friend requests
+            // For this demo, we'll use a simulated count
+            unreadFriendRequests = 2; // Simulated unread friend requests
+            updateFriendRequestNotification();
+        }
+
         // Update message notification badge
         function updateMessageNotification() {
             if (unreadMessages > 0) {
@@ -2452,8 +2492,16 @@
             }
         }
 
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
+        // Update friend request notification badge
+        function updateFriendRequestNotification() {
+            if (unreadFriendRequests > 0) {
+                friendRequestNotification.textContent = unreadFriendRequests;
+                friendRequestNotification.style.display = 'flex';
+            } else {
+                friendRequestNotification.style.display = 'none';
+            }
+        }
+
         // Save profile changes
         function saveProfileChanges() {
             if (!currentUser) return;
@@ -2511,7 +2559,6 @@
                         <span>${article.date}</span>
                     </div>
                     <p class="article-excerpt">${article.excerpt}</p>
-<<<<<<< HEAD
                     <div class="engagement-metrics">
                         <div class="metric">
                             <div class="metric-value">${article.readCount}</div>
@@ -2526,8 +2573,6 @@
                             <div class="metric-label">Comments</div>
                         </div>
                     </div>
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
                     <div class="article-actions">
                         <a href="#" class="read-more" data-id="${article.id}">Read More <i class="fas fa-arrow-right"></i></a>
                         <div class="rating">
@@ -2574,11 +2619,8 @@
             const article = articles.find(a => a.id === parseInt(articleId));
             if (!article) return;
             
-<<<<<<< HEAD
             currentArticleId = articleId;
             
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
             // Update article detail page
             document.getElementById('detailTitle').textContent = article.title;
             document.getElementById('detailAuthor').textContent = article.author;
@@ -2586,12 +2628,9 @@
             document.getElementById('detailCategory').textContent = article.category;
             document.getElementById('detailImage').style.backgroundImage = `url('${article.image}')`;
             document.getElementById('detailBody').innerHTML = article.content;
-<<<<<<< HEAD
             detailReadCount.textContent = article.readCount;
             detailLikeCount.textContent = article.likeCount;
             detailCommentCount.textContent = article.commentCount;
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
             
             // Update tags
             const tagsContainer = document.getElementById('detailTags');
@@ -2610,12 +2649,9 @@
             // Update rating count
             document.getElementById('detailRatingCount').textContent = `(${article.ratingCount} ratings)`;
             
-<<<<<<< HEAD
             // Reset comment rating
             setCommentRating(0);
             
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
             // Show article detail page
             showPage('article-detail');
             
@@ -2635,23 +2671,15 @@
                     id: 1,
                     author: "Alex Johnson",
                     text: "This is a great article! Very informative and well-written.",
-<<<<<<< HEAD
                     date: "2 days ago",
                     rating: 5
-=======
-                    date: "2 days ago"
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
                 },
                 {
                     id: 2,
                     author: "Sarah Miller",
                     text: "I learned a lot from this. Thanks for sharing your insights!",
-<<<<<<< HEAD
                     date: "1 day ago",
                     rating: 4
-=======
-                    date: "1 day ago"
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
                 }
             ];
             
@@ -2664,14 +2692,11 @@
                         <span class="comment-date">${comment.date}</span>
                     </div>
                     <p class="comment-text">${comment.text}</p>
-<<<<<<< HEAD
                     <div class="comment-rating">
                         <div class="comment-stars">
                             ${createRatingStars(comment.rating)}
                         </div>
                     </div>
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
                 `;
                 commentsList.appendChild(commentElement);
             });
@@ -2719,7 +2744,6 @@
             });
         }
 
-<<<<<<< HEAD
         // Render user suggestions for first-time users
         function renderUserSuggestions() {
             suggestionsGrid.innerHTML = '';
@@ -2792,6 +2816,123 @@
             });
         }
 
+        // Render friends
+        function renderFriends() {
+            friendsGrid.innerHTML = '';
+            
+            // In a real app, you would fetch the actual friends
+            // For this demo, we'll use the first 4 users
+            users.slice(0, 4).forEach(user => {
+                const friendElement = document.createElement('div');
+                friendElement.className = 'suggestion-card';
+                friendElement.innerHTML = `
+                    <div class="suggestion-avatar">${user.name.charAt(0)}</div>
+                    <h4>${user.name}</h4>
+                    <p>${user.bio}</p>
+                    <div class="suggestion-stats">
+                        <span>${user.followers} followers</span>
+                        <span>${user.articles} articles</span>
+                    </div>
+                    <div class="user-actions">
+                        <button class="message-btn" data-id="${user.id}">Message</button>
+                        <button class="friend-btn" data-id="${user.id}">Unfriend</button>
+                    </div>
+                `;
+                
+                const messageBtn = friendElement.querySelector('.message-btn');
+                messageBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    // Navigate to connect page and select this user
+                    showPage('connect');
+                    setTimeout(() => {
+                        selectUser(user);
+                    }, 100);
+                });
+                
+                const unfriendBtn = friendElement.querySelector('.friend-btn');
+                unfriendBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    unfriendUser(user.id);
+                });
+                
+                friendsGrid.appendChild(friendElement);
+            });
+        }
+
+        // Render suggested friends
+        function renderSuggestedFriends() {
+            suggestedFriendsGrid.innerHTML = '';
+            
+            // In a real app, you would fetch suggested friends based on mutual connections, interests, etc.
+            // For this demo, we'll use users 3-5
+            users.slice(2, 5).forEach(user => {
+                const suggestionElement = document.createElement('div');
+                suggestionElement.className = 'suggestion-card';
+                suggestionElement.innerHTML = `
+                    <div class="suggestion-avatar">${user.name.charAt(0)}</div>
+                    <h4>${user.name}</h4>
+                    <p>${user.bio}</p>
+                    <div class="suggestion-stats">
+                        <span>${user.followers} followers</span>
+                        <span>${user.articles} articles</span>
+                    </div>
+                    <button class="friend-btn" data-id="${user.id}">Add Friend</button>
+                `;
+                
+                const friendBtn = suggestionElement.querySelector('.friend-btn');
+                friendBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    sendFriendRequest(user.id);
+                });
+                
+                suggestedFriendsGrid.appendChild(suggestionElement);
+            });
+        }
+
+        // Render friend requests
+        function renderFriendRequests() {
+            friendRequestsList.innerHTML = '';
+            
+            if (friendRequests.length === 0) {
+                friendRequestsList.innerHTML = '<p>No pending friend requests</p>';
+                return;
+            }
+            
+            // In a real app, you would fetch the actual user data for each request
+            // For this demo, we'll use sample data
+            friendRequests.forEach(request => {
+                const requestElement = document.createElement('div');
+                requestElement.className = 'friend-request-item';
+                requestElement.innerHTML = `
+                    <div class="friend-request-info">
+                        <div class="user-avatar-small">U</div>
+                        <div>
+                            <h4>User ${request.fromUid}</h4>
+                            <p>Wants to be your friend</p>
+                        </div>
+                    </div>
+                    <div class="friend-request-actions">
+                        <button class="accept-btn" data-id="${request.id}">Accept</button>
+                        <button class="decline-btn" data-id="${request.id}">Decline</button>
+                    </div>
+                `;
+                
+                const acceptBtn = requestElement.querySelector('.accept-btn');
+                acceptBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    acceptFriendRequest(request.id, request.fromUid);
+                });
+                
+                const declineBtn = requestElement.querySelector('.decline-btn');
+                declineBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    declineFriendRequest(request.id);
+                });
+                
+                friendRequestsList.appendChild(requestElement);
+            });
+        }
+
         // Follow a user
         function followUser(userId) {
             if (!currentUser) return;
@@ -2833,8 +2974,119 @@
             alert('You have unfollowed this user.');
         }
 
-=======
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
+        // Toggle follow status
+        function toggleFollow() {
+            if (!currentUser) {
+                alert('Please log in to follow users');
+                return;
+            }
+            
+            const userId = selectedChatUser.id;
+            const isFollowing = userFollowing.includes(userId.toString());
+            
+            if (isFollowing) {
+                unfollowUser(userId);
+            } else {
+                followUser(userId);
+            }
+        }
+
+        // Send friend request
+        function sendFriendRequest(toUserId) {
+            if (!currentUser) {
+                alert('Please log in to send friend requests');
+                return;
+            }
+            
+            // In a real app, you would add to Firestore
+            // For this demo, we'll update the UI immediately
+            const friendBtn = document.querySelector(`.friend-btn[data-id="${toUserId}"]`);
+            if (friendBtn) {
+                friendBtn.textContent = 'Request Sent';
+                friendBtn.classList.add('requested');
+                friendBtn.disabled = true;
+            }
+            
+            // Show success message
+            alert('Friend request sent!');
+        }
+
+        // Accept friend request
+        function acceptFriendRequest(requestId, fromUid) {
+            // In a real app, you would update Firestore
+            // For this demo, we'll update the UI immediately
+            userFriends.push(fromUid);
+            
+            // Remove from friend requests
+            const index = friendRequests.findIndex(req => req.id === requestId);
+            if (index > -1) {
+                friendRequests.splice(index, 1);
+            }
+            
+            // Update UI
+            renderFriendRequests();
+            unreadFriendRequests--;
+            updateFriendRequestNotification();
+            
+            // Show success message
+            alert('Friend request accepted!');
+        }
+
+        // Decline friend request
+        function declineFriendRequest(requestId) {
+            // In a real app, you would update Firestore
+            // For this demo, we'll update the UI immediately
+            
+            // Remove from friend requests
+            const index = friendRequests.findIndex(req => req.id === requestId);
+            if (index > -1) {
+                friendRequests.splice(index, 1);
+            }
+            
+            // Update UI
+            renderFriendRequests();
+            unreadFriendRequests--;
+            updateFriendRequestNotification();
+            
+            // Show success message
+            alert('Friend request declined.');
+        }
+
+        // Unfriend a user
+        function unfriendUser(userId) {
+            if (!currentUser) return;
+            
+            // In a real app, you would update Firestore
+            // For this demo, we'll update the UI immediately
+            const index = userFriends.indexOf(userId.toString());
+            if (index > -1) {
+                userFriends.splice(index, 1);
+            }
+            
+            // Update UI
+            renderFriends();
+            
+            // Show success message
+            alert('You have unfriended this user.');
+        }
+
+        // Toggle friend request
+        function toggleFriendRequest() {
+            if (!currentUser) {
+                alert('Please log in to send friend requests');
+                return;
+            }
+            
+            const userId = selectedChatUser.id;
+            const isFriend = userFriends.includes(userId.toString());
+            
+            if (isFriend) {
+                unfriendUser(userId);
+            } else {
+                sendFriendRequest(userId);
+            }
+        }
+
         // Initialize chat
         function initializeChat() {
             // Clear chat messages
@@ -2869,6 +3121,22 @@
             // Enable chat input
             chatInput.disabled = false;
             chatSend.disabled = false;
+            
+            // Update profile buttons
+            profileFollowBtn.style.display = 'inline-block';
+            profileFriendBtn.style.display = 'inline-block';
+            profileMessageBtn.style.display = 'inline-block';
+            
+            // Update follow button state
+            const isFollowing = userFollowing.includes(user.id.toString());
+            profileFollowBtn.textContent = isFollowing ? 'Following' : 'Follow';
+            profileFollowBtn.classList.toggle('following', isFollowing);
+            
+            // Update friend button state
+            const isFriend = userFriends.includes(user.id.toString());
+            const hasRequest = false; // In a real app, you would check if there's a pending request
+            profileFriendBtn.textContent = isFriend ? 'Unfriend' : (hasRequest ? 'Request Sent' : 'Add Friend');
+            profileFriendBtn.classList.toggle('requested', hasRequest);
             
             // Load chat messages
             loadChatMessages(user.id);
@@ -2931,7 +3199,6 @@
             // and then update the UI when the other user responds
         }
 
-<<<<<<< HEAD
         // Toggle like on article
         function toggleLike() {
             if (!currentUser) {
@@ -3034,11 +3301,7 @@
         }
 
         // Initialize the app when DOM is loaded
-        document.addEventListener('DOMContentLoaded', initApp)
-=======
-        // Initialize the app when DOM is loaded
         document.addEventListener('DOMContentLoaded', initApp);
->>>>>>> c731300b8a17020d62c31226c02ff1840571c694
     </script>
 </body>
 </html>
