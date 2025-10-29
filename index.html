@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BlogHub | Share Your Stories</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <style>
         /* CSS Variables */
         :root {
@@ -1794,7 +1791,34 @@
         </div>
     </footer>
 
-    <script>
+    <script type="module">
+        // Import Firebase v11 Modular SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword, 
+            createUserWithEmailAndPassword,
+            signInWithPopup,
+            GoogleAuthProvider,
+            FacebookAuthProvider,
+            onAuthStateChanged,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+        import { 
+            getFirestore, 
+            collection, 
+            doc, 
+            setDoc, 
+            getDoc, 
+            updateDoc,
+            addDoc,
+            query,
+            where,
+            getDocs,
+            onSnapshot,
+            orderBy
+        } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
         // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyB5o_yjIq0_CNLYwsCtDTWRs0cIKhI8tlI",
@@ -1806,9 +1830,9 @@
         };
 
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
         // DOM Elements
         const authPage = document.getElementById('auth');
@@ -1920,54 +1944,6 @@
                 readCount: 312,
                 likeCount: 56,
                 commentCount: 12
-            },
-            {
-                id: 4,
-                title: "The Art of Storytelling",
-                excerpt: "Learn how to craft compelling narratives that captivate your audience.",
-                author: "Rabi",
-                date: "March 30, 2023",
-                category: "Writing",
-                image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                content: "<p>Storytelling is a powerful tool that can transform how you communicate ideas, whether in writing, presentations, or everyday conversations.</p><p>Effective stories have a clear structure with a beginning, middle, and end. They create emotional connections and make information more memorable.</p><p>Practice incorporating storytelling techniques into your writing to engage readers and make your content more impactful.</p>",
-                tags: ["Storytelling", "Writing", "Communication"],
-                rating: 4.3,
-                ratingCount: 10,
-                readCount: 201,
-                likeCount: 38,
-                commentCount: 7
-            },
-            {
-                id: 5,
-                title: "Mindfulness Meditation Guide",
-                excerpt: "A beginner's guide to mindfulness meditation and its benefits for mental health.",
-                author: "Rabi",
-                date: "March 18, 2023",
-                category: "Wellness",
-                image: "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                content: "<p>Mindfulness meditation is a practice that involves focusing your attention on the present moment without judgment.</p><p>Regular practice can reduce stress, improve focus, and enhance overall well-being. Start with just a few minutes each day and gradually increase the duration.</p><p>Find a quiet space, sit comfortably, and focus on your breath. When your mind wanders, gently bring your attention back to your breathing.</p>",
-                tags: ["Meditation", "Mindfulness", "Wellness"],
-                rating: 4.8,
-                ratingCount: 20,
-                readCount: 421,
-                likeCount: 89,
-                commentCount: 15
-            },
-            {
-                id: 6,
-                title: "Digital Photography Tips",
-                excerpt: "Essential techniques for capturing stunning photos with your digital camera.",
-                author: "Rabi",
-                date: "February 25, 2023",
-                category: "Photography",
-                image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                content: "<p>Digital photography has made it easier than ever to capture beautiful images, but understanding some fundamental techniques can significantly improve your results.</p><p>Learn about composition rules like the rule of thirds, how to use natural light to your advantage, and the basics of exposure settings.</p><p>Practice regularly and don't be afraid to experiment with different perspectives and techniques to develop your unique photographic style.</p>",
-                tags: ["Photography", "Tips", "Digital"],
-                rating: 4.4,
-                ratingCount: 14,
-                readCount: 278,
-                likeCount: 47,
-                commentCount: 9
             }
         ];
 
@@ -2002,26 +1978,6 @@
                 followers: 312,
                 following: 201,
                 articles: 8
-            },
-            {
-                id: 4,
-                name: "Emma Wilson",
-                email: "emma@example.com",
-                bio: "Fitness coach and wellness advocate",
-                status: "Online",
-                followers: 421,
-                following: 156,
-                articles: 21
-            },
-            {
-                id: 5,
-                name: "David Brown",
-                email: "david@example.com",
-                bio: "Business strategist and entrepreneur",
-                status: "Offline",
-                followers: 156,
-                following: 89,
-                articles: 7
             }
         ];
 
@@ -2063,8 +2019,8 @@
 
         // Initialize the app
         function initApp() {
-            // Check if user is logged in
-            auth.onAuthStateChanged(user => {
+            // Check if user is logged in using modular auth
+            onAuthStateChanged(auth, (user) => {
                 if (user) {
                     // User is signed in
                     currentUser = user;
@@ -2115,41 +2071,69 @@
                 });
             });
 
-            // Login form submission
-            loginForm.addEventListener('submit', e => {
+            // Login form submission - MODULAR VERSION
+            loginForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const email = document.getElementById('loginEmail').value;
                 const password = document.getElementById('loginPassword').value;
                 
-                auth.signInWithEmailAndPassword(email, password)
-                    .then(userCredential => {
-                        // Signed in successfully
-                        console.log('User logged in:', userCredential.user);
-                    })
-                    .catch(error => {
-                        console.error('Login error:', error);
-                        alert('Login failed: ' + error.message);
-                    });
+                try {
+                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                    console.log('User logged in:', userCredential.user);
+                } catch (error) {
+                    console.error('Login error:', error);
+                    alert('Login failed: ' + error.message);
+                }
             });
 
-            // Signup form submission
-            signupForm.addEventListener('submit', e => {
+            // Signup form submission - MODULAR VERSION
+            signupForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const name = document.getElementById('signupName').value;
                 const email = document.getElementById('signupEmail').value;
                 const password = document.getElementById('signupPassword').value;
                 const bio = document.getElementById('signupBio').value;
                 
-                auth.createUserWithEmailAndPassword(email, password)
-                    .then(userCredential => {
-                        // Signed up successfully
-                        console.log('User signed up:', userCredential.user);
-                        
-                        // Save additional user data to Firestore
-                        return db.collection('users').doc(userCredential.user.uid).set({
-                            name: name,
-                            email: email,
-                            bio: bio,
+                try {
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    console.log('User signed up:', userCredential.user);
+                    
+                    // Save additional user data to Firestore using modular syntax
+                    await setDoc(doc(db, 'users', userCredential.user.uid), {
+                        name: name,
+                        email: email,
+                        bio: bio,
+                        joinDate: new Date().toISOString(),
+                        articles: 0,
+                        followers: 0,
+                        following: 0,
+                        friends: 0,
+                        firstTimeUser: true
+                    });
+                    
+                    console.log('User data saved to Firestore');
+                } catch (error) {
+                    console.error('Signup error:', error);
+                    alert('Signup failed: ' + error.message);
+                }
+            });
+
+            // Google login - MODULAR VERSION
+            googleLoginBtn.addEventListener('click', async () => {
+                const provider = new GoogleAuthProvider();
+                try {
+                    const result = await signInWithPopup(auth, provider);
+                    console.log('Google login successful:', result.user);
+                    
+                    // Check if user exists in Firestore, if not create a record
+                    const userRef = doc(db, 'users', result.user.uid);
+                    const userDoc = await getDoc(userRef);
+                    
+                    if (!userDoc.exists()) {
+                        await setDoc(userRef, {
+                            name: result.user.displayName,
+                            email: result.user.email,
+                            bio: '',
                             joinDate: new Date().toISOString(),
                             articles: 0,
                             followers: 0,
@@ -2157,98 +2141,61 @@
                             friends: 0,
                             firstTimeUser: true
                         });
-                    })
-                    .then(() => {
-                        console.log('User data saved to Firestore');
-                    })
-                    .catch(error => {
-                        console.error('Signup error:', error);
-                        alert('Signup failed: ' + error.message);
-                    });
+                    }
+                } catch (error) {
+                    console.error('Google login error:', error);
+                    alert('Google login failed: ' + error.message);
+                }
             });
 
-            // Google login
-            googleLoginBtn.addEventListener('click', () => {
-                const provider = new firebase.auth.GoogleAuthProvider();
-                auth.signInWithPopup(provider)
-                    .then(result => {
-                        console.log('Google login successful:', result.user);
-                        
-                        // Check if user exists in Firestore, if not create a record
-                        const userRef = db.collection('users').doc(result.user.uid);
-                        userRef.get().then(doc => {
-                            if (!doc.exists) {
-                                userRef.set({
-                                    name: result.user.displayName,
-                                    email: result.user.email,
-                                    bio: '',
-                                    joinDate: new Date().toISOString(),
-                                    articles: 0,
-                                    followers: 0,
-                                    following: 0,
-                                    friends: 0,
-                                    firstTimeUser: true
-                                });
-                            }
+            // Facebook login - MODULAR VERSION
+            facebookLoginBtn.addEventListener('click', async () => {
+                const provider = new FacebookAuthProvider();
+                try {
+                    const result = await signInWithPopup(auth, provider);
+                    console.log('Facebook login successful:', result.user);
+                    
+                    // Check if user exists in Firestore, if not create a record
+                    const userRef = doc(db, 'users', result.user.uid);
+                    const userDoc = await getDoc(userRef);
+                    
+                    if (!userDoc.exists()) {
+                        await setDoc(userRef, {
+                            name: result.user.displayName,
+                            email: result.user.email,
+                            bio: '',
+                            joinDate: new Date().toISOString(),
+                            articles: 0,
+                            followers: 0,
+                            following: 0,
+                            friends: 0,
+                            firstTimeUser: true
                         });
-                    })
-                    .catch(error => {
-                        console.error('Google login error:', error);
-                        alert('Google login failed: ' + error.message);
-                    });
+                    }
+                } catch (error) {
+                    console.error('Facebook login error:', error);
+                    alert('Facebook login failed: ' + error.message);
+                }
             });
 
-            // Facebook login
-            facebookLoginBtn.addEventListener('click', () => {
-                const provider = new firebase.auth.FacebookAuthProvider();
-                auth.signInWithPopup(provider)
-                    .then(result => {
-                        console.log('Facebook login successful:', result.user);
-                        
-                        // Check if user exists in Firestore, if not create a record
-                        const userRef = db.collection('users').doc(result.user.uid);
-                        userRef.get().then(doc => {
-                            if (!doc.exists) {
-                                userRef.set({
-                                    name: result.user.displayName,
-                                    email: result.user.email,
-                                    bio: '',
-                                    joinDate: new Date().toISOString(),
-                                    articles: 0,
-                                    followers: 0,
-                                    following: 0,
-                                    friends: 0,
-                                    firstTimeUser: true
-                                });
-                            }
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Facebook login error:', error);
-                        alert('Facebook login failed: ' + error.message);
-                    });
+            // Logout - MODULAR VERSION
+            logoutBtn.addEventListener('click', async () => {
+                try {
+                    await signOut(auth);
+                    console.log('User signed out');
+                } catch (error) {
+                    console.error('Logout error:', error);
+                }
             });
 
-            // Logout
-            logoutBtn.addEventListener('click', () => {
-                auth.signOut()
-                    .then(() => {
-                        console.log('User signed out');
-                    })
-                    .catch(error => {
-                        console.error('Logout error:', error);
-                    });
-            });
-
-            // Logout from settings
-            logoutBtnSettings.addEventListener('click', () => {
-                auth.signOut()
-                    .then(() => {
-                        console.log('User signed out');
-                    })
-                    .catch(error => {
-                        console.error('Logout error:', error);
-                    });
+            // Logout from settings - MODULAR VERSION
+            logoutBtnSettings.addEventListener('click', async () => {
+                try {
+                    await signOut(auth);
+                    console.log('User signed out');
+                } catch (error) {
+                    console.error('Logout error:', error);
+                }
             });
 
             // Navigation
@@ -2271,8 +2218,26 @@
                 }
             });
 
-            // Save profile changes
-            saveProfileBtn.addEventListener('click', saveProfileChanges);
+            // Save profile changes - MODULAR VERSION
+            saveProfileBtn.addEventListener('click', async () => {
+                if (!currentUser) return;
+                
+                const name = settingsName.value;
+                const bio = settingsBio.value;
+                
+                try {
+                    const userRef = doc(db, 'users', currentUser.uid);
+                    await updateDoc(userRef, {
+                        name: name,
+                        bio: bio
+                    });
+                    alert('Profile updated successfully!');
+                    loadUserProfile(currentUser);
+                } catch (error) {
+                    console.error('Error updating profile:', error);
+                    alert('Error updating profile: ' + error.message);
+                }
+            });
 
             // Like button
             likeBtn.addEventListener('click', toggleLike);
@@ -2371,12 +2336,14 @@
             profileEmail.textContent = email;
         }
 
-        // Load user profile from Firestore
-        function loadUserProfile(user) {
-            const userRef = db.collection('users').doc(user.uid);
-            userRef.get().then(doc => {
-                if (doc.exists) {
-                    const userData = doc.data();
+        // Load user profile from Firestore - MODULAR VERSION
+        async function loadUserProfile(user) {
+            try {
+                const userRef = doc(db, 'users', user.uid);
+                const userDoc = await getDoc(userRef);
+                
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
                     profileName.textContent = userData.name || user.displayName || 'User';
                     profileBio.textContent = userData.bio || 'This is where the user\'s bio will appear. They can edit this in their settings.';
                     profileArticlesCount.textContent = userData.articles || 0;
@@ -2392,78 +2359,128 @@
                     settingsName.value = userData.name || user.displayName || '';
                     settingsBio.value = userData.bio || '';
                 }
-            }).catch(error => {
+            } catch (error) {
                 console.error('Error loading user profile:', error);
-            });
+            }
         }
 
-        // Load user's following list
-        function loadUserFollowing(user) {
-            const followingRef = db.collection('users').doc(user.uid).collection('following');
-            followingRef.get().then(snapshot => {
+        // Load user's following list - MODULAR VERSION
+        async function loadUserFollowing(user) {
+            try {
+                const followingRef = collection(db, 'users', user.uid, 'following');
+                const snapshot = await getDocs(followingRef);
                 userFollowing = [];
                 snapshot.forEach(doc => {
                     userFollowing.push(doc.id);
                 });
-            }).catch(error => {
+            } catch (error) {
                 console.error('Error loading following list:', error);
-            });
+            }
         }
 
-        // Load user's friends list
-        function loadUserFriends(user) {
-            const friendsRef = db.collection('users').doc(user.uid).collection('friends');
-            friendsRef.get().then(snapshot => {
+        // Load user's friends list - MODULAR VERSION
+        async function loadUserFriends(user) {
+            try {
+                const friendsRef = collection(db, 'users', user.uid, 'friends');
+                const snapshot = await getDocs(friendsRef);
                 userFriends = [];
                 snapshot.forEach(doc => {
                     userFriends.push(doc.id);
                 });
-            }).catch(error => {
+            } catch (error) {
                 console.error('Error loading friends list:', error);
+            }
+        }
+
+        // Load friend requests - MODULAR VERSION
+        async function loadFriendRequests(user) {
+            try {
+                const requestsRef = collection(db, 'friendRequests');
+                const q = query(requestsRef, 
+                    where('toUid', '==', user.uid),
+                    where('status', '==', 'pending')
+                );
+                const snapshot = await getDocs(q);
+                
+                friendRequests = [];
+                snapshot.forEach(doc => {
+                    friendRequests.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+                renderFriendRequests();
+            } catch (error) {
+                console.error('Error loading friend requests:', error);
+            }
+        }
+
+        // Send friend request - MODULAR VERSION
+        async function sendFriendRequest(toUid) {
+            if (!currentUser) {
+                alert("Login first!");
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "friendRequests"), {
+                    fromUid: currentUser.uid,
+                    toUid: toUid,
+                    status: "pending",
+                    timestamp: Date.now()
+                });
+
+                alert("Friend request sent!");
+                
+                // Update UI
+                const friendBtn = document.querySelector(`.friend-btn[data-id="${toUid}"]`);
+                if (friendBtn) {
+                    friendBtn.textContent = 'Request Sent';
+                    friendBtn.classList.add('requested');
+                    friendBtn.disabled = true;
+                }
+            } catch (error) {
+                console.error("Error sending friend request:", error);
+                alert("Failed to send friend request: " + error.message);
+            }
+        }
+
+        // Enhanced messaging system - MODULAR VERSION
+        function setupRealTimeMessages(conversationId) {
+            const messagesRef = collection(db, "messages");
+            const q = query(messagesRef, 
+                where("conversationId", "==", conversationId),
+                orderBy("timestamp")
+            );
+
+            // Real-time listener for messages
+            onSnapshot(q, (snapshot) => {
+                const messages = snapshot.docs.map(doc => doc.data());
+                displayMessages(messages);
             });
         }
 
-        // Load friend requests
-        function loadFriendRequests(user) {
-            const requestsRef = db.collection('friendRequests');
-            requestsRef.where('toUid', '==', user.uid)
-                .where('status', '==', 'pending')
-                .get()
-                .then(snapshot => {
-                    friendRequests = [];
-                    snapshot.forEach(doc => {
-                        friendRequests.push({
-                            id: doc.id,
-                            ...doc.data()
-                        });
-                    });
-                    renderFriendRequests();
-                })
-                .catch(error => {
-                    console.error('Error loading friend requests:', error);
+        async function sendMessageToFirestore(text, conversationId) {
+            if (!currentUser) return;
+            
+            try {
+                await addDoc(collection(db, "messages"), {
+                    conversationId: conversationId,
+                    senderUid: currentUser.uid,
+                    message: text,
+                    timestamp: Date.now()
                 });
+            } catch (error) {
+                console.error("Error sending message:", error);
+            }
         }
 
         // Check if user is first-time user and show suggestions
         function checkFirstTimeUser(user) {
-            const userRef = db.collection('users').doc(user.uid);
-            userRef.get().then(doc => {
-                if (doc.exists) {
-                    const userData = doc.data();
-                    if (userData.firstTimeUser) {
-                        // Show suggestions for first-time users
-                        suggestionsSection.style.display = 'block';
-                        renderUserSuggestions();
-                        
-                        // Mark that user has seen suggestions
-                        userRef.update({
-                            firstTimeUser: false
-                        });
-                    }
-                }
-            }).catch(error => {
-                console.error('Error checking first-time user:', error);
-            });
+            // In a real app, you would check Firestore
+            // For this demo, we'll show suggestions for all users
+            suggestionsSection.style.display = 'block';
+            renderUserSuggestions();
         }
 
         // Load unread messages count
@@ -2500,26 +2517,6 @@
             } else {
                 friendRequestNotification.style.display = 'none';
             }
-        }
-
-        // Save profile changes
-        function saveProfileChanges() {
-            if (!currentUser) return;
-            
-            const name = settingsName.value;
-            const bio = settingsBio.value;
-            
-            const userRef = db.collection('users').doc(currentUser.uid);
-            userRef.update({
-                name: name,
-                bio: bio
-            }).then(() => {
-                alert('Profile updated successfully!');
-                loadUserProfile(currentUser);
-            }).catch(error => {
-                console.error('Error updating profile:', error);
-                alert('Error updating profile: ' + error.message);
-            });
         }
 
         // Render articles to the page
@@ -2989,26 +2986,6 @@
             } else {
                 followUser(userId);
             }
-        }
-
-        // Send friend request
-        function sendFriendRequest(toUserId) {
-            if (!currentUser) {
-                alert('Please log in to send friend requests');
-                return;
-            }
-            
-            // In a real app, you would add to Firestore
-            // For this demo, we'll update the UI immediately
-            const friendBtn = document.querySelector(`.friend-btn[data-id="${toUserId}"]`);
-            if (friendBtn) {
-                friendBtn.textContent = 'Request Sent';
-                friendBtn.classList.add('requested');
-                friendBtn.disabled = true;
-            }
-            
-            // Show success message
-            alert('Friend request sent!');
         }
 
         // Accept friend request
