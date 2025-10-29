@@ -1,0 +1,37 @@
+mutation CreateNewBlog($title: String!, $slug: String!, $description: String, $headerImageUrl: String) @auth(level: USER) {
+  blog_insert(data: {
+    title: $title,
+    slug: $slug,
+    description: $description,
+    headerImageUrl: $headerImageUrl,
+		userId_expr: "auth.uid",
+    createdAt_expr: "request.time"
+  })
+}
+
+query GetPostsByBlog($blogId: UUID!) @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public") {
+  posts(where: {blogId: {eq: $blogId}}) {
+    id
+    title
+    summary
+  }
+}
+
+mutation CreateNewComment($postId: UUID!, $content: String!) @auth(level: USER) {
+  comment_insert(data: {
+    postId: $postId,
+    content: $content,
+		userId_expr: "auth.uid",
+    createdAt_expr: "request.time"
+  })
+}
+
+query GetBlog @auth(level: USER) {
+  blog(key: {userId_expr: "auth.uid"}) {
+    id
+    title
+    slug
+    description
+    headerImageUrl
+  }
+}

@@ -1,0 +1,61 @@
+type User @table {
+  username: String!
+  email: String!
+  createdAt: Timestamp!
+  displayName: String
+  bio: String
+  profilePictureUrl: String
+}
+
+type Blog @table {
+  title: String!
+  slug: String!
+  createdAt: Timestamp!
+  description: String
+  headerImageUrl: String
+  user: User!
+}
+
+type Post @table {
+  title: String!
+  content: String!
+  publishedAt: Timestamp!
+  createdAt: Timestamp!
+  imageUrl: String
+  summary: String
+  blog: Blog!
+  author: User!
+}
+
+type Category @table {
+  name: String!
+  slug: String!
+}
+
+type Tag @table {
+  name: String!
+  slug: String!
+}
+
+type Comment @table {
+  content: String!
+  createdAt: Timestamp!
+  user: User!
+  post: Post!
+}
+
+type SubscriptionType @table(key: ["subscriber", "subscribedToBlog"]) {
+  createdAt: Timestamp!
+  subscriber: User!
+  subscribedToBlog: Blog!
+}
+
+type PostCategory @table(key: ["post", "category"]) {
+  post: Post!
+  category: Category!
+}
+
+type PostTag @table(key: ["post", "tag"]) {
+  post: Post!
+  tag: Tag!
+}

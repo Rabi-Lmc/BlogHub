@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BlogHub Admin Panel</title>
+  <style>
+    body {
+      background: #0d0d0d;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .admin-panel {
+      max-width: 500px;
+      margin: 50px auto;
+      background: #1a1a1a;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px orange;
+    }
+
+    input, textarea, select, button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 150px;
+    }
+
+    button {
+      background: orange;
+      color: black;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    h2 {
+      text-align: center;
+      color: orange;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-panel">
+    <h2>Upload New Article</h2>
+
+    <input type="text" id="title" placeholder="Article Title">
+    <textarea id="content" placeholder="Article Content"></textarea>
+    <select id="topic">
+      <option value="Technology">Technology</option>
+      <option value="Science">Science</option>
+      <option value="Lifestyle">Lifestyle</option>
+    </select>
+
+    <button id="uploadBtn">Publish Article</button>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+    // 🔥 Replace with your Firebase config
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    document.getElementById("uploadBtn").addEventListener("click", async () => {
+      const title = document.getElementById("title").value.trim();
+      const content = document.getElementById("content").value.trim();
+      const topic = document.getElementById("topic").value;
+
+      if (!title || !content) {
+        alert("Please fill all fields!");
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, "articles"), {
+          title,
+          content,
+          topic,
+          createdAt: serverTimestamp()
+        });
+        alert("✅ Article uploaded successfully!");
+        document.getElementById("title").value = "";
+        document.getElementById("content").value = "";
+      } catch (error) {
+        alert("❌ Error uploading article: " + error.message);
+      }
+    });
+  </script>
+
+</body>
+</html>
