@@ -138,6 +138,8 @@
             justify-content: center;
             color: white;
             font-weight: bold;
+            background-size: cover;
+            background-position: center;
         }
 
         .logout-btn {
@@ -151,6 +153,55 @@
         .logout-btn:hover {
             background-color: var(--accent-color);
             color: var(--primary-bg);
+        }
+
+        .create-article-btn {
+            background-color: var(--success-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        .create-article-btn:hover {
+            background-color: #27ae60;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background-color: var(--secondary-bg);
+            padding: 1rem;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            z-index: 99;
+        }
+
+        .mobile-nav.active {
+            display: block;
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .mobile-nav a {
+            color: var(--text-color);
+            padding: 0.5rem 0;
+            display: block;
         }
 
         /* Main Content Styles */
@@ -234,7 +285,7 @@
             color: var(--text-secondary);
         }
 
-        .form-group input {
+        .form-group input, .form-group textarea, .form-group select {
             width: 100%;
             padding: 0.8rem;
             background-color: var(--secondary-bg);
@@ -243,7 +294,7 @@
             color: var(--text-color);
         }
 
-        .form-group input:focus {
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
             border-color: var(--accent-color);
         }
 
@@ -473,6 +524,108 @@
             color: var(--warning-color);
         }
 
+        /* Create Article Page */
+        .create-article-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .create-article-card {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+        }
+
+        .create-article-card h2 {
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .form-group-full {
+            margin-bottom: 1rem;
+        }
+
+        .form-group-full label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .form-group-full textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--secondary-bg);
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: var(--text-color);
+            resize: vertical;
+            min-height: 200px;
+        }
+
+        .form-group-full textarea:focus {
+            border-color: var(--accent-color);
+        }
+
+        .tags-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag {
+            background-color: var(--secondary-bg);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tag-remove {
+            cursor: pointer;
+            color: var(--error-color);
+        }
+
+        .tag-input {
+            flex: 1;
+            min-width: 100px;
+            padding: 0.3rem;
+            background-color: transparent;
+            border: none;
+            color: var(--text-color);
+        }
+
+        .tag-input:focus {
+            outline: none;
+        }
+
+        .publish-btn {
+            background-color: var(--success-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .publish-btn:hover {
+            background-color: #27ae60;
+        }
+
         /* About Page */
         .about-content {
             display: flex;
@@ -497,6 +650,8 @@
             font-size: 4rem;
             color: var(--accent-color);
             flex-shrink: 0;
+            background-size: cover;
+            background-position: center;
         }
 
         .writer-details {
@@ -738,6 +893,25 @@
             color: white;
             font-size: 2rem;
             font-weight: bold;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .profile-avatar-upload {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: var(--accent-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.8rem;
         }
 
         .profile-details h2 {
@@ -936,6 +1110,8 @@
             justify-content: center;
             color: white;
             font-weight: bold;
+            background-size: cover;
+            background-position: center;
         }
 
         .user-details-small h4 {
@@ -1144,6 +1320,8 @@
             font-size: 1.5rem;
             font-weight: bold;
             margin: 0 auto 1rem;
+            background-size: cover;
+            background-position: center;
         }
 
         .suggestion-stats {
@@ -1261,6 +1439,11 @@
             border-radius: 4px;
         }
 
+        /* Profile Picture Upload */
+        .profile-picture-upload {
+            display: none;
+        }
+
         /* Responsive Styles */
         @media (max-width: 768px) {
             .header-content {
@@ -1269,7 +1452,11 @@
             }
 
             nav ul {
-                gap: 1rem;
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
             }
 
             .writer-info {
@@ -1311,6 +1498,21 @@
             .suggestions-grid {
                 grid-template-columns: 1fr;
             }
+
+            .user-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .follow-btn, .message-btn, .friend-btn {
+                margin-right: 0;
+                width: 100%;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
         }
     </style>
 </head>
@@ -1327,6 +1529,7 @@
                     <li><a href="#" class="nav-link" data-page="home">Home</a></li>
                     <li><a href="#" class="nav-link" data-page="about">About Us</a></li>
                     <li><a href="#" class="nav-link" data-page="articles">Articles</a></li>
+                    <li><a href="#" class="nav-link" data-page="create-article">Write</a></li>
                     <li class="nav-item-with-badge">
                         <a href="#" class="nav-link" data-page="connect">Connect</a>
                         <span class="notification-badge" id="messageNotification" style="display: none;">0</span>
@@ -1339,10 +1542,32 @@
                     <li><a href="#" class="nav-link" data-page="settings">Settings</a></li>
                 </ul>
             </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
             <div class="user-info" id="userInfo">
+                <button class="create-article-btn" id="createArticleBtn">Write</button>
                 <div class="user-avatar" id="userAvatar">U</div>
                 <button class="logout-btn" id="logoutBtn">Logout</button>
             </div>
+        </div>
+        <div class="mobile-nav" id="mobileNav">
+            <ul>
+                <li><a href="#" class="nav-link" data-page="home">Home</a></li>
+                <li><a href="#" class="nav-link" data-page="about">About Us</a></li>
+                <li><a href="#" class="nav-link" data-page="articles">Articles</a></li>
+                <li><a href="#" class="nav-link" data-page="create-article">Write</a></li>
+                <li class="nav-item-with-badge">
+                    <a href="#" class="nav-link" data-page="connect">Connect</a>
+                    <span class="notification-badge" id="mobileMessageNotification" style="display: none;">0</span>
+                </li>
+                <li class="nav-item-with-badge">
+                    <a href="#" class="nav-link" data-page="friends">Friends</a>
+                    <span class="notification-badge" id="mobileFriendRequestNotification" style="display: none;">0</span>
+                </li>
+                <li><a href="#" class="nav-link" data-page="profile">Profile</a></li>
+                <li><a href="#" class="nav-link" data-page="settings">Settings</a></li>
+            </ul>
         </div>
     </header>
 
@@ -1447,6 +1672,62 @@
             </div>
         </section>
 
+        <!-- Create Article Page -->
+        <section id="create-article" class="page">
+            <div class="container create-article-container">
+                <div class="create-article-card">
+                    <h2>Create New Article</h2>
+                    <form id="createArticleForm">
+                        <div class="form-group">
+                            <label for="articleTitle">Title</label>
+                            <input type="text" id="articleTitle" placeholder="Enter article title">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="articleCategory">Category</label>
+                                <select id="articleCategory">
+                                    <option value="">Select Category</option>
+                                    <option value="Technology">Technology</option>
+                                    <option value="Lifestyle">Lifestyle</option>
+                                    <option value="Travel">Travel</option>
+                                    <option value="Food">Food</option>
+                                    <option value="Health">Health</option>
+                                    <option value="Business">Business</option>
+                                    <option value="Entertainment">Entertainment</option>
+                                    <option value="Science">Science</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="articleImage">Featured Image URL</label>
+                                <input type="text" id="articleImage" placeholder="Enter image URL">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="articleExcerpt">Excerpt</label>
+                            <textarea id="articleExcerpt" placeholder="Brief description of your article" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-group-full">
+                            <label for="articleContent">Content</label>
+                            <textarea id="articleContent" placeholder="Write your article content here..." rows="15"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="articleTags">Tags</label>
+                            <div class="tags-input" id="tagsContainer">
+                                <input type="text" id="articleTags" class="tag-input" placeholder="Add tags...">
+                            </div>
+                            <div id="tagsList" class="tags-input"></div>
+                        </div>
+                        
+                        <button type="submit" class="publish-btn">Publish Article</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
         <!-- About Us Page -->
         <section id="about" class="page">
             <div class="container">
@@ -1454,26 +1735,15 @@
                 <div class="about-content">
                     <div class="writer-info">
                         <div class="writer-photo">
-                            <i class="fas fa-user"></i>
+                             <img src="image/rabi.jpg" alt="Description of image" width="250" height="250">
                         </div>
                         <div class="writer-details">
                             <h2>Rabi</h2>
-                            <p>Rabi is a passionate writer and content creator with over 5 years of experience in the blogging industry. With a background in literature and digital marketing, Rabi brings a unique perspective to every piece of content.</p>
+                            <p>Rabi is a passionate writer and content creator with over 1 years of experience in the blogging industry. With a background in arts and digital marketing, Rabi brings a unique perspective to every piece of content.</p>
                             <p>When not writing, Rabi enjoys photography, hiking, and exploring new coffee shops around the city. The goal is to create a community where ideas can be shared freely and creativity can flourish.</p>
                             <p>Through BlogHub, Rabi hopes to inspire others to share their stories and connect with a global audience of readers and writers.</p>
-                            <div class="social-links-about">
-                                <a href="#" class="social-link-about">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                                <a href="#" class="social-link-about">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a>
-                                <a href="https://www.youtube.com/@Why-o2j" class="social-link-about" target="_blank">
-                                    <i class="fab fa-youtube"></i>
-                                </a>
-                                <a href="#" class="social-link-about">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
+                            
+                                
                             </div>
                         </div>
                     </div>
@@ -1637,7 +1907,13 @@
             <div class="container">
                 <div class="profile-card">
                     <div class="profile-header">
-                        <div class="profile-avatar" id="profileAvatar">U</div>
+                        <div class="profile-avatar" id="profileAvatar">
+                            U
+                            <div class="profile-avatar-upload" id="profileAvatarUpload">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <input type="file" id="profilePictureUpload" class="profile-picture-upload" accept="image/*">
+                        </div>
                         <div class="profile-details">
                             <h2 id="profileName">User Name</h2>
                             <p id="profileEmail">user@example.com</p>
@@ -1685,6 +1961,41 @@
             <div class="container">
                 <div class="settings-card">
                     <h2 class="section-title">Settings</h2>
+                    
+                    <div class="settings-group">
+                        <h3>Personal Information</h3>
+                        <div class="form-group">
+                            <label for="settingsName">Full Name</label>
+                            <input type="text" id="settingsName" placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="settingsEmail">Email</label>
+                            <input type="email" id="settingsEmail" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="settingsBio">Bio</label>
+                            <textarea id="settingsBio" placeholder="Tell us about yourself" rows="3"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-group">
+                        <h3>Profile Picture</h3>
+                        <div class="form-group">
+                            <label for="settingsProfilePicture">Upload Profile Picture</label>
+                            <input type="file" id="settingsProfilePicture" accept="image/*">
+                        </div>
+                    </div>
+                    
+                    <div class="settings-group">
+                        <h3>Theme</h3>
+                        <div class="setting-item">
+                            <span>Dark Mode</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
                     
                     <div class="settings-group">
                         <h3>Account Settings</h3>
@@ -1736,29 +2047,7 @@
                         </div>
                     </div>
                     
-                    <div class="settings-group">
-                        <h3>Theme</h3>
-                        <div class="setting-item">
-                            <span>Dark Mode</span>
-                            <label class="toggle-switch">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="settings-group">
-                        <h3>Profile Information</h3>
-                        <div class="form-group">
-                            <label for="settingsName">Full Name</label>
-                            <input type="text" id="settingsName" placeholder="Enter your full name">
-                        </div>
-                        <div class="form-group">
-                            <label for="settingsBio">Bio</label>
-                            <textarea id="settingsBio" placeholder="Tell us about yourself" rows="3"></textarea>
-                        </div>
-                        <button class="auth-btn" id="saveProfileBtn">Save Changes</button>
-                    </div>
+                    <button class="auth-btn" id="saveProfileBtn">Save Changes</button>
                     
                     <div class="logout-section">
                         <button class="logout-btn-settings" id="logoutBtnSettings">Logout</button>
@@ -1772,18 +2061,16 @@
     <footer>
         <div class="container footer-content">
             <div class="social-links">
-                <a href="#" class="social-link">
+                <a href="https://www.instagram.com/bloghub7/" class="social-link">
                     <i class="fab fa-instagram"></i>
                 </a>
-                <a href="#" class="social-link">
+                <a href="https://www.facebook.com/profile.php?id=61573912779133" class="social-link">
                     <i class="fab fa-facebook-f"></i>
                 </a>
                 <a href="https://www.youtube.com/@Why-o2j" class="social-link" target="_blank">
                     <i class="fab fa-youtube"></i>
                 </a>
-                <a href="#" class="social-link">
-                    <i class="fab fa-twitter"></i>
-                </a>
+                
             </div>
             <div class="copyright">
                 <p>&copy; 2023 BlogHub. All rights reserved.</p>
@@ -1802,7 +2089,8 @@
             GoogleAuthProvider,
             FacebookAuthProvider,
             onAuthStateChanged,
-            signOut
+            signOut,
+            updateProfile
         } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
         import { 
             getFirestore, 
@@ -1816,8 +2104,17 @@
             where,
             getDocs,
             onSnapshot,
-            orderBy
+            orderBy,
+            serverTimestamp,
+            deleteDoc,
+            increment
         } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+        import { 
+            getStorage,
+            ref,
+            uploadBytes,
+            getDownloadURL
+        } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-storage.js";
 
         // Firebase Configuration
         const firebaseConfig = {
@@ -1833,12 +2130,14 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        const storage = getStorage(app);
 
         // DOM Elements
         const authPage = document.getElementById('auth');
         const homePage = document.getElementById('home');
         const aboutPage = document.getElementById('about');
         const articlesPage = document.getElementById('articles');
+        const createArticlePage = document.getElementById('create-article');
         const articleDetailPage = document.getElementById('article-detail');
         const connectPage = document.getElementById('connect');
         const friendsPage = document.getElementById('friends');
@@ -1847,6 +2146,9 @@
         const userInfo = document.getElementById('userInfo');
         const userAvatar = document.getElementById('userAvatar');
         const profileAvatar = document.getElementById('profileAvatar');
+        const profileAvatarUpload = document.getElementById('profileAvatarUpload');
+        const profilePictureUpload = document.getElementById('profilePictureUpload');
+        const settingsProfilePicture = document.getElementById('settingsProfilePicture');
         const profileName = document.getElementById('profileName');
         const profileEmail = document.getElementById('profileEmail');
         const profileBio = document.getElementById('profileBio');
@@ -1859,10 +2161,12 @@
         const profileMessageBtn = document.getElementById('profileMessageBtn');
         const logoutBtn = document.getElementById('logoutBtn');
         const logoutBtnSettings = document.getElementById('logoutBtnSettings');
+        const createArticleBtn = document.getElementById('createArticleBtn');
         const authTabs = document.querySelectorAll('.auth-tab');
         const authForms = document.querySelectorAll('.auth-form');
         const loginForm = document.getElementById('loginForm');
         const signupForm = document.getElementById('signupForm');
+        const createArticleForm = document.getElementById('createArticleForm');
         const googleLoginBtn = document.getElementById('googleLogin');
         const facebookLoginBtn = document.getElementById('facebookLogin');
         const navLinks = document.querySelectorAll('.nav-link');
@@ -1878,12 +2182,15 @@
         const chatUserAvatar = document.getElementById('chatUserAvatar');
         const saveProfileBtn = document.getElementById('saveProfileBtn');
         const settingsName = document.getElementById('settingsName');
+        const settingsEmail = document.getElementById('settingsEmail');
         const settingsBio = document.getElementById('settingsBio');
         const suggestionsSection = document.getElementById('suggestionsSection');
         const suggestionsGrid = document.getElementById('suggestionsGrid');
         const followedUsersGrid = document.getElementById('followedUsersGrid');
         const messageNotification = document.getElementById('messageNotification');
+        const mobileMessageNotification = document.getElementById('mobileMessageNotification');
         const friendRequestNotification = document.getElementById('friendRequestNotification');
+        const mobileFriendRequestNotification = document.getElementById('mobileFriendRequestNotification');
         const likeBtn = document.getElementById('likeBtn');
         const commentInput = document.getElementById('commentInput');
         const commentRating = document.getElementById('commentRating');
@@ -1894,117 +2201,15 @@
         const friendRequestsList = document.getElementById('friendRequestsList');
         const friendsGrid = document.getElementById('friendsGrid');
         const suggestedFriendsGrid = document.getElementById('suggestedFriendsGrid');
-
-        // Sample Articles Data
-        const articles = [
-            {
-                id: 1,
-                title: "The Future of Web Development",
-                excerpt: "Exploring the latest trends and technologies shaping the future of web development.",
-                author: "Rabi",
-                date: "May 15, 2023",
-                category: "Technology",
-                image: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                content: "<p><b>Web Development</b></p><p>Web development is the work involved in developing a intranet (a private network). website for the Internet ( World Wide Web). Web development can range from developing a simple single plain text to complex web applications, static page of electronic businesses, and social network services. A more comprehensive list of tasks to which Web development commonly refers, may include Web engineering, Web design, Web content development, client liaison, client-side/ network security configuration, and e-commerce development. </p><p>server-side scripting, Web server and Among Web professionals,'web Development' usually refers to the main non-design aspects of building Web sites: writing markup and coding.  Web development often utilizes content management systems (CMS) to simplify content changes and make them accessible with basic technical skills.</p><p>For larger organizations and businesses, Web development teams can consist of hundreds of people ( developers) and follow standard methods like Web. Agile methodologies while developing Web sites. Smaller organizations may only require a single permanent or contracting developer, or secondary assignment to related job positions such as a graphic designer or information systems technician. Web development may be a collaborative effort between departments rather than the domain of a designated department. There are three kinds of Web developer specialization: developer, and full-stack developer. Front-end developers are responsible for behavior and visuals that run in the user browser, while back-end developers deal with the servers. Since the commercialization of the Web, the industry has boomed and has become one of the most used technologies ever.</p><p> <b>Evolution of the World Wide Web and web development</b></p><p><b>Origin/ Web 1.0</b></p><p> Tim Berners-Lee </p>",
-                tags: ["Web Development", "Technology", "Future"],
-                rating: 4.5,
-                ratingCount: 12,
-                readCount: 245,
-                likeCount: 42,
-                commentCount: 8
-            },
-            {
-                id: 2,
-                title: "Sustainable Living Tips",
-                excerpt: "Practical ways to reduce your environmental footprint and live more sustainably.",
-                author: "Rabi",
-                date: "April 28, 2023",
-                category: "Lifestyle",
-                image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                content: "<p>Sustainable living is becoming increasingly important as we face environmental challenges. Here are practical tips to reduce your environmental footprint.</p><p>From reducing single-use plastics to conserving energy at home, small changes can make a big difference when adopted by many.</p><p>Consider growing your own vegetables, using public transportation, and supporting local businesses to further reduce your impact on the environment.</p>",
-                tags: ["Sustainability", "Environment", "Lifestyle"],
-                rating: 4.2,
-                ratingCount: 8,
-                readCount: 189,
-                likeCount: 31,
-                commentCount: 5
-            },
-            {
-                id: 3,
-                title: "Minimalist Workspace Setup",
-                excerpt: "How to create a productive and clutter-free workspace that inspires creativity.",
-                author: "Rabi",
-                date: "April 12, 2023",
-                category: "Productivity",
-                image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                content: "<p>A minimalist workspace can significantly boost productivity and creativity by reducing distractions and creating a calm environment.</p><p>Start by decluttering your desk, keeping only the essentials. Invest in quality over quantity when it comes to office supplies and equipment.</p><p>Consider the ergonomics of your setup, proper lighting, and adding a touch of nature with plants to create an inspiring workspace.</p>",
-                tags: ["Minimalism", "Productivity", "Workspace"],
-                rating: 4.7,
-                ratingCount: 15,
-                readCount: 312,
-                likeCount: 56,
-                commentCount: 12
-            }
-        ];
-
-        // Sample Users for Connect Page
-        const users = [
-            {
-                id: 1,
-                name: "Alex Johnson",
-                email: "alex@example.com",
-                bio: "Passionate about technology and writing",
-                status: "Online",
-                followers: 245,
-                following: 128,
-                articles: 15
-            },
-            {
-                id: 2,
-                name: "Sarah Miller",
-                email: "sarah@example.com",
-                bio: "Travel enthusiast and food blogger",
-                status: "Online",
-                followers: 189,
-                following: 95,
-                articles: 12
-            },
-            {
-                id: 3,
-                name: "Michael Chen",
-                email: "michael@example.com",
-                bio: "Photographer and visual storyteller",
-                status: "Away",
-                followers: 312,
-                following: 201,
-                articles: 8
-            }
-        ];
-
-        // Sample Messages for Chat
-        const sampleMessages = [
-            {
-                id: 1,
-                sender: 1,
-                receiver: 0,
-                text: "Hi there! I really enjoyed your article on web development.",
-                timestamp: "2023-05-20T10:30:00"
-            },
-            {
-                id: 2,
-                sender: 0,
-                receiver: 1,
-                text: "Thank you! I'm glad you found it helpful. Are you working on any web projects currently?",
-                timestamp: "2023-05-20T10:32:00"
-            },
-            {
-                id: 3,
-                sender: 1,
-                receiver: 0,
-                text: "Yes, I'm building a portfolio website using React. Your tips on performance optimization were really useful.",
-                timestamp: "2023-05-20T10:35:00"
-            }
-        ];
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        const articleTitle = document.getElementById('articleTitle');
+        const articleCategory = document.getElementById('articleCategory');
+        const articleImage = document.getElementById('articleImage');
+        const articleExcerpt = document.getElementById('articleExcerpt');
+        const articleContent = document.getElementById('articleContent');
+        const articleTags = document.getElementById('articleTags');
+        const tagsList = document.getElementById('tagsList');
 
         // Current User and Selected Chat User
         let currentUser = null;
@@ -2016,6 +2221,11 @@
         let friendRequests = [];
         let unreadMessages = 0;
         let unreadFriendRequests = 0;
+        let allUsers = [];
+        let conversations = {};
+        let conversationListeners = {};
+        let articles = [];
+        let articleTagsArray = [];
 
         // Initialize the app
         function initApp() {
@@ -2033,6 +2243,8 @@
                     checkFirstTimeUser(user);
                     loadUnreadMessages(user);
                     loadUnreadFriendRequests(user);
+                    loadAllUsers();
+                    loadArticles();
                 } else {
                     // User is signed out
                     currentUser = null;
@@ -2043,15 +2255,29 @@
             // Set up event listeners
             setupEventListeners();
             
-            // Render articles
-            renderArticles();
-            
             // Render users for connect page
             renderUsers();
         }
 
         // Set up event listeners
         function setupEventListeners() {
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileNav.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileNav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                    mobileNav.classList.remove('active');
+                }
+            });
+
+            // Create article button
+            createArticleBtn.addEventListener('click', () => {
+                showPage('create-article');
+            });
+
             // Auth tab switching
             authTabs.forEach(tab => {
                 tab.addEventListener('click', () => {
@@ -2098,6 +2324,11 @@
                     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                     console.log('User signed up:', userCredential.user);
                     
+                    // Update profile with display name
+                    await updateProfile(userCredential.user, {
+                        displayName: name
+                    });
+                    
                     // Save additional user data to Firestore using modular syntax
                     await setDoc(doc(db, 'users', userCredential.user.uid), {
                         name: name,
@@ -2108,13 +2339,29 @@
                         followers: 0,
                         following: 0,
                         friends: 0,
-                        firstTimeUser: true
+                        firstTimeUser: true,
+                        profilePicture: ''
                     });
                     
                     console.log('User data saved to Firestore');
                 } catch (error) {
                     console.error('Signup error:', error);
                     alert('Signup failed: ' + error.message);
+                }
+            });
+
+            // Create article form submission
+            createArticleForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                await publishArticle();
+            });
+
+            // Tags input functionality
+            articleTags.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ',') {
+                    e.preventDefault();
+                    addTag(articleTags.value.trim());
+                    articleTags.value = '';
                 }
             });
 
@@ -2139,7 +2386,8 @@
                             followers: 0,
                             following: 0,
                             friends: 0,
-                            firstTimeUser: true
+                            firstTimeUser: true,
+                            profilePicture: result.user.photoURL || ''
                         });
                     }
                 } catch (error) {
@@ -2169,7 +2417,8 @@
                             followers: 0,
                             following: 0,
                             friends: 0,
-                            firstTimeUser: true
+                            firstTimeUser: true,
+                            profilePicture: result.user.photoURL || ''
                         });
                     }
                 } catch (error) {
@@ -2204,6 +2453,7 @@
                     e.preventDefault();
                     const page = link.getAttribute('data-page');
                     showPage(page);
+                    mobileNav.classList.remove('active');
                 });
             });
 
@@ -2223,19 +2473,45 @@
                 if (!currentUser) return;
                 
                 const name = settingsName.value;
+                const email = settingsEmail.value;
                 const bio = settingsBio.value;
                 
                 try {
+                    // Update auth profile
+                    await updateProfile(currentUser, {
+                        displayName: name
+                    });
+                    
+                    // Update Firestore
                     const userRef = doc(db, 'users', currentUser.uid);
                     await updateDoc(userRef, {
                         name: name,
+                        email: email,
                         bio: bio
                     });
+                    
+                    // Handle profile picture upload
+                    const profilePictureFile = settingsProfilePicture.files[0];
+                    if (profilePictureFile) {
+                        await uploadProfilePicture(profilePictureFile);
+                    }
+                    
                     alert('Profile updated successfully!');
                     loadUserProfile(currentUser);
                 } catch (error) {
                     console.error('Error updating profile:', error);
                     alert('Error updating profile: ' + error.message);
+                }
+            });
+
+            // Profile avatar upload
+            profileAvatarUpload.addEventListener('click', () => {
+                profilePictureUpload.click();
+            });
+            
+            profilePictureUpload.addEventListener('change', async (e) => {
+                if (e.target.files[0]) {
+                    await uploadProfilePicture(e.target.files[0]);
                 }
             });
 
@@ -2270,12 +2546,170 @@
             });
         }
 
+        // Add tag to article
+        function addTag(tagText) {
+            if (tagText && !articleTagsArray.includes(tagText)) {
+                articleTagsArray.push(tagText);
+                renderTags();
+            }
+        }
+
+        // Remove tag from article
+        function removeTag(tagText) {
+            articleTagsArray = articleTagsArray.filter(tag => tag !== tagText);
+            renderTags();
+        }
+
+        // Render tags
+        function renderTags() {
+            tagsList.innerHTML = '';
+            articleTagsArray.forEach(tag => {
+                const tagElement = document.createElement('div');
+                tagElement.className = 'tag';
+                tagElement.innerHTML = `
+                    ${tag}
+                    <span class="tag-remove" data-tag="${tag}">&times;</span>
+                `;
+                tagsList.appendChild(tagElement);
+            });
+
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.tag-remove').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const tag = e.target.getAttribute('data-tag');
+                    removeTag(tag);
+                });
+            });
+        }
+
+        // Publish article to Firebase
+        async function publishArticle() {
+            if (!currentUser) {
+                alert('Please log in to publish articles');
+                return;
+            }
+
+            const title = articleTitle.value.trim();
+            const category = articleCategory.value;
+            const image = articleImage.value.trim();
+            const excerpt = articleExcerpt.value.trim();
+            const content = articleContent.value.trim();
+            const tags = articleTagsArray;
+
+            if (!title || !category || !excerpt || !content) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            try {
+                // Create article in Firestore
+                const articleRef = await addDoc(collection(db, 'articles'), {
+                    title: title,
+                    category: category,
+                    image: image || 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                    excerpt: excerpt,
+                    content: content,
+                    tags: tags,
+                    authorId: currentUser.uid,
+                    authorName: currentUser.displayName || 'Anonymous',
+                    publishedAt: serverTimestamp(),
+                    readCount: 0,
+                    likeCount: 0,
+                    commentCount: 0,
+                    rating: 0,
+                    ratingCount: 0
+                });
+
+                // Update user's article count
+                const userRef = doc(db, 'users', currentUser.uid);
+                await updateDoc(userRef, {
+                    articles: increment(1)
+                });
+
+                // Clear form
+                createArticleForm.reset();
+                articleTagsArray = [];
+                renderTags();
+
+                alert('Article published successfully!');
+                showPage('articles');
+                
+                // Reload articles to show the new one
+                loadArticles();
+            } catch (error) {
+                console.error('Error publishing article:', error);
+                alert('Error publishing article: ' + error.message);
+            }
+        }
+
+        // Load articles from Firebase
+        async function loadArticles() {
+            try {
+                const articlesRef = collection(db, 'articles');
+                const q = query(articlesRef, orderBy('publishedAt', 'desc'));
+                const snapshot = await getDocs(q);
+                
+                articles = [];
+                snapshot.forEach(doc => {
+                    const articleData = doc.data();
+                    articles.push({
+                        id: doc.id,
+                        ...articleData,
+                        // Convert Firestore timestamp to Date
+                        date: articleData.publishedAt ? 
+                            articleData.publishedAt.toDate().toLocaleDateString() : 
+                            new Date().toLocaleDateString()
+                    });
+                });
+                
+                renderArticles();
+            } catch (error) {
+                console.error('Error loading articles:', error);
+            }
+        }
+
+        // Upload profile picture
+        async function uploadProfilePicture(file) {
+            if (!currentUser) return;
+            
+            try {
+                // Create a reference to the file location
+                const storageRef = ref(storage, `profile-pictures/${currentUser.uid}`);
+                
+                // Upload the file
+                const snapshot = await uploadBytes(storageRef, file);
+                
+                // Get the download URL
+                const downloadURL = await getDownloadURL(snapshot.ref);
+                
+                // Update user profile with the new photo URL
+                await updateProfile(currentUser, {
+                    photoURL: downloadURL
+                });
+                
+                // Update Firestore
+                const userRef = doc(db, 'users', currentUser.uid);
+                await updateDoc(userRef, {
+                    profilePicture: downloadURL
+                });
+                
+                // Update UI
+                updateUserInfo(currentUser);
+                
+                alert('Profile picture updated successfully!');
+            } catch (error) {
+                console.error('Error uploading profile picture:', error);
+                alert('Error uploading profile picture: ' + error.message);
+            }
+        }
+
         // Show authentication page
         function showAuthPage() {
             authPage.classList.add('active');
             homePage.classList.remove('active');
             aboutPage.classList.remove('active');
             articlesPage.classList.remove('active');
+            createArticlePage.classList.remove('active');
             articleDetailPage.classList.remove('active');
             connectPage.classList.remove('active');
             friendsPage.classList.remove('active');
@@ -2320,7 +2754,13 @@
                     profileFollowBtn.style.display = 'none';
                     profileFriendBtn.style.display = 'none';
                     profileMessageBtn.style.display = 'none';
+                    loadUserArticles(currentUser.uid);
                 }
+            }
+            
+            // If showing articles page, load all articles
+            if (pageName === 'articles') {
+                loadArticles();
             }
         }
 
@@ -2328,10 +2768,15 @@
         function updateUserInfo(user) {
             const displayName = user.displayName || 'User';
             const email = user.email || 'user@example.com';
+            const photoURL = user.photoURL || '';
             const firstLetter = displayName.charAt(0).toUpperCase();
             
-            userAvatar.textContent = firstLetter;
-            profileAvatar.textContent = firstLetter;
+            userAvatar.textContent = photoURL ? '' : firstLetter;
+            userAvatar.style.backgroundImage = photoURL ? `url(${photoURL})` : '';
+            
+            profileAvatar.textContent = photoURL ? '' : firstLetter;
+            profileAvatar.style.backgroundImage = photoURL ? `url(${photoURL})` : '';
+            
             profileName.textContent = displayName;
             profileEmail.textContent = email;
         }
@@ -2357,10 +2802,79 @@
                     
                     // Update settings form
                     settingsName.value = userData.name || user.displayName || '';
+                    settingsEmail.value = userData.email || user.email || '';
                     settingsBio.value = userData.bio || '';
+                    
+                    // Update profile picture if available
+                    if (userData.profilePicture) {
+                        userAvatar.style.backgroundImage = `url(${userData.profilePicture})`;
+                        userAvatar.textContent = '';
+                        profileAvatar.style.backgroundImage = `url(${userData.profilePicture})`;
+                        profileAvatar.textContent = '';
+                    }
                 }
             } catch (error) {
                 console.error('Error loading user profile:', error);
+            }
+        }
+
+        // Load user's articles
+        async function loadUserArticles(userId) {
+            try {
+                const articlesRef = collection(db, 'articles');
+                const q = query(articlesRef, where('authorId', '==', userId), orderBy('publishedAt', 'desc'));
+                const snapshot = await getDocs(q);
+                
+                const userArticles = [];
+                snapshot.forEach(doc => {
+                    const articleData = doc.data();
+                    userArticles.push({
+                        id: doc.id,
+                        ...articleData,
+                        date: articleData.publishedAt ? 
+                            articleData.publishedAt.toDate().toLocaleDateString() : 
+                            new Date().toLocaleDateString()
+                    });
+                });
+                
+                renderUserArticles(userArticles);
+            } catch (error) {
+                console.error('Error loading user articles:', error);
+            }
+        }
+
+        // Render user's articles
+        function renderUserArticles(userArticles) {
+            profileArticlesGrid.innerHTML = '';
+            
+            if (userArticles.length === 0) {
+                profileArticlesGrid.innerHTML = '<p>No articles published yet.</p>';
+                return;
+            }
+            
+            userArticles.forEach(article => {
+                profileArticlesGrid.appendChild(createArticleCard(article));
+            });
+        }
+
+        // Load all users from Firestore
+        async function loadAllUsers() {
+            try {
+                const usersRef = collection(db, 'users');
+                const snapshot = await getDocs(usersRef);
+                allUsers = [];
+                snapshot.forEach(doc => {
+                    if (doc.id !== currentUser.uid) {
+                        allUsers.push({
+                            id: doc.id,
+                            ...doc.data()
+                        });
+                    }
+                });
+                renderUsers();
+                renderUserSuggestions();
+            } catch (error) {
+                console.error('Error loading users:', error);
             }
         }
 
@@ -2445,8 +2959,78 @@
             }
         }
 
+        // Follow user - MODULAR VERSION
+        async function followUser(userId) {
+            if (!currentUser) return;
+            
+            try {
+                // Add to following list
+                await setDoc(doc(db, 'users', currentUser.uid, 'following', userId), {
+                    timestamp: serverTimestamp()
+                });
+                
+                // Add to user's followers list
+                await setDoc(doc(db, 'users', userId, 'followers', currentUser.uid), {
+                    timestamp: serverTimestamp()
+                });
+                
+                // Update userFollowing array
+                userFollowing.push(userId);
+                
+                // Update UI
+                const followBtn = document.querySelector(`.follow-btn[data-id="${userId}"]`);
+                if (followBtn) {
+                    followBtn.textContent = 'Following';
+                    followBtn.classList.add('following');
+                }
+                
+                // Show success message
+                alert('You are now following this user!');
+            } catch (error) {
+                console.error('Error following user:', error);
+                alert('Error following user: ' + error.message);
+            }
+        }
+
+        // Unfollow user - MODULAR VERSION
+        async function unfollowUser(userId) {
+            if (!currentUser) return;
+            
+            try {
+                // Remove from following list
+                await deleteDoc(doc(db, 'users', currentUser.uid, 'following', userId));
+                
+                // Remove from user's followers list
+                await deleteDoc(doc(db, 'users', userId, 'followers', currentUser.uid));
+                
+                // Update userFollowing array
+                const index = userFollowing.indexOf(userId);
+                if (index > -1) {
+                    userFollowing.splice(index, 1);
+                }
+                
+                // Update UI
+                const followBtn = document.querySelector(`.follow-btn[data-id="${userId}"]`);
+                if (followBtn) {
+                    followBtn.textContent = 'Follow';
+                    followBtn.classList.remove('following');
+                }
+                
+                // Show success message
+                alert('You have unfollowed this user.');
+            } catch (error) {
+                console.error('Error unfollowing user:', error);
+                alert('Error unfollowing user: ' + error.message);
+            }
+        }
+
         // Enhanced messaging system - MODULAR VERSION
         function setupRealTimeMessages(conversationId) {
+            // Remove existing listener if any
+            if (conversationListeners[conversationId]) {
+                conversationListeners[conversationId]();
+            }
+            
             const messagesRef = collection(db, "messages");
             const q = query(messagesRef, 
                 where("conversationId", "==", conversationId),
@@ -2454,10 +3038,19 @@
             );
 
             // Real-time listener for messages
-            onSnapshot(q, (snapshot) => {
-                const messages = snapshot.docs.map(doc => doc.data());
+            const unsubscribe = onSnapshot(q, (snapshot) => {
+                const messages = [];
+                snapshot.forEach(doc => {
+                    messages.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
                 displayMessages(messages);
             });
+            
+            // Store the unsubscribe function
+            conversationListeners[conversationId] = unsubscribe;
         }
 
         async function sendMessageToFirestore(text, conversationId) {
@@ -2468,11 +3061,16 @@
                     conversationId: conversationId,
                     senderUid: currentUser.uid,
                     message: text,
-                    timestamp: Date.now()
+                    timestamp: serverTimestamp()
                 });
             } catch (error) {
                 console.error("Error sending message:", error);
             }
+        }
+
+        // Get or create conversation ID
+        function getConversationId(user1, user2) {
+            return [user1, user2].sort().join('_');
         }
 
         // Check if user is first-time user and show suggestions
@@ -2495,7 +3093,7 @@
         function loadUnreadFriendRequests(user) {
             // In a real app, you would query Firestore for unread friend requests
             // For this demo, we'll use a simulated count
-            unreadFriendRequests = 2; // Simulated unread friend requests
+            unreadFriendRequests = friendRequests.length;
             updateFriendRequestNotification();
         }
 
@@ -2504,8 +3102,11 @@
             if (unreadMessages > 0) {
                 messageNotification.textContent = unreadMessages;
                 messageNotification.style.display = 'flex';
+                mobileMessageNotification.textContent = unreadMessages;
+                mobileMessageNotification.style.display = 'flex';
             } else {
                 messageNotification.style.display = 'none';
+                mobileMessageNotification.style.display = 'none';
             }
         }
 
@@ -2514,8 +3115,11 @@
             if (unreadFriendRequests > 0) {
                 friendRequestNotification.textContent = unreadFriendRequests;
                 friendRequestNotification.style.display = 'flex';
+                mobileFriendRequestNotification.textContent = unreadFriendRequests;
+                mobileFriendRequestNotification.style.display = 'flex';
             } else {
                 friendRequestNotification.style.display = 'none';
+                mobileFriendRequestNotification.style.display = 'none';
             }
         }
 
@@ -2524,7 +3128,6 @@
             // Clear existing articles
             featuredArticlesGrid.innerHTML = '';
             allArticlesGrid.innerHTML = '';
-            profileArticlesGrid.innerHTML = '';
             
             // Render featured articles (first 3)
             articles.slice(0, 3).forEach(article => {
@@ -2534,11 +3137,6 @@
             // Render all articles
             articles.forEach(article => {
                 allArticlesGrid.appendChild(createArticleCard(article));
-            });
-            
-            // Render user's articles (first 3 for demo)
-            articles.slice(0, 3).forEach(article => {
-                profileArticlesGrid.appendChild(createArticleCard(article));
             });
         }
 
@@ -2552,28 +3150,28 @@
                 <div class="article-content">
                     <h3>${article.title}</h3>
                     <div class="article-meta">
-                        <span>${article.author}</span>
+                        <span>${article.authorName}</span>
                         <span>${article.date}</span>
                     </div>
                     <p class="article-excerpt">${article.excerpt}</p>
                     <div class="engagement-metrics">
                         <div class="metric">
-                            <div class="metric-value">${article.readCount}</div>
+                            <div class="metric-value">${article.readCount || 0}</div>
                             <div class="metric-label">Reads</div>
                         </div>
                         <div class="metric">
-                            <div class="metric-value">${article.likeCount}</div>
+                            <div class="metric-value">${article.likeCount || 0}</div>
                             <div class="metric-label">Likes</div>
                         </div>
                         <div class="metric">
-                            <div class="metric-value">${article.commentCount}</div>
+                            <div class="metric-value">${article.commentCount || 0}</div>
                             <div class="metric-label">Comments</div>
                         </div>
                     </div>
                     <div class="article-actions">
                         <a href="#" class="read-more" data-id="${article.id}">Read More <i class="fas fa-arrow-right"></i></a>
                         <div class="rating">
-                            ${createRatingStars(article.rating)}
+                            ${createRatingStars(article.rating || 0)}
                         </div>
                     </div>
                 </div>
@@ -2613,38 +3211,40 @@
 
         // Show article detail
         function showArticleDetail(articleId) {
-            const article = articles.find(a => a.id === parseInt(articleId));
+            const article = articles.find(a => a.id === articleId);
             if (!article) return;
             
             currentArticleId = articleId;
             
             // Update article detail page
             document.getElementById('detailTitle').textContent = article.title;
-            document.getElementById('detailAuthor').textContent = article.author;
+            document.getElementById('detailAuthor').textContent = article.authorName;
             document.getElementById('detailDate').textContent = article.date;
             document.getElementById('detailCategory').textContent = article.category;
             document.getElementById('detailImage').style.backgroundImage = `url('${article.image}')`;
             document.getElementById('detailBody').innerHTML = article.content;
-            detailReadCount.textContent = article.readCount;
-            detailLikeCount.textContent = article.likeCount;
-            detailCommentCount.textContent = article.commentCount;
+            detailReadCount.textContent = article.readCount || 0;
+            detailLikeCount.textContent = article.likeCount || 0;
+            detailCommentCount.textContent = article.commentCount || 0;
             
             // Update tags
             const tagsContainer = document.getElementById('detailTags');
             tagsContainer.innerHTML = '';
-            article.tags.forEach(tag => {
-                const tagElement = document.createElement('span');
-                tagElement.className = 'tag';
-                tagElement.textContent = tag;
-                tagsContainer.appendChild(tagElement);
-            });
+            if (article.tags && article.tags.length > 0) {
+                article.tags.forEach(tag => {
+                    const tagElement = document.createElement('span');
+                    tagElement.className = 'tag';
+                    tagElement.textContent = tag;
+                    tagsContainer.appendChild(tagElement);
+                });
+            }
             
             // Update rating
             const ratingContainer = document.getElementById('detailRating');
-            ratingContainer.innerHTML = createRatingStars(article.rating);
+            ratingContainer.innerHTML = createRatingStars(article.rating || 0);
             
             // Update rating count
-            document.getElementById('detailRatingCount').textContent = `(${article.ratingCount} ratings)`;
+            document.getElementById('detailRatingCount').textContent = `(${article.ratingCount || 0} ratings)`;
             
             // Reset comment rating
             setCommentRating(0);
@@ -2654,6 +3254,21 @@
             
             // Load comments
             loadComments(articleId);
+            
+            // Increment read count
+            incrementReadCount(articleId);
+        }
+
+        // Increment article read count
+        async function incrementReadCount(articleId) {
+            try {
+                const articleRef = doc(db, 'articles', articleId);
+                await updateDoc(articleRef, {
+                    readCount: increment(1)
+                });
+            } catch (error) {
+                console.error('Error incrementing read count:', error);
+            }
         }
 
         // Load comments for an article
@@ -2705,7 +3320,8 @@
             const filteredArticles = articles.filter(article => 
                 article.title.toLowerCase().includes(searchTerm) || 
                 article.excerpt.toLowerCase().includes(searchTerm) ||
-                article.category.toLowerCase().includes(searchTerm)
+                article.category.toLowerCase().includes(searchTerm) ||
+                (article.tags && article.tags.some(tag => tag.toLowerCase().includes(searchTerm)))
             );
             
             // Clear existing articles
@@ -2721,15 +3337,19 @@
         function renderUsers() {
             usersContainer.innerHTML = '';
             
-            users.forEach(user => {
+            allUsers.forEach(user => {
                 const userElement = document.createElement('div');
                 userElement.className = 'user-item';
                 userElement.setAttribute('data-id', user.id);
+                
+                const firstLetter = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+                const profilePicture = user.profilePicture || '';
+                
                 userElement.innerHTML = `
-                    <div class="user-avatar-small">${user.name.charAt(0)}</div>
+                    <div class="user-avatar-small" style="background-image: ${profilePicture ? `url(${profilePicture})` : ''}">${profilePicture ? '' : firstLetter}</div>
                     <div class="user-details-small">
-                        <h4>${user.name}</h4>
-                        <p>${user.bio}</p>
+                        <h4>${user.name || 'User'}</h4>
+                        <p>${user.bio || 'BlogHub user'}</p>
                     </div>
                 `;
                 
@@ -2746,24 +3366,32 @@
             suggestionsGrid.innerHTML = '';
             
             // Show first 4 users as suggestions
-            users.slice(0, 4).forEach(user => {
+            allUsers.slice(0, 4).forEach(user => {
+                const firstLetter = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+                const profilePicture = user.profilePicture || '';
+                const isFollowing = userFollowing.includes(user.id);
+                
                 const suggestionElement = document.createElement('div');
                 suggestionElement.className = 'suggestion-card';
                 suggestionElement.innerHTML = `
-                    <div class="suggestion-avatar">${user.name.charAt(0)}</div>
-                    <h4>${user.name}</h4>
-                    <p>${user.bio}</p>
+                    <div class="suggestion-avatar" style="background-image: ${profilePicture ? `url(${profilePicture})` : ''}">${profilePicture ? '' : firstLetter}</div>
+                    <h4>${user.name || 'User'}</h4>
+                    <p>${user.bio || 'BlogHub user'}</p>
                     <div class="suggestion-stats">
-                        <span>${user.followers} followers</span>
-                        <span>${user.articles} articles</span>
+                        <span>${user.followers || 0} followers</span>
+                        <span>${user.articles || 0} articles</span>
                     </div>
-                    <button class="follow-btn" data-id="${user.id}">Follow</button>
+                    <button class="follow-btn ${isFollowing ? 'following' : ''}" data-id="${user.id}">${isFollowing ? 'Following' : 'Follow'}</button>
                 `;
                 
                 const followBtn = suggestionElement.querySelector('.follow-btn');
                 followBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    followUser(user.id);
+                    if (isFollowing) {
+                        unfollowUser(user.id);
+                    } else {
+                        followUser(user.id);
+                    }
                 });
                 
                 suggestionsGrid.appendChild(suggestionElement);
@@ -2774,18 +3402,22 @@
         function renderFollowedUsers() {
             followedUsersGrid.innerHTML = '';
             
-            // In a real app, you would fetch the actual followed users
-            // For this demo, we'll use the first 3 users
-            users.slice(0, 3).forEach(user => {
+            // Filter followed users from allUsers
+            const followedUsers = allUsers.filter(user => userFollowing.includes(user.id));
+            
+            followedUsers.forEach(user => {
+                const firstLetter = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+                const profilePicture = user.profilePicture || '';
+                
                 const followedUserElement = document.createElement('div');
                 followedUserElement.className = 'suggestion-card';
                 followedUserElement.innerHTML = `
-                    <div class="suggestion-avatar">${user.name.charAt(0)}</div>
-                    <h4>${user.name}</h4>
-                    <p>${user.bio}</p>
+                    <div class="suggestion-avatar" style="background-image: ${profilePicture ? `url(${profilePicture})` : ''}">${profilePicture ? '' : firstLetter}</div>
+                    <h4>${user.name || 'User'}</h4>
+                    <p>${user.bio || 'BlogHub user'}</p>
                     <div class="suggestion-stats">
-                        <span>${user.followers} followers</span>
-                        <span>${user.articles} articles</span>
+                        <span>${user.followers || 0} followers</span>
+                        <span>${user.articles || 0} articles</span>
                     </div>
                     <div class="user-actions">
                         <button class="message-btn" data-id="${user.id}">Message</button>
@@ -2817,18 +3449,22 @@
         function renderFriends() {
             friendsGrid.innerHTML = '';
             
-            // In a real app, you would fetch the actual friends
-            // For this demo, we'll use the first 4 users
-            users.slice(0, 4).forEach(user => {
+            // Filter friends from allUsers
+            const friends = allUsers.filter(user => userFriends.includes(user.id));
+            
+            friends.forEach(user => {
+                const firstLetter = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+                const profilePicture = user.profilePicture || '';
+                
                 const friendElement = document.createElement('div');
                 friendElement.className = 'suggestion-card';
                 friendElement.innerHTML = `
-                    <div class="suggestion-avatar">${user.name.charAt(0)}</div>
-                    <h4>${user.name}</h4>
-                    <p>${user.bio}</p>
+                    <div class="suggestion-avatar" style="background-image: ${profilePicture ? `url(${profilePicture})` : ''}">${profilePicture ? '' : firstLetter}</div>
+                    <h4>${user.name || 'User'}</h4>
+                    <p>${user.bio || 'BlogHub user'}</p>
                     <div class="suggestion-stats">
-                        <span>${user.followers} followers</span>
-                        <span>${user.articles} articles</span>
+                        <span>${user.followers || 0} followers</span>
+                        <span>${user.articles || 0} articles</span>
                     </div>
                     <div class="user-actions">
                         <button class="message-btn" data-id="${user.id}">Message</button>
@@ -2860,18 +3496,25 @@
         function renderSuggestedFriends() {
             suggestedFriendsGrid.innerHTML = '';
             
-            // In a real app, you would fetch suggested friends based on mutual connections, interests, etc.
-            // For this demo, we'll use users 3-5
-            users.slice(2, 5).forEach(user => {
+            // Filter users who are not friends and not in pending requests
+            const suggestedFriends = allUsers.filter(user => 
+                !userFriends.includes(user.id) && 
+                !friendRequests.some(req => req.fromUid === user.id || req.toUid === user.id)
+            ).slice(0, 3);
+            
+            suggestedFriends.forEach(user => {
+                const firstLetter = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+                const profilePicture = user.profilePicture || '';
+                
                 const suggestionElement = document.createElement('div');
                 suggestionElement.className = 'suggestion-card';
                 suggestionElement.innerHTML = `
-                    <div class="suggestion-avatar">${user.name.charAt(0)}</div>
-                    <h4>${user.name}</h4>
-                    <p>${user.bio}</p>
+                    <div class="suggestion-avatar" style="background-image: ${profilePicture ? `url(${profilePicture})` : ''}">${profilePicture ? '' : firstLetter}</div>
+                    <h4>${user.name || 'User'}</h4>
+                    <p>${user.bio || 'BlogHub user'}</p>
                     <div class="suggestion-stats">
-                        <span>${user.followers} followers</span>
-                        <span>${user.articles} articles</span>
+                        <span>${user.followers || 0} followers</span>
+                        <span>${user.articles || 0} articles</span>
                     </div>
                     <button class="friend-btn" data-id="${user.id}">Add Friend</button>
                 `;
@@ -2895,21 +3538,26 @@
                 return;
             }
             
-            // In a real app, you would fetch the actual user data for each request
-            // For this demo, we'll use sample data
             friendRequests.forEach(request => {
+                // Find the user who sent the request
+                const fromUser = allUsers.find(user => user.id === request.fromUid);
+                if (!fromUser) return;
+                
+                const firstLetter = fromUser.name ? fromUser.name.charAt(0).toUpperCase() : 'U';
+                const profilePicture = fromUser.profilePicture || '';
+                
                 const requestElement = document.createElement('div');
                 requestElement.className = 'friend-request-item';
                 requestElement.innerHTML = `
                     <div class="friend-request-info">
-                        <div class="user-avatar-small">U</div>
+                        <div class="user-avatar-small" style="background-image: ${profilePicture ? `url(${profilePicture})` : ''}">${profilePicture ? '' : firstLetter}</div>
                         <div>
-                            <h4>User ${request.fromUid}</h4>
+                            <h4>${fromUser.name || 'User'}</h4>
                             <p>Wants to be your friend</p>
                         </div>
                     </div>
                     <div class="friend-request-actions">
-                        <button class="accept-btn" data-id="${request.id}">Accept</button>
+                        <button class="accept-btn" data-id="${request.id}" data-userid="${fromUser.id}">Accept</button>
                         <button class="decline-btn" data-id="${request.id}">Decline</button>
                     </div>
                 `;
@@ -2917,7 +3565,7 @@
                 const acceptBtn = requestElement.querySelector('.accept-btn');
                 acceptBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    acceptFriendRequest(request.id, request.fromUid);
+                    acceptFriendRequest(request.id, fromUser.id);
                 });
                 
                 const declineBtn = requestElement.querySelector('.decline-btn');
@@ -2930,47 +3578,6 @@
             });
         }
 
-        // Follow a user
-        function followUser(userId) {
-            if (!currentUser) return;
-            
-            // In a real app, you would update Firestore
-            // For this demo, we'll update the UI immediately
-            userFollowing.push(userId.toString());
-            
-            // Update the follow button
-            const followBtn = document.querySelector(`.follow-btn[data-id="${userId}"]`);
-            if (followBtn) {
-                followBtn.textContent = 'Following';
-                followBtn.classList.add('following');
-            }
-            
-            // Show success message
-            alert('You are now following this user!');
-        }
-
-        // Unfollow a user
-        function unfollowUser(userId) {
-            if (!currentUser) return;
-            
-            // In a real app, you would update Firestore
-            // For this demo, we'll update the UI immediately
-            const index = userFollowing.indexOf(userId.toString());
-            if (index > -1) {
-                userFollowing.splice(index, 1);
-            }
-            
-            // Update the follow button
-            const followBtn = document.querySelector(`.follow-btn[data-id="${userId}"]`);
-            if (followBtn) {
-                followBtn.textContent = 'Follow';
-                followBtn.classList.remove('following');
-            }
-            
-            // Show success message
-            alert('You have unfollowed this user.');
-        }
-
         // Toggle follow status
         function toggleFollow() {
             if (!currentUser) {
@@ -2979,7 +3586,7 @@
             }
             
             const userId = selectedChatUser.id;
-            const isFollowing = userFollowing.includes(userId.toString());
+            const isFollowing = userFollowing.includes(userId);
             
             if (isFollowing) {
                 unfollowUser(userId);
@@ -2989,62 +3596,98 @@
         }
 
         // Accept friend request
-        function acceptFriendRequest(requestId, fromUid) {
-            // In a real app, you would update Firestore
-            // For this demo, we'll update the UI immediately
-            userFriends.push(fromUid);
-            
-            // Remove from friend requests
-            const index = friendRequests.findIndex(req => req.id === requestId);
-            if (index > -1) {
-                friendRequests.splice(index, 1);
+        async function acceptFriendRequest(requestId, fromUid) {
+            try {
+                // Update friend request status
+                await updateDoc(doc(db, 'friendRequests', requestId), {
+                    status: 'accepted'
+                });
+                
+                // Add to current user's friends
+                await setDoc(doc(db, 'users', currentUser.uid, 'friends', fromUid), {
+                    timestamp: serverTimestamp()
+                });
+                
+                // Add to requester's friends
+                await setDoc(doc(db, 'users', fromUid, 'friends', currentUser.uid), {
+                    timestamp: serverTimestamp()
+                });
+                
+                // Update local arrays
+                userFriends.push(fromUid);
+                
+                // Remove from friend requests
+                const index = friendRequests.findIndex(req => req.id === requestId);
+                if (index > -1) {
+                    friendRequests.splice(index, 1);
+                }
+                
+                // Update UI
+                renderFriendRequests();
+                unreadFriendRequests--;
+                updateFriendRequestNotification();
+                
+                // Show success message
+                alert('Friend request accepted!');
+            } catch (error) {
+                console.error('Error accepting friend request:', error);
+                alert('Error accepting friend request: ' + error.message);
             }
-            
-            // Update UI
-            renderFriendRequests();
-            unreadFriendRequests--;
-            updateFriendRequestNotification();
-            
-            // Show success message
-            alert('Friend request accepted!');
         }
 
         // Decline friend request
-        function declineFriendRequest(requestId) {
-            // In a real app, you would update Firestore
-            // For this demo, we'll update the UI immediately
-            
-            // Remove from friend requests
-            const index = friendRequests.findIndex(req => req.id === requestId);
-            if (index > -1) {
-                friendRequests.splice(index, 1);
+        async function declineFriendRequest(requestId) {
+            try {
+                // Update friend request status
+                await updateDoc(doc(db, 'friendRequests', requestId), {
+                    status: 'declined'
+                });
+                
+                // Remove from friend requests
+                const index = friendRequests.findIndex(req => req.id === requestId);
+                if (index > -1) {
+                    friendRequests.splice(index, 1);
+                }
+                
+                // Update UI
+                renderFriendRequests();
+                unreadFriendRequests--;
+                updateFriendRequestNotification();
+                
+                // Show success message
+                alert('Friend request declined.');
+            } catch (error) {
+                console.error('Error declining friend request:', error);
+                alert('Error declining friend request: ' + error.message);
             }
-            
-            // Update UI
-            renderFriendRequests();
-            unreadFriendRequests--;
-            updateFriendRequestNotification();
-            
-            // Show success message
-            alert('Friend request declined.');
         }
 
         // Unfriend a user
-        function unfriendUser(userId) {
+        async function unfriendUser(userId) {
             if (!currentUser) return;
             
-            // In a real app, you would update Firestore
-            // For this demo, we'll update the UI immediately
-            const index = userFriends.indexOf(userId.toString());
-            if (index > -1) {
-                userFriends.splice(index, 1);
+            try {
+                // Remove from current user's friends
+                await deleteDoc(doc(db, 'users', currentUser.uid, 'friends', userId));
+                
+                // Remove from user's friends
+                await deleteDoc(doc(db, 'users', userId, 'friends', currentUser.uid));
+                
+                // Update local array
+                const index = userFriends.indexOf(userId);
+                if (index > -1) {
+                    userFriends.splice(index, 1);
+                }
+                
+                // Update UI
+                renderFriends();
+                
+                // Show success message
+                alert('You have unfriended this user.');
+            } catch (error) {
+                console.error('Error unfriending user:', error);
+                alert('Error unfriending user: ' + error.message);
             }
-            
-            // Update UI
-            renderFriends();
-            
-            // Show success message
-            alert('You have unfriended this user.');
         }
 
         // Toggle friend request
@@ -3055,7 +3698,7 @@
             }
             
             const userId = selectedChatUser.id;
-            const isFriend = userFriends.includes(userId.toString());
+            const isFriend = userFriends.includes(userId);
             
             if (isFriend) {
                 unfriendUser(userId);
@@ -3092,8 +3735,12 @@
             document.querySelector(`.user-item[data-id="${user.id}"]`).classList.add('active');
             
             // Update chat header
-            chatUserName.textContent = user.name;
-            chatUserAvatar.textContent = user.name.charAt(0);
+            chatUserName.textContent = user.name || 'User';
+            
+            const firstLetter = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+            const profilePicture = user.profilePicture || '';
+            chatUserAvatar.textContent = profilePicture ? '' : firstLetter;
+            chatUserAvatar.style.backgroundImage = profilePicture ? `url(${profilePicture})` : '';
             
             // Enable chat input
             chatInput.disabled = false;
@@ -3105,13 +3752,13 @@
             profileMessageBtn.style.display = 'inline-block';
             
             // Update follow button state
-            const isFollowing = userFollowing.includes(user.id.toString());
+            const isFollowing = userFollowing.includes(user.id);
             profileFollowBtn.textContent = isFollowing ? 'Following' : 'Follow';
             profileFollowBtn.classList.toggle('following', isFollowing);
             
             // Update friend button state
-            const isFriend = userFriends.includes(user.id.toString());
-            const hasRequest = false; // In a real app, you would check if there's a pending request
+            const isFriend = userFriends.includes(user.id);
+            const hasRequest = friendRequests.some(req => req.fromUid === user.id || req.toUid === user.id);
             profileFriendBtn.textContent = isFriend ? 'Unfriend' : (hasRequest ? 'Request Sent' : 'Add Friend');
             profileFriendBtn.classList.toggle('requested', hasRequest);
             
@@ -3124,18 +3771,39 @@
             // Clear chat messages
             chatMessages.innerHTML = '';
             
-            // In a real app, you would fetch messages from a database
-            // For this demo, we'll use sample messages
-            sampleMessages.forEach(message => {
+            // Get conversation ID
+            const conversationId = getConversationId(currentUser.uid, userId);
+            
+            // Set up real-time listener for messages
+            setupRealTimeMessages(conversationId);
+        }
+
+        // Display messages in the chat
+        function displayMessages(messages) {
+            // Clear chat messages
+            chatMessages.innerHTML = '';
+            
+            if (messages.length === 0) {
+                const defaultMessage = document.createElement('div');
+                defaultMessage.className = 'message';
+                defaultMessage.textContent = 'No messages yet. Start the conversation!';
+                defaultMessage.style.alignSelf = 'center';
+                defaultMessage.style.textAlign = 'center';
+                defaultMessage.style.width = 'auto';
+                chatMessages.appendChild(defaultMessage);
+                return;
+            }
+            
+            messages.forEach(message => {
                 const messageElement = document.createElement('div');
-                const isSent = message.sender === 0; // 0 represents current user
+                const isSent = message.senderUid === currentUser.uid;
                 messageElement.className = `message ${isSent ? 'sent' : 'received'}`;
                 
-                const timestamp = new Date(message.timestamp);
+                const timestamp = message.timestamp ? message.timestamp.toDate() : new Date();
                 const timeString = timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 
                 messageElement.innerHTML = `
-                    <div class="message-text">${message.text}</div>
+                    <div class="message-text">${message.message}</div>
                     <div class="message-time">${timeString}</div>
                 `;
                 
@@ -3147,33 +3815,19 @@
         }
 
         // Send message
-        function sendMessage() {
+        async function sendMessage() {
             if (!selectedChatUser || !chatInput.value.trim()) return;
             
             const messageText = chatInput.value.trim();
             
-            // Create message element
-            const messageElement = document.createElement('div');
-            messageElement.className = 'message sent';
+            // Get conversation ID
+            const conversationId = getConversationId(currentUser.uid, selectedChatUser.id);
             
-            const timestamp = new Date();
-            const timeString = timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            
-            messageElement.innerHTML = `
-                <div class="message-text">${messageText}</div>
-                <div class="message-time">${timeString}</div>
-            `;
-            
-            chatMessages.appendChild(messageElement);
+            // Send message to Firestore
+            await sendMessageToFirestore(messageText, conversationId);
             
             // Clear input
             chatInput.value = '';
-            
-            // Scroll to bottom
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            
-            // In a real app, you would save the message to a database
-            // and then update the UI when the other user responds
         }
 
         // Toggle like on article
@@ -3183,7 +3837,7 @@
                 return;
             }
             
-            const article = articles.find(a => a.id === parseInt(currentArticleId));
+            const article = articles.find(a => a.id === currentArticleId);
             if (!article) return;
             
             // In a real app, you would update Firestore
@@ -3263,7 +3917,7 @@
             commentsList.insertBefore(commentElement, commentsList.firstChild);
             
             // Update comment count
-            const article = articles.find(a => a.id === parseInt(currentArticleId));
+            const article = articles.find(a => a.id === currentArticleId);
             if (article) {
                 article.commentCount++;
                 detailCommentCount.textContent = article.commentCount;
