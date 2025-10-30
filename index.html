@@ -20,6 +20,8 @@
             --success-color: #2ecc71;
             --warning-color: #f39c12;
             --error-color: #e74c3c;
+            --border-radius: 8px;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         /* Reset & Base Styles */
@@ -235,8 +237,8 @@
         .auth-card {
             background-color: var(--card-bg);
             padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
             width: 100%;
             max-width: 450px;
             text-align: center;
@@ -361,7 +363,7 @@
             background: linear-gradient(rgba(10,10,26,0.8), rgba(10,10,26,0.8)), url('https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
             background-size: cover;
             background-position: center;
-            border-radius: 10px;
+            border-radius: var(--border-radius);
             margin-bottom: 2rem;
         }
 
@@ -410,7 +412,7 @@
         .quote-of-day {
             background-color: var(--card-bg);
             padding: 1.5rem;
-            border-radius: 8px;
+            border-radius: var(--border-radius);
             margin-bottom: 2rem;
             border-left: 4px solid var(--accent-color);
         }
@@ -456,9 +458,10 @@
 
         .article-card {
             background-color: var(--card-bg);
-            border-radius: 8px;
+            border-radius: var(--border-radius);
             overflow: hidden;
             transition: var(--transition);
+            box-shadow: var(--card-shadow);
         }
 
         .article-card:hover {
@@ -533,8 +536,8 @@
         .create-article-card {
             background-color: var(--card-bg);
             padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
         }
 
         .create-article-card h2 {
@@ -717,7 +720,7 @@
         /* Article Detail Page */
         .article-detail {
             background-color: var(--card-bg);
-            border-radius: 10px;
+            border-radius: var(--border-radius);
             padding: 2rem;
             margin-bottom: 2rem;
         }
@@ -744,7 +747,7 @@
             background-color: #333;
             background-size: cover;
             background-position: center;
-            border-radius: 8px;
+            border-radius: var(--border-radius);
             margin-bottom: 1.5rem;
         }
 
@@ -797,7 +800,7 @@
 
         .comments-section {
             background-color: var(--card-bg);
-            border-radius: 10px;
+            border-radius: var(--border-radius);
             padding: 2rem;
         }
 
@@ -843,7 +846,7 @@
         .comment {
             padding: 1rem;
             background-color: var(--secondary-bg);
-            border-radius: 8px;
+            border-radius: var(--border-radius);
         }
 
         .comment-header {
@@ -869,10 +872,11 @@
         /* Profile Page */
         .profile-card {
             background-color: var(--card-bg);
-            border-radius: 10px;
+            border-radius: var(--border-radius);
             padding: 2rem;
             max-width: 800px;
             margin: 0 auto;
+            box-shadow: var(--card-shadow);
         }
 
         .profile-header {
@@ -933,7 +937,7 @@
             text-align: center;
             padding: 1rem;
             background-color: var(--secondary-bg);
-            border-radius: 8px;
+            border-radius: var(--border-radius);
         }
 
         .stat-value {
@@ -951,7 +955,7 @@
             margin-bottom: 2rem;
             padding: 1rem;
             background-color: var(--secondary-bg);
-            border-radius: 8px;
+            border-radius: var(--border-radius);
         }
 
         .profile-bio h3 {
@@ -971,19 +975,29 @@
         /* Settings Page */
         .settings-card {
             background-color: var(--card-bg);
-            border-radius: 10px;
+            border-radius: var(--border-radius);
             padding: 2rem;
             max-width: 800px;
             margin: 0 auto;
+            box-shadow: var(--card-shadow);
         }
 
         .settings-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #333;
         }
 
         .settings-group h3 {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-group h3 i {
+            font-size: 1.2rem;
         }
 
         .setting-item {
@@ -991,11 +1005,24 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 0;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .setting-item:last-child {
             border-bottom: none;
+        }
+
+        .setting-item-label {
+            flex: 1;
+        }
+
+        .setting-item-label h4 {
+            margin-bottom: 0.3rem;
+        }
+
+        .setting-item-label p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
         }
 
         .toggle-switch {
@@ -1043,6 +1070,103 @@
             transform: translateX(26px);
         }
 
+        .color-picker {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .color-option.active {
+            border-color: white;
+            transform: scale(1.1);
+        }
+
+        .font-option {
+            padding: 8px 15px;
+            border-radius: 4px;
+            background-color: var(--secondary-bg);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .font-option.active {
+            border-color: var(--accent-color);
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+
+        .font-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .layout-options {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .layout-option {
+            flex: 1;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            background-color: var(--secondary-bg);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            text-align: center;
+        }
+
+        .layout-option.active {
+            border-color: var(--accent-color);
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+
+        .layout-option i {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .card-style-options {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .card-style-option {
+            flex: 1;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            background-color: var(--secondary-bg);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            text-align: center;
+        }
+
+        .card-style-option.active {
+            border-color: var(--accent-color);
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+
+        .card-style-option i {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
         .logout-section {
             margin-top: 2rem;
             padding-top: 2rem;
@@ -1061,196 +1185,41 @@
             background-color: #c0392b;
         }
 
-        /* Connect Page */
-        .connect-container {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 2rem;
-        }
-
-        .users-list {
-            background-color: var(--card-bg);
-            border-radius: 10px;
+        .danger-zone {
+            border: 1px solid var(--error-color);
+            border-radius: var(--border-radius);
             padding: 1.5rem;
-            max-height: 600px;
-            overflow-y: auto;
+            margin-top: 2rem;
         }
 
-        .users-list h3 {
+        .danger-zone h3 {
+            color: var(--error-color);
             margin-bottom: 1rem;
-            color: var(--accent-color);
         }
 
-        .user-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            border-radius: 8px;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .user-item:hover {
-            background-color: var(--secondary-bg);
-        }
-
-        .user-item.active {
-            background-color: var(--secondary-bg);
-            border-left: 3px solid var(--accent-color);
-        }
-
-        .user-avatar-small {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--accent-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .user-details-small h4 {
-            margin-bottom: 0.2rem;
-        }
-
-        .user-details-small p {
+        .danger-zone p {
             color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .chat-container {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            height: 600px;
-        }
-
-        .chat-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #333;
             margin-bottom: 1rem;
         }
 
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            margin-bottom: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .message {
-            padding: 0.8rem 1rem;
-            border-radius: 8px;
-            max-width: 70%;
-        }
-
-        .message.sent {
-            align-self: flex-end;
-            background-color: var(--accent-color);
-            color: white;
-        }
-
-        .message.received {
-            align-self: flex-start;
-            background-color: var(--secondary-bg);
-        }
-
-        .message-time {
-            font-size: 0.8rem;
-            margin-top: 0.3rem;
-            opacity: 0.7;
-        }
-
-        .chat-input {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .chat-input input {
-            flex: 1;
-            padding: 0.8rem;
-            background-color: var(--secondary-bg);
-            border: 1px solid #333;
-            border-radius: 4px;
-            color: var(--text-color);
-        }
-
-        .chat-send {
-            background-color: var(--accent-color);
+        .delete-account-btn {
+            background-color: var(--error-color);
             color: white;
             padding: 0.8rem 1.5rem;
             border-radius: 4px;
             font-weight: 600;
         }
 
-        .chat-send:hover {
-            background-color: var(--hover-color);
-        }
-
-        /* Footer Styles */
-        footer {
-            background-color: var(--secondary-bg);
-            padding: 2rem 0;
-            margin-top: 2rem;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .social-link {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--card-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-color);
-            transition: var(--transition);
-        }
-
-        .social-link:hover {
-            background-color: var(--accent-color);
-            transform: translateY(-3px);
-        }
-
-        .copyright {
-            color: var(--text-secondary);
-            text-align: center;
-        }
-
-        /* New Styles for Enhanced Features */
-        .follow-btn, .message-btn, .friend-btn {
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-weight: 500;
-            margin-right: 0.5rem;
+        .delete-account-btn:hover {
+            background-color: #c0392b;
         }
 
         .follow-btn {
             background-color: var(--accent-color);
             color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: 500;
         }
 
         .follow-btn:hover {
@@ -1261,33 +1230,10 @@
             background-color: var(--success-color);
         }
 
-        .message-btn {
-            background-color: transparent;
-            color: var(--text-color);
-            border: 1px solid var(--accent-color);
-        }
-
-        .message-btn:hover {
-            background-color: var(--accent-color);
-            color: white;
-        }
-
-        .friend-btn {
-            background-color: var(--warning-color);
-            color: white;
-        }
-
-        .friend-btn:hover {
-            background-color: #e67e22;
-        }
-
-        .friend-btn.requested {
-            background-color: var(--text-secondary);
-        }
-
         .user-actions {
             display: flex;
             margin-top: 1rem;
+            gap: 10px;
         }
 
         .suggestions-section {
@@ -1303,9 +1249,10 @@
 
         .suggestion-card {
             background-color: var(--card-bg);
-            border-radius: 8px;
+            border-radius: var(--border-radius);
             padding: 1.5rem;
             text-align: center;
+            box-shadow: var(--card-shadow);
         }
 
         .suggestion-avatar {
@@ -1374,74 +1321,49 @@
             font-size: 0.9rem;
         }
 
-        .notification-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: var(--error-color);
-            color: white;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            font-size: 0.7rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .profile-picture-upload {
+            display: none;
         }
 
-        .nav-item-with-badge {
-            position: relative;
-        }
-
-        /* Friend Requests Section */
-        .friend-requests-section {
+        /* Footer Styles */
+        footer {
+            background-color: var(--secondary-bg);
+            padding: 2rem 0;
             margin-top: 2rem;
         }
 
-        .friend-requests-list {
+        .footer-content {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
-            margin-top: 1rem;
+            align-items: center;
+            gap: 1.5rem;
         }
 
-        .friend-request-item {
+        .social-links {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem;
+            gap: 1.5rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             background-color: var(--card-bg);
-            border-radius: 8px;
-        }
-
-        .friend-request-info {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            justify-content: center;
+            color: var(--text-color);
+            transition: var(--transition);
         }
 
-        .friend-request-actions {
-            display: flex;
-            gap: 0.5rem;
+        .social-link:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
         }
 
-        .accept-btn {
-            background-color: var(--success-color);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-        }
-
-        .decline-btn {
-            background-color: var(--error-color);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-        }
-
-        /* Profile Picture Upload */
-        .profile-picture-upload {
-            display: none;
+        .copyright {
+            color: var(--text-secondary);
+            text-align: center;
         }
 
         /* Responsive Styles */
@@ -1487,14 +1409,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .connect-container {
-                grid-template-columns: 1fr;
-            }
-
-            .message {
-                max-width: 85%;
-            }
-
             .suggestions-grid {
                 grid-template-columns: 1fr;
             }
@@ -1504,14 +1418,100 @@
                 gap: 0.5rem;
             }
 
-            .follow-btn, .message-btn, .friend-btn {
-                margin-right: 0;
+            .follow-btn {
                 width: 100%;
             }
 
             .form-row {
                 flex-direction: column;
                 gap: 0;
+            }
+
+            .layout-options, .card-style-options {
+                flex-direction: column;
+            }
+
+            .font-options {
+                justify-content: center;
+            }
+
+            .color-picker {
+                justify-content: center;
+            }
+
+            .article-detail {
+                padding: 1rem;
+            }
+
+            .article-title {
+                font-size: 1.5rem;
+            }
+
+            .article-image {
+                height: 200px;
+            }
+
+            .article-actions-detail {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .rating-detail {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .comments-section {
+                padding: 1rem;
+            }
+
+            .settings-card {
+                padding: 1rem;
+            }
+
+            .setting-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .toggle-switch {
+                align-self: flex-end;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+            }
+
+            .hero {
+                padding: 2rem 1rem;
+            }
+
+            .categories {
+                justify-content: center;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .auth-card {
+                padding: 1.5rem;
+            }
+
+            .social-buttons {
+                flex-direction: column;
+            }
+
+            .profile-card {
+                padding: 1rem;
+            }
+
+            .create-article-card {
+                padding: 1.5rem;
             }
         }
     </style>
@@ -1530,14 +1530,6 @@
                     <li><a href="#" class="nav-link" data-page="about">About Us</a></li>
                     <li><a href="#" class="nav-link" data-page="articles">Articles</a></li>
                     <li><a href="#" class="nav-link" data-page="create-article">Write</a></li>
-                    <li class="nav-item-with-badge">
-                        <a href="#" class="nav-link" data-page="connect">Connect</a>
-                        <span class="notification-badge" id="messageNotification" style="display: none;">0</span>
-                    </li>
-                    <li class="nav-item-with-badge">
-                        <a href="#" class="nav-link" data-page="friends">Friends</a>
-                        <span class="notification-badge" id="friendRequestNotification" style="display: none;">0</span>
-                    </li>
                     <li><a href="#" class="nav-link" data-page="profile">Profile</a></li>
                     <li><a href="#" class="nav-link" data-page="settings">Settings</a></li>
                 </ul>
@@ -1557,14 +1549,6 @@
                 <li><a href="#" class="nav-link" data-page="about">About Us</a></li>
                 <li><a href="#" class="nav-link" data-page="articles">Articles</a></li>
                 <li><a href="#" class="nav-link" data-page="create-article">Write</a></li>
-                <li class="nav-item-with-badge">
-                    <a href="#" class="nav-link" data-page="connect">Connect</a>
-                    <span class="notification-badge" id="mobileMessageNotification" style="display: none;">0</span>
-                </li>
-                <li class="nav-item-with-badge">
-                    <a href="#" class="nav-link" data-page="friends">Friends</a>
-                    <span class="notification-badge" id="mobileFriendRequestNotification" style="display: none;">0</span>
-                </li>
                 <li><a href="#" class="nav-link" data-page="profile">Profile</a></li>
                 <li><a href="#" class="nav-link" data-page="settings">Settings</a></li>
             </ul>
@@ -1735,15 +1719,25 @@
                 <div class="about-content">
                     <div class="writer-info">
                         <div class="writer-photo">
-                             <img src="image/rabi.jpg" alt="Description of image" width="250" height="250">
+                            <img src="image/rabi.jpg" alt="Science image" width="250" height="250">
+
                         </div>
                         <div class="writer-details">
                             <h2>Rabi</h2>
-                            <p>Rabi is a passionate writer and content creator with over 1 years of experience in the blogging industry. With a background in arts and digital marketing, Rabi brings a unique perspective to every piece of content.</p>
+                            <p>Rabi is a passionate writer and content creator with over 1 years of experience in the blogging industry. With a background in UI/Ux design, graphics design, coding, and digital marketing, Rabi brings a unique perspective to every piece of content.</p>
                             <p>When not writing, Rabi enjoys photography, hiking, and exploring new coffee shops around the city. The goal is to create a community where ideas can be shared freely and creativity can flourish.</p>
                             <p>Through BlogHub, Rabi hopes to inspire others to share their stories and connect with a global audience of readers and writers.</p>
                             
-                                
+                            <div class="social-links-about">
+                                <a href="#" class="social-link-about">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="social-link-about">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <a href="#" class="social-link-about">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -1835,73 +1829,6 @@
             </div>
         </section>
 
-        <!-- Connect Page -->
-        <section id="connect" class="page">
-            <div class="container">
-                <h2 class="section-title">Connect with Readers</h2>
-                <div class="connect-container">
-                    <div class="users-list">
-                        <h3>Active Users</h3>
-                        <div class="users-container" id="usersContainer">
-                            <!-- Users will be dynamically loaded here -->
-                        </div>
-                    </div>
-                    <div class="chat-container">
-                        <div class="chat-header">
-                            <div class="user-avatar-small" id="chatUserAvatar">U</div>
-                            <div class="user-details-small">
-                                <h4 id="chatUserName">Select a user to chat</h4>
-                                <p id="chatUserStatus">Online</p>
-                            </div>
-                        </div>
-                        <div class="chat-messages" id="chatMessages">
-                            <!-- Messages will be dynamically loaded here -->
-                        </div>
-                        <div class="chat-input">
-                            <input type="text" id="chatInput" placeholder="Type a message..." disabled>
-                            <button class="chat-send" id="chatSend" disabled>Send</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Followed Users Section -->
-                <div class="suggestions-section" style="margin-top: 3rem;">
-                    <h2 class="section-title">People You Follow</h2>
-                    <div class="suggestions-grid" id="followedUsersGrid">
-                        <!-- Followed users will be dynamically loaded here -->
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Friends Page -->
-        <section id="friends" class="page">
-            <div class="container">
-                <h2 class="section-title">Friends</h2>
-                
-                <div class="friend-requests-section">
-                    <h3>Friend Requests</h3>
-                    <div class="friend-requests-list" id="friendRequestsList">
-                        <!-- Friend requests will be dynamically loaded here -->
-                    </div>
-                </div>
-                
-                <div class="suggestions-section">
-                    <h3>Your Friends</h3>
-                    <div class="suggestions-grid" id="friendsGrid">
-                        <!-- Friends will be dynamically loaded here -->
-                    </div>
-                </div>
-                
-                <div class="suggestions-section">
-                    <h3>Suggested Friends</h3>
-                    <div class="suggestions-grid" id="suggestedFriendsGrid">
-                        <!-- Suggested friends will be dynamically loaded here -->
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Profile Page -->
         <section id="profile" class="page">
             <div class="container">
@@ -1919,9 +1846,7 @@
                             <p id="profileEmail">user@example.com</p>
                             <p id="profileJoinDate">Member since January 2023</p>
                             <div class="user-actions">
-                                <button class="follow-btn" id="profileFollowBtn" style="display: none;">Follow</button>
-                                <button class="friend-btn" id="profileFriendBtn" style="display: none;">Add Friend</button>
-                                <button class="message-btn" id="profileMessageBtn" style="display: none;">Message</button>
+                                <button class="follow-btn" id="profileFollowBtn">Follow</button>
                             </div>
                         </div>
                     </div>
@@ -1962,89 +1887,398 @@
                 <div class="settings-card">
                     <h2 class="section-title">Settings</h2>
                     
+                    <!-- Account Settings -->
                     <div class="settings-group">
-                        <h3>Personal Information</h3>
+                        <h3><i class="fas fa-user-cog"></i> Account Settings</h3>
+                        
                         <div class="form-group">
-                            <label for="settingsName">Full Name</label>
-                            <input type="text" id="settingsName" placeholder="Enter your full name">
-                        </div>
-                        <div class="form-group">
-                            <label for="settingsEmail">Email</label>
-                            <input type="email" id="settingsEmail" placeholder="Enter your email">
-                        </div>
-                        <div class="form-group">
-                            <label for="settingsBio">Bio</label>
-                            <textarea id="settingsBio" placeholder="Tell us about yourself" rows="3"></textarea>
-                        </div>
-                    </div>
-                    
-                    <div class="settings-group">
-                        <h3>Profile Picture</h3>
-                        <div class="form-group">
-                            <label for="settingsProfilePicture">Upload Profile Picture</label>
+                            <label for="settingsProfilePicture">Profile Picture</label>
                             <input type="file" id="settingsProfilePicture" accept="image/*">
                         </div>
-                    </div>
-                    
-                    <div class="settings-group">
-                        <h3>Theme</h3>
+                        
+                        <div class="form-group">
+                            <label for="settingsName">Display Name</label>
+                            <input type="text" id="settingsName" placeholder="Enter your display name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="settingsBio">Bio/Description</label>
+                            <textarea id="settingsBio" placeholder="Tell us about yourself" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="settingsEmail">Email Address</label>
+                            <input type="email" id="settingsEmail" placeholder="Enter your email">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="settingsCurrentPassword">Current Password</label>
+                            <input type="password" id="settingsCurrentPassword" placeholder="Enter current password">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="settingsNewPassword">New Password</label>
+                            <input type="password" id="settingsNewPassword" placeholder="Enter new password">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="settingsConfirmPassword">Confirm New Password</label>
+                            <input type="password" id="settingsConfirmPassword" placeholder="Confirm new password">
+                        </div>
+                        
                         <div class="setting-item">
-                            <span>Dark Mode</span>
+                            <div class="setting-item-label">
+                                <h4>Two-Factor Authentication</h4>
+                                <p>Add an extra layer of security to your account</p>
+                            </div>
                             <label class="toggle-switch">
-                                <input type="checkbox" checked>
+                                <input type="checkbox" id="twoFactorToggle">
                                 <span class="slider"></span>
                             </label>
                         </div>
                     </div>
                     
+                    <!-- Blog Preferences -->
                     <div class="settings-group">
-                        <h3>Account Settings</h3>
+                        <h3><i class="fas fa-blog"></i> Blog Preferences</h3>
+                        
                         <div class="setting-item">
-                            <span>Email Notifications</span>
+                            <div class="setting-item-label">
+                                <h4>Default Blog Visibility</h4>
+                                <p>Set the default visibility for new blog posts</p>
+                            </div>
+                            <select id="blogVisibility">
+                                <option value="public">Public</option>
+                                <option value="private">Private</option>
+                                <option value="draft">Draft</option>
+                            </select>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-item-label">
+                                <h4>Allow Comments</h4>
+                                <p>Enable or disable comments on your posts</p>
+                            </div>
                             <label class="toggle-switch">
-                                <input type="checkbox" checked>
+                                <input type="checkbox" id="commentsToggle" checked>
                                 <span class="slider"></span>
                             </label>
                         </div>
+                        
                         <div class="setting-item">
-                            <span>Push Notifications</span>
+                            <div class="setting-item-label">
+                                <h4>Auto Save Drafts</h4>
+                                <p>Automatically save drafts while writing</p>
+                            </div>
                             <label class="toggle-switch">
-                                <input type="checkbox">
+                                <input type="checkbox" id="autoSaveToggle" checked>
                                 <span class="slider"></span>
                             </label>
                         </div>
+                        
                         <div class="setting-item">
-                            <span>Newsletter Subscription</span>
+                            <div class="setting-item-label">
+                                <h4>Post Sorting</h4>
+                                <p>Default view for your posts</p>
+                            </div>
+                            <select id="postSorting">
+                                <option value="latest">Latest</option>
+                                <option value="most-viewed">Most Viewed</option>
+                                <option value="trending">Trending</option>
+                            </select>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-item-label">
+                                <h4>Reading Time Display</h4>
+                                <p>Show estimated read time on posts</p>
+                            </div>
                             <label class="toggle-switch">
-                                <input type="checkbox" checked>
+                                <input type="checkbox" id="readingTimeToggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-item-label">
+                                <h4>Show Author Info</h4>
+                                <p>Display author card at the end of posts</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="authorInfoToggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-item-label">
+                                <h4>Enable Sharing Buttons</h4>
+                                <p>Show social sharing options on posts</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="sharingToggle" checked>
                                 <span class="slider"></span>
                             </label>
                         </div>
                     </div>
                     
+                    <!-- Appearance Settings -->
                     <div class="settings-group">
-                        <h3>Privacy</h3>
+                        <h3><i class="fas fa-palette"></i> Appearance Settings</h3>
+                        
                         <div class="setting-item">
-                            <span>Public Profile</span>
+                            <div class="setting-item-label">
+                                <h4>Theme Mode</h4>
+                                <p>Choose your preferred theme</p>
+                            </div>
+                            <select id="themeMode">
+                                <option value="dark">Dark</option>
+                                <option value="light">Light</option>
+                                <option value="system">System Default</option>
+                            </select>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-item-label">
+                                <h4>Accent Color</h4>
+                                <p>Choose your primary highlight color</p>
+                            </div>
+                            <div class="color-picker">
+                                <div class="color-option active" style="background-color: #3498db;" data-color="#3498db"></div>
+                                <div class="color-option" style="background-color: #e74c3c;" data-color="#e74c3c"></div>
+                                <div class="color-option" style="background-color: #2ecc71;" data-color="#2ecc71"></div>
+                                <div class="color-option" style="background-color: #f39c12;" data-color="#f39c12"></div>
+                                <div class="color-option" style="background-color: #9b59b6;" data-color="#9b59b6"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-item-label">
+                                <h4>Font Style</h4>
+                                <p>Select your preferred font family</p>
+                            </div>
+                            <div class="font-options">
+                                <div class="font-option active" data-font="Segoe UI, Tahoma, Geneva, Verdana, sans-serif">Default</div>
+                                <div class="font-option" data-font="Arial, Helvetica, sans-serif">Arial</div>
+                                <div class="font-option" data-font="Georgia, serif">Georgia</div>
+                                <div class="font-option" data-font="'Courier New', Courier, monospace">Courier</div>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-item-label">
+                                <h4>Layout Mode</h4>
+                                <p>Choose your preferred layout style</p>
+                            </div>
+                            <div class="layout-options">
+                                <div class="layout-option active" data-layout="full-width">
+                                    <i class="fas fa-arrows-alt-h"></i>
+                                    <span>Full Width</span>
+                                </div>
+                                <div class="layout-option" data-layout="boxed">
+                                    <i class="fas fa-square"></i>
+                                    <span>Boxed</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-item-label">
+                                <h4>Blog Card Style</h4>
+                                <p>Choose how your blog cards appear</p>
+                            </div>
+                            <div class="card-style-options">
+                                <div class="card-style-option active" data-style="minimal">
+                                    <i class="fas fa-th-large"></i>
+                                    <span>Minimal</span>
+                                </div>
+                                <div class="card-style-option" data-style="bordered">
+                                    <i class="fas fa-square"></i>
+                                    <span>Bordered</span>
+                                </div>
+                                <div class="card-style-option" data-style="image-focused">
+                                    <i class="fas fa-image"></i>
+                                    <span>Image Focused</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Notification Settings -->
+                    <div class="settings-group">
+                        <h3><i class="fas fa-bell"></i> Notification Settings</h3>
+                        
+                        <div class="setting-item">
+                            <div class="setting-item-label">
+                                <h4>New Follower Notification</h4>
+                                <p>Get notified when someone follows you</p>
+                            </div>
                             <label class="toggle-switch">
-                                <input type="checkbox" checked>
+                                <input type="checkbox" id="followerNotificationToggle" checked>
                                 <span class="slider"></span>
                             </label>
                         </div>
+                        
                         <div class="setting-item">
-                            <span>Show Email</span>
+                            <div class="setting-item-label">
+                                <h4>New Comment Alert</h4>
+                                <p>Receive alerts for new comments on your posts</p>
+                            </div>
                             <label class="toggle-switch">
-                                <input type="checkbox">
+                                <input type="checkbox" id="commentNotificationToggle" checked>
                                 <span class="slider"></span>
                             </label>
                         </div>
+                        
                         <div class="setting-item">
-                            <span>Allow Direct Messages</span>
+                            <div class="setting-item-label">
+                                <h4>Blog Published Notification</h4>
+                                <p>Get notified when your blog is published</p>
+                            </div>
                             <label class="toggle-switch">
-                                <input type="checkbox" checked>
+                                <input type="checkbox" id="publishNotificationToggle" checked>
                                 <span class="slider"></span>
                             </label>
                         </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-item-label">
+                                <h4>Weekly Analytics Report</h4>
+                                <p>Receive engagement summary by email</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="analyticsReportToggle">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-item-label">
+                                <h4>Sound/Vibration Alert</h4>
+                                <p>Enable or mute notification sound</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="soundAlertToggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Social & Connection Settings -->
+                    <div class="settings-group">
+                        <h3><i class="fas fa-share-alt"></i> Social & Connection Settings</h3>
+                        
+                        <div class="setting-item">
+                            <div class="setting-item-label">
+                                <h4>Followers Visibility</h4>
+                                <p>Control who can see your follower count</p>
+                            </div>
+                            <select id="followersVisibility">
+                                <option value="public">Show to Everyone</option>
+                                <option value="followers">Show to Followers Only</option>
+                                <option value="private">Hide from Everyone</option>
+                            </select>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-item-label">
+                                <h4>Allow Messages</h4>
+                                <p>Enable direct messages from other users</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="messagesToggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-item-label">
+                                <h4>Connect Social Accounts</h4>
+                                <p>Link your social media accounts</p>
+                            </div>
+                            <div class="social-buttons">
+                                <button class="social-btn google-btn">
+                                    <i class="fab fa-google"></i> Connect Google
+                                </button>
+                                <button class="social-btn facebook-btn">
+                                    <i class="fab fa-facebook-f"></i> Connect Facebook
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-item-label">
+                                <h4>Auto-Share New Blogs</h4>
+                                <p>Automatically post new blogs to connected accounts</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="autoShareToggle">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Privacy Settings -->
+                    <div class="settings-group">
+                        <h3><i class="fas fa-lock"></i> Privacy Settings</h3>
+                        
+                        <div class="setting-item">
+                            <div class="setting-item-label">
+                                <h4>Profile Visibility</h4>
+                                <p>Control who can see your profile</p>
+                            </div>
+                            <select id="profileVisibility">
+                                <option value="public">Public</option>
+                                <option value="followers">Only Followers</option>
+                                <option value="private">Private</option>
+                            </select>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-item-label">
+                                <h4>Who Can Comment</h4>
+                                <p>Control who can comment on your posts</p>
+                            </div>
+                            <select id="commentPermissions">
+                                <option value="everyone">Everyone</option>
+                                <option value="followers">Followers Only</option>
+                                <option value="no-one">No One</option>
+                            </select>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-item-label">
+                                <h4>Show Online Status</h4>
+                                <p>Allow others to see when you're online</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="onlineStatusToggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-item-label">
+                                <h4>Blocked Users</h4>
+                                <p>View and manage blocked accounts</p>
+                            </div>
+                            <button class="auth-btn" id="manageBlockedUsersBtn">Manage Blocked Users</button>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-item-label">
+                                <h4>Download My Data</h4>
+                                <p>Export all your data from BlogHub</p>
+                            </div>
+                            <button class="auth-btn" id="downloadDataBtn">Request Data Export</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Danger Zone -->
+                    <div class="danger-zone">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Danger Zone</h3>
+                        <p>Once you delete your account, there is no going back. Please be certain.</p>
+                        <button class="delete-account-btn" id="deleteAccountBtn">Delete Account</button>
                     </div>
                     
                     <button class="auth-btn" id="saveProfileBtn">Save Changes</button>
@@ -2070,7 +2304,6 @@
                 <a href="https://www.youtube.com/@Why-o2j" class="social-link" target="_blank">
                     <i class="fab fa-youtube"></i>
                 </a>
-                
             </div>
             <div class="copyright">
                 <p>&copy; 2023 BlogHub. All rights reserved.</p>
@@ -2090,7 +2323,11 @@
             FacebookAuthProvider,
             onAuthStateChanged,
             signOut,
-            updateProfile
+            updateProfile,
+            updatePassword,
+            EmailAuthProvider,
+            reauthenticateWithCredential,
+            deleteUser
         } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
         import { 
             getFirestore, 
@@ -2139,8 +2376,6 @@
         const articlesPage = document.getElementById('articles');
         const createArticlePage = document.getElementById('create-article');
         const articleDetailPage = document.getElementById('article-detail');
-        const connectPage = document.getElementById('connect');
-        const friendsPage = document.getElementById('friends');
         const profilePage = document.getElementById('profile');
         const settingsPage = document.getElementById('settings');
         const userInfo = document.getElementById('userInfo');
@@ -2157,8 +2392,6 @@
         const profileFollowersCount = document.getElementById('profileFollowersCount');
         const profileFollowingCount = document.getElementById('profileFollowingCount');
         const profileFollowBtn = document.getElementById('profileFollowBtn');
-        const profileFriendBtn = document.getElementById('profileFriendBtn');
-        const profileMessageBtn = document.getElementById('profileMessageBtn');
         const logoutBtn = document.getElementById('logoutBtn');
         const logoutBtnSettings = document.getElementById('logoutBtnSettings');
         const createArticleBtn = document.getElementById('createArticleBtn');
@@ -2174,23 +2407,16 @@
         const allArticlesGrid = document.getElementById('allArticles');
         const profileArticlesGrid = document.getElementById('profileArticles');
         const searchInput = document.getElementById('searchInput');
-        const usersContainer = document.getElementById('usersContainer');
-        const chatMessages = document.getElementById('chatMessages');
-        const chatInput = document.getElementById('chatInput');
-        const chatSend = document.getElementById('chatSend');
-        const chatUserName = document.getElementById('chatUserName');
-        const chatUserAvatar = document.getElementById('chatUserAvatar');
         const saveProfileBtn = document.getElementById('saveProfileBtn');
         const settingsName = document.getElementById('settingsName');
         const settingsEmail = document.getElementById('settingsEmail');
         const settingsBio = document.getElementById('settingsBio');
+        const settingsCurrentPassword = document.getElementById('settingsCurrentPassword');
+        const settingsNewPassword = document.getElementById('settingsNewPassword');
+        const settingsConfirmPassword = document.getElementById('settingsConfirmPassword');
+        const twoFactorToggle = document.getElementById('twoFactorToggle');
         const suggestionsSection = document.getElementById('suggestionsSection');
         const suggestionsGrid = document.getElementById('suggestionsGrid');
-        const followedUsersGrid = document.getElementById('followedUsersGrid');
-        const messageNotification = document.getElementById('messageNotification');
-        const mobileMessageNotification = document.getElementById('mobileMessageNotification');
-        const friendRequestNotification = document.getElementById('friendRequestNotification');
-        const mobileFriendRequestNotification = document.getElementById('mobileFriendRequestNotification');
         const likeBtn = document.getElementById('likeBtn');
         const commentInput = document.getElementById('commentInput');
         const commentRating = document.getElementById('commentRating');
@@ -2198,9 +2424,6 @@
         const detailReadCount = document.getElementById('detailReadCount');
         const detailLikeCount = document.getElementById('detailLikeCount');
         const detailCommentCount = document.getElementById('detailCommentCount');
-        const friendRequestsList = document.getElementById('friendRequestsList');
-        const friendsGrid = document.getElementById('friendsGrid');
-        const suggestedFriendsGrid = document.getElementById('suggestedFriendsGrid');
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileNav = document.getElementById('mobileNav');
         const articleTitle = document.getElementById('articleTitle');
@@ -2210,20 +2433,41 @@
         const articleContent = document.getElementById('articleContent');
         const articleTags = document.getElementById('articleTags');
         const tagsList = document.getElementById('tagsList');
+        const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+        const downloadDataBtn = document.getElementById('downloadDataBtn');
+        const manageBlockedUsersBtn = document.getElementById('manageBlockedUsersBtn');
+
+        // Settings elements
+        const blogVisibility = document.getElementById('blogVisibility');
+        const commentsToggle = document.getElementById('commentsToggle');
+        const autoSaveToggle = document.getElementById('autoSaveToggle');
+        const postSorting = document.getElementById('postSorting');
+        const readingTimeToggle = document.getElementById('readingTimeToggle');
+        const authorInfoToggle = document.getElementById('authorInfoToggle');
+        const sharingToggle = document.getElementById('sharingToggle');
+        const themeMode = document.getElementById('themeMode');
+        const colorOptions = document.querySelectorAll('.color-option');
+        const fontOptions = document.querySelectorAll('.font-option');
+        const layoutOptions = document.querySelectorAll('.layout-option');
+        const cardStyleOptions = document.querySelectorAll('.card-style-option');
+        const followerNotificationToggle = document.getElementById('followerNotificationToggle');
+        const commentNotificationToggle = document.getElementById('commentNotificationToggle');
+        const publishNotificationToggle = document.getElementById('publishNotificationToggle');
+        const analyticsReportToggle = document.getElementById('analyticsReportToggle');
+        const soundAlertToggle = document.getElementById('soundAlertToggle');
+        const followersVisibility = document.getElementById('followersVisibility');
+        const messagesToggle = document.getElementById('messagesToggle');
+        const autoShareToggle = document.getElementById('autoShareToggle');
+        const profileVisibility = document.getElementById('profileVisibility');
+        const commentPermissions = document.getElementById('commentPermissions');
+        const onlineStatusToggle = document.getElementById('onlineStatusToggle');
 
         // Current User and Selected Chat User
         let currentUser = null;
-        let selectedChatUser = null;
         let currentArticleId = null;
         let selectedRating = 0;
         let userFollowing = [];
-        let userFriends = [];
-        let friendRequests = [];
-        let unreadMessages = 0;
-        let unreadFriendRequests = 0;
         let allUsers = [];
-        let conversations = {};
-        let conversationListeners = {};
         let articles = [];
         let articleTagsArray = [];
 
@@ -2237,12 +2481,7 @@
                     showMainPages();
                     updateUserInfo(user);
                     loadUserProfile(user);
-                    loadUserFollowing(user);
-                    loadUserFriends(user);
-                    loadFriendRequests(user);
                     checkFirstTimeUser(user);
-                    loadUnreadMessages(user);
-                    loadUnreadFriendRequests(user);
                     loadAllUsers();
                     loadArticles();
                 } else {
@@ -2255,8 +2494,8 @@
             // Set up event listeners
             setupEventListeners();
             
-            // Render users for connect page
-            renderUsers();
+            // Load settings from localStorage
+            loadSettings();
         }
 
         // Set up event listeners
@@ -2338,7 +2577,6 @@
                         articles: 0,
                         followers: 0,
                         following: 0,
-                        friends: 0,
                         firstTimeUser: true,
                         profilePicture: ''
                     });
@@ -2385,7 +2623,6 @@
                             articles: 0,
                             followers: 0,
                             following: 0,
-                            friends: 0,
                             firstTimeUser: true,
                             profilePicture: result.user.photoURL || ''
                         });
@@ -2416,7 +2653,6 @@
                             articles: 0,
                             followers: 0,
                             following: 0,
-                            friends: 0,
                             firstTimeUser: true,
                             profilePicture: result.user.photoURL || ''
                         });
@@ -2460,14 +2696,6 @@
             // Search functionality
             searchInput.addEventListener('input', filterArticles);
 
-            // Chat functionality
-            chatSend.addEventListener('click', sendMessage);
-            chatInput.addEventListener('keypress', e => {
-                if (e.key === 'Enter') {
-                    sendMessage();
-                }
-            });
-
             // Save profile changes - MODULAR VERSION
             saveProfileBtn.addEventListener('click', async () => {
                 if (!currentUser) return;
@@ -2475,6 +2703,9 @@
                 const name = settingsName.value;
                 const email = settingsEmail.value;
                 const bio = settingsBio.value;
+                const currentPassword = settingsCurrentPassword.value;
+                const newPassword = settingsNewPassword.value;
+                const confirmPassword = settingsConfirmPassword.value;
                 
                 try {
                     // Update auth profile
@@ -2490,11 +2721,40 @@
                         bio: bio
                     });
                     
+                    // Handle password change if provided
+                    if (newPassword && confirmPassword) {
+                        if (newPassword !== confirmPassword) {
+                            alert('New passwords do not match');
+                            return;
+                        }
+                        
+                        if (!currentPassword) {
+                            alert('Please enter your current password to change it');
+                            return;
+                        }
+                        
+                        // Reauthenticate user
+                        const credential = EmailAuthProvider.credential(currentUser.email, currentPassword);
+                        await reauthenticateWithCredential(currentUser, credential);
+                        
+                        // Update password
+                        await updatePassword(currentUser, newPassword);
+                        alert('Password updated successfully!');
+                        
+                        // Clear password fields
+                        settingsCurrentPassword.value = '';
+                        settingsNewPassword.value = '';
+                        settingsConfirmPassword.value = '';
+                    }
+                    
                     // Handle profile picture upload
                     const profilePictureFile = settingsProfilePicture.files[0];
                     if (profilePictureFile) {
                         await uploadProfilePicture(profilePictureFile);
                     }
+                    
+                    // Save settings to localStorage
+                    saveSettings();
                     
                     alert('Profile updated successfully!');
                     loadUserProfile(currentUser);
@@ -2532,16 +2792,63 @@
             // Follow button
             profileFollowBtn.addEventListener('click', toggleFollow);
 
-            // Friend button
-            profileFriendBtn.addEventListener('click', toggleFriendRequest);
+            // Delete account
+            deleteAccountBtn.addEventListener('click', deleteAccount);
 
-            // Message button
-            profileMessageBtn.addEventListener('click', () => {
-                if (selectedChatUser) {
-                    showPage('connect');
-                    setTimeout(() => {
-                        selectUser(selectedChatUser);
-                    }, 100);
+            // Download data
+            downloadDataBtn.addEventListener('click', downloadData);
+
+            // Manage blocked users
+            manageBlockedUsersBtn.addEventListener('click', manageBlockedUsers);
+
+            // Settings event listeners
+            colorOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    colorOptions.forEach(opt => opt.classList.remove('active'));
+                    option.classList.add('active');
+                    saveSettings();
+                });
+            });
+
+            fontOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    fontOptions.forEach(opt => opt.classList.remove('active'));
+                    option.classList.add('active');
+                    saveSettings();
+                });
+            });
+
+            layoutOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    layoutOptions.forEach(opt => opt.classList.remove('active'));
+                    option.classList.add('active');
+                    saveSettings();
+                });
+            });
+
+            cardStyleOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    cardStyleOptions.forEach(opt => opt.classList.remove('active'));
+                    option.classList.add('active');
+                    saveSettings();
+                });
+            });
+
+            // Save settings when any setting changes
+            const settingElements = [
+                blogVisibility, commentsToggle, autoSaveToggle, postSorting, 
+                readingTimeToggle, authorInfoToggle, sharingToggle, themeMode,
+                followerNotificationToggle, commentNotificationToggle, publishNotificationToggle,
+                analyticsReportToggle, soundAlertToggle, followersVisibility, messagesToggle,
+                autoShareToggle, profileVisibility, commentPermissions, onlineStatusToggle,
+                twoFactorToggle
+            ];
+
+            settingElements.forEach(element => {
+                if (element.type === 'checkbox') {
+                    element.addEventListener('change', saveSettings);
+                } else {
+                    element.addEventListener('change', saveSettings);
                 }
             });
         }
@@ -2711,8 +3018,6 @@
             articlesPage.classList.remove('active');
             createArticlePage.classList.remove('active');
             articleDetailPage.classList.remove('active');
-            connectPage.classList.remove('active');
-            friendsPage.classList.remove('active');
             profilePage.classList.remove('active');
             settingsPage.classList.remove('active');
             userInfo.style.display = 'none';
@@ -2735,26 +3040,15 @@
             // Show the selected page
             document.getElementById(pageName).classList.add('active');
             
-            // If showing connect page, initialize chat
-            if (pageName === 'connect') {
-                initializeChat();
-                renderFollowedUsers();
-            }
-            
-            // If showing friends page, load friend data
-            if (pageName === 'friends') {
-                renderFriends();
-                renderSuggestedFriends();
-            }
-            
             // If showing profile page, check if it's the current user's profile
             if (pageName === 'profile') {
                 if (currentUser) {
                     // It's the current user's profile
                     profileFollowBtn.style.display = 'none';
-                    profileFriendBtn.style.display = 'none';
-                    profileMessageBtn.style.display = 'none';
                     loadUserArticles(currentUser.uid);
+                } else {
+                    // It's another user's profile
+                    profileFollowBtn.style.display = 'inline-block';
                 }
             }
             
@@ -2871,206 +3165,10 @@
                         });
                     }
                 });
-                renderUsers();
                 renderUserSuggestions();
             } catch (error) {
                 console.error('Error loading users:', error);
             }
-        }
-
-        // Load user's following list - MODULAR VERSION
-        async function loadUserFollowing(user) {
-            try {
-                const followingRef = collection(db, 'users', user.uid, 'following');
-                const snapshot = await getDocs(followingRef);
-                userFollowing = [];
-                snapshot.forEach(doc => {
-                    userFollowing.push(doc.id);
-                });
-            } catch (error) {
-                console.error('Error loading following list:', error);
-            }
-        }
-
-        // Load user's friends list - MODULAR VERSION
-        async function loadUserFriends(user) {
-            try {
-                const friendsRef = collection(db, 'users', user.uid, 'friends');
-                const snapshot = await getDocs(friendsRef);
-                userFriends = [];
-                snapshot.forEach(doc => {
-                    userFriends.push(doc.id);
-                });
-            } catch (error) {
-                console.error('Error loading friends list:', error);
-            }
-        }
-
-        // Load friend requests - MODULAR VERSION
-        async function loadFriendRequests(user) {
-            try {
-                const requestsRef = collection(db, 'friendRequests');
-                const q = query(requestsRef, 
-                    where('toUid', '==', user.uid),
-                    where('status', '==', 'pending')
-                );
-                const snapshot = await getDocs(q);
-                
-                friendRequests = [];
-                snapshot.forEach(doc => {
-                    friendRequests.push({
-                        id: doc.id,
-                        ...doc.data()
-                    });
-                });
-                renderFriendRequests();
-            } catch (error) {
-                console.error('Error loading friend requests:', error);
-            }
-        }
-
-        // Send friend request - MODULAR VERSION
-        async function sendFriendRequest(toUid) {
-            if (!currentUser) {
-                alert("Login first!");
-                return;
-            }
-
-            try {
-                await addDoc(collection(db, "friendRequests"), {
-                    fromUid: currentUser.uid,
-                    toUid: toUid,
-                    status: "pending",
-                    timestamp: Date.now()
-                });
-
-                alert("Friend request sent!");
-                
-                // Update UI
-                const friendBtn = document.querySelector(`.friend-btn[data-id="${toUid}"]`);
-                if (friendBtn) {
-                    friendBtn.textContent = 'Request Sent';
-                    friendBtn.classList.add('requested');
-                    friendBtn.disabled = true;
-                }
-            } catch (error) {
-                console.error("Error sending friend request:", error);
-                alert("Failed to send friend request: " + error.message);
-            }
-        }
-
-        // Follow user - MODULAR VERSION
-        async function followUser(userId) {
-            if (!currentUser) return;
-            
-            try {
-                // Add to following list
-                await setDoc(doc(db, 'users', currentUser.uid, 'following', userId), {
-                    timestamp: serverTimestamp()
-                });
-                
-                // Add to user's followers list
-                await setDoc(doc(db, 'users', userId, 'followers', currentUser.uid), {
-                    timestamp: serverTimestamp()
-                });
-                
-                // Update userFollowing array
-                userFollowing.push(userId);
-                
-                // Update UI
-                const followBtn = document.querySelector(`.follow-btn[data-id="${userId}"]`);
-                if (followBtn) {
-                    followBtn.textContent = 'Following';
-                    followBtn.classList.add('following');
-                }
-                
-                // Show success message
-                alert('You are now following this user!');
-            } catch (error) {
-                console.error('Error following user:', error);
-                alert('Error following user: ' + error.message);
-            }
-        }
-
-        // Unfollow user - MODULAR VERSION
-        async function unfollowUser(userId) {
-            if (!currentUser) return;
-            
-            try {
-                // Remove from following list
-                await deleteDoc(doc(db, 'users', currentUser.uid, 'following', userId));
-                
-                // Remove from user's followers list
-                await deleteDoc(doc(db, 'users', userId, 'followers', currentUser.uid));
-                
-                // Update userFollowing array
-                const index = userFollowing.indexOf(userId);
-                if (index > -1) {
-                    userFollowing.splice(index, 1);
-                }
-                
-                // Update UI
-                const followBtn = document.querySelector(`.follow-btn[data-id="${userId}"]`);
-                if (followBtn) {
-                    followBtn.textContent = 'Follow';
-                    followBtn.classList.remove('following');
-                }
-                
-                // Show success message
-                alert('You have unfollowed this user.');
-            } catch (error) {
-                console.error('Error unfollowing user:', error);
-                alert('Error unfollowing user: ' + error.message);
-            }
-        }
-
-        // Enhanced messaging system - MODULAR VERSION
-        function setupRealTimeMessages(conversationId) {
-            // Remove existing listener if any
-            if (conversationListeners[conversationId]) {
-                conversationListeners[conversationId]();
-            }
-            
-            const messagesRef = collection(db, "messages");
-            const q = query(messagesRef, 
-                where("conversationId", "==", conversationId),
-                orderBy("timestamp")
-            );
-
-            // Real-time listener for messages
-            const unsubscribe = onSnapshot(q, (snapshot) => {
-                const messages = [];
-                snapshot.forEach(doc => {
-                    messages.push({
-                        id: doc.id,
-                        ...doc.data()
-                    });
-                });
-                displayMessages(messages);
-            });
-            
-            // Store the unsubscribe function
-            conversationListeners[conversationId] = unsubscribe;
-        }
-
-        async function sendMessageToFirestore(text, conversationId) {
-            if (!currentUser) return;
-            
-            try {
-                await addDoc(collection(db, "messages"), {
-                    conversationId: conversationId,
-                    senderUid: currentUser.uid,
-                    message: text,
-                    timestamp: serverTimestamp()
-                });
-            } catch (error) {
-                console.error("Error sending message:", error);
-            }
-        }
-
-        // Get or create conversation ID
-        function getConversationId(user1, user2) {
-            return [user1, user2].sort().join('_');
         }
 
         // Check if user is first-time user and show suggestions
@@ -3079,48 +3177,6 @@
             // For this demo, we'll show suggestions for all users
             suggestionsSection.style.display = 'block';
             renderUserSuggestions();
-        }
-
-        // Load unread messages count
-        function loadUnreadMessages(user) {
-            // In a real app, you would query Firestore for unread messages
-            // For this demo, we'll use a simulated count
-            unreadMessages = 3; // Simulated unread messages
-            updateMessageNotification();
-        }
-
-        // Load unread friend requests count
-        function loadUnreadFriendRequests(user) {
-            // In a real app, you would query Firestore for unread friend requests
-            // For this demo, we'll use a simulated count
-            unreadFriendRequests = friendRequests.length;
-            updateFriendRequestNotification();
-        }
-
-        // Update message notification badge
-        function updateMessageNotification() {
-            if (unreadMessages > 0) {
-                messageNotification.textContent = unreadMessages;
-                messageNotification.style.display = 'flex';
-                mobileMessageNotification.textContent = unreadMessages;
-                mobileMessageNotification.style.display = 'flex';
-            } else {
-                messageNotification.style.display = 'none';
-                mobileMessageNotification.style.display = 'none';
-            }
-        }
-
-        // Update friend request notification badge
-        function updateFriendRequestNotification() {
-            if (unreadFriendRequests > 0) {
-                friendRequestNotification.textContent = unreadFriendRequests;
-                friendRequestNotification.style.display = 'flex';
-                mobileFriendRequestNotification.textContent = unreadFriendRequests;
-                mobileFriendRequestNotification.style.display = 'flex';
-            } else {
-                friendRequestNotification.style.display = 'none';
-                mobileFriendRequestNotification.style.display = 'none';
-            }
         }
 
         // Render articles to the page
@@ -3333,34 +3389,6 @@
             });
         }
 
-        // Render users for connect page
-        function renderUsers() {
-            usersContainer.innerHTML = '';
-            
-            allUsers.forEach(user => {
-                const userElement = document.createElement('div');
-                userElement.className = 'user-item';
-                userElement.setAttribute('data-id', user.id);
-                
-                const firstLetter = user.name ? user.name.charAt(0).toUpperCase() : 'U';
-                const profilePicture = user.profilePicture || '';
-                
-                userElement.innerHTML = `
-                    <div class="user-avatar-small" style="background-image: ${profilePicture ? `url(${profilePicture})` : ''}">${profilePicture ? '' : firstLetter}</div>
-                    <div class="user-details-small">
-                        <h4>${user.name || 'User'}</h4>
-                        <p>${user.bio || 'BlogHub user'}</p>
-                    </div>
-                `;
-                
-                userElement.addEventListener('click', () => {
-                    selectUser(user);
-                });
-                
-                usersContainer.appendChild(userElement);
-            });
-        }
-
         // Render user suggestions for first-time users
         function renderUserSuggestions() {
             suggestionsGrid.innerHTML = '';
@@ -3398,186 +3426,6 @@
             });
         }
 
-        // Render followed users
-        function renderFollowedUsers() {
-            followedUsersGrid.innerHTML = '';
-            
-            // Filter followed users from allUsers
-            const followedUsers = allUsers.filter(user => userFollowing.includes(user.id));
-            
-            followedUsers.forEach(user => {
-                const firstLetter = user.name ? user.name.charAt(0).toUpperCase() : 'U';
-                const profilePicture = user.profilePicture || '';
-                
-                const followedUserElement = document.createElement('div');
-                followedUserElement.className = 'suggestion-card';
-                followedUserElement.innerHTML = `
-                    <div class="suggestion-avatar" style="background-image: ${profilePicture ? `url(${profilePicture})` : ''}">${profilePicture ? '' : firstLetter}</div>
-                    <h4>${user.name || 'User'}</h4>
-                    <p>${user.bio || 'BlogHub user'}</p>
-                    <div class="suggestion-stats">
-                        <span>${user.followers || 0} followers</span>
-                        <span>${user.articles || 0} articles</span>
-                    </div>
-                    <div class="user-actions">
-                        <button class="message-btn" data-id="${user.id}">Message</button>
-                        <button class="follow-btn following" data-id="${user.id}">Following</button>
-                    </div>
-                `;
-                
-                const messageBtn = followedUserElement.querySelector('.message-btn');
-                messageBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    // Navigate to connect page and select this user
-                    showPage('connect');
-                    setTimeout(() => {
-                        selectUser(user);
-                    }, 100);
-                });
-                
-                const followBtn = followedUserElement.querySelector('.follow-btn');
-                followBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    unfollowUser(user.id);
-                });
-                
-                followedUsersGrid.appendChild(followedUserElement);
-            });
-        }
-
-        // Render friends
-        function renderFriends() {
-            friendsGrid.innerHTML = '';
-            
-            // Filter friends from allUsers
-            const friends = allUsers.filter(user => userFriends.includes(user.id));
-            
-            friends.forEach(user => {
-                const firstLetter = user.name ? user.name.charAt(0).toUpperCase() : 'U';
-                const profilePicture = user.profilePicture || '';
-                
-                const friendElement = document.createElement('div');
-                friendElement.className = 'suggestion-card';
-                friendElement.innerHTML = `
-                    <div class="suggestion-avatar" style="background-image: ${profilePicture ? `url(${profilePicture})` : ''}">${profilePicture ? '' : firstLetter}</div>
-                    <h4>${user.name || 'User'}</h4>
-                    <p>${user.bio || 'BlogHub user'}</p>
-                    <div class="suggestion-stats">
-                        <span>${user.followers || 0} followers</span>
-                        <span>${user.articles || 0} articles</span>
-                    </div>
-                    <div class="user-actions">
-                        <button class="message-btn" data-id="${user.id}">Message</button>
-                        <button class="friend-btn" data-id="${user.id}">Unfriend</button>
-                    </div>
-                `;
-                
-                const messageBtn = friendElement.querySelector('.message-btn');
-                messageBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    // Navigate to connect page and select this user
-                    showPage('connect');
-                    setTimeout(() => {
-                        selectUser(user);
-                    }, 100);
-                });
-                
-                const unfriendBtn = friendElement.querySelector('.friend-btn');
-                unfriendBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    unfriendUser(user.id);
-                });
-                
-                friendsGrid.appendChild(friendElement);
-            });
-        }
-
-        // Render suggested friends
-        function renderSuggestedFriends() {
-            suggestedFriendsGrid.innerHTML = '';
-            
-            // Filter users who are not friends and not in pending requests
-            const suggestedFriends = allUsers.filter(user => 
-                !userFriends.includes(user.id) && 
-                !friendRequests.some(req => req.fromUid === user.id || req.toUid === user.id)
-            ).slice(0, 3);
-            
-            suggestedFriends.forEach(user => {
-                const firstLetter = user.name ? user.name.charAt(0).toUpperCase() : 'U';
-                const profilePicture = user.profilePicture || '';
-                
-                const suggestionElement = document.createElement('div');
-                suggestionElement.className = 'suggestion-card';
-                suggestionElement.innerHTML = `
-                    <div class="suggestion-avatar" style="background-image: ${profilePicture ? `url(${profilePicture})` : ''}">${profilePicture ? '' : firstLetter}</div>
-                    <h4>${user.name || 'User'}</h4>
-                    <p>${user.bio || 'BlogHub user'}</p>
-                    <div class="suggestion-stats">
-                        <span>${user.followers || 0} followers</span>
-                        <span>${user.articles || 0} articles</span>
-                    </div>
-                    <button class="friend-btn" data-id="${user.id}">Add Friend</button>
-                `;
-                
-                const friendBtn = suggestionElement.querySelector('.friend-btn');
-                friendBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    sendFriendRequest(user.id);
-                });
-                
-                suggestedFriendsGrid.appendChild(suggestionElement);
-            });
-        }
-
-        // Render friend requests
-        function renderFriendRequests() {
-            friendRequestsList.innerHTML = '';
-            
-            if (friendRequests.length === 0) {
-                friendRequestsList.innerHTML = '<p>No pending friend requests</p>';
-                return;
-            }
-            
-            friendRequests.forEach(request => {
-                // Find the user who sent the request
-                const fromUser = allUsers.find(user => user.id === request.fromUid);
-                if (!fromUser) return;
-                
-                const firstLetter = fromUser.name ? fromUser.name.charAt(0).toUpperCase() : 'U';
-                const profilePicture = fromUser.profilePicture || '';
-                
-                const requestElement = document.createElement('div');
-                requestElement.className = 'friend-request-item';
-                requestElement.innerHTML = `
-                    <div class="friend-request-info">
-                        <div class="user-avatar-small" style="background-image: ${profilePicture ? `url(${profilePicture})` : ''}">${profilePicture ? '' : firstLetter}</div>
-                        <div>
-                            <h4>${fromUser.name || 'User'}</h4>
-                            <p>Wants to be your friend</p>
-                        </div>
-                    </div>
-                    <div class="friend-request-actions">
-                        <button class="accept-btn" data-id="${request.id}" data-userid="${fromUser.id}">Accept</button>
-                        <button class="decline-btn" data-id="${request.id}">Decline</button>
-                    </div>
-                `;
-                
-                const acceptBtn = requestElement.querySelector('.accept-btn');
-                acceptBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    acceptFriendRequest(request.id, fromUser.id);
-                });
-                
-                const declineBtn = requestElement.querySelector('.decline-btn');
-                declineBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    declineFriendRequest(request.id);
-                });
-                
-                friendRequestsList.appendChild(requestElement);
-            });
-        }
-
         // Toggle follow status
         function toggleFollow() {
             if (!currentUser) {
@@ -3585,249 +3433,80 @@
                 return;
             }
             
-            const userId = selectedChatUser.id;
-            const isFollowing = userFollowing.includes(userId);
-            
-            if (isFollowing) {
-                unfollowUser(userId);
+            // In this simplified version, we're just toggling the button state
+            // In a real app, you would update Firestore
+            if (profileFollowBtn.classList.contains('following')) {
+                profileFollowBtn.textContent = 'Follow';
+                profileFollowBtn.classList.remove('following');
             } else {
-                followUser(userId);
+                profileFollowBtn.textContent = 'Following';
+                profileFollowBtn.classList.add('following');
             }
         }
 
-        // Accept friend request
-        async function acceptFriendRequest(requestId, fromUid) {
-            try {
-                // Update friend request status
-                await updateDoc(doc(db, 'friendRequests', requestId), {
-                    status: 'accepted'
-                });
-                
-                // Add to current user's friends
-                await setDoc(doc(db, 'users', currentUser.uid, 'friends', fromUid), {
-                    timestamp: serverTimestamp()
-                });
-                
-                // Add to requester's friends
-                await setDoc(doc(db, 'users', fromUid, 'friends', currentUser.uid), {
-                    timestamp: serverTimestamp()
-                });
-                
-                // Update local arrays
-                userFriends.push(fromUid);
-                
-                // Remove from friend requests
-                const index = friendRequests.findIndex(req => req.id === requestId);
-                if (index > -1) {
-                    friendRequests.splice(index, 1);
-                }
-                
-                // Update UI
-                renderFriendRequests();
-                unreadFriendRequests--;
-                updateFriendRequestNotification();
-                
-                // Show success message
-                alert('Friend request accepted!');
-            } catch (error) {
-                console.error('Error accepting friend request:', error);
-                alert('Error accepting friend request: ' + error.message);
-            }
-        }
-
-        // Decline friend request
-        async function declineFriendRequest(requestId) {
-            try {
-                // Update friend request status
-                await updateDoc(doc(db, 'friendRequests', requestId), {
-                    status: 'declined'
-                });
-                
-                // Remove from friend requests
-                const index = friendRequests.findIndex(req => req.id === requestId);
-                if (index > -1) {
-                    friendRequests.splice(index, 1);
-                }
-                
-                // Update UI
-                renderFriendRequests();
-                unreadFriendRequests--;
-                updateFriendRequestNotification();
-                
-                // Show success message
-                alert('Friend request declined.');
-            } catch (error) {
-                console.error('Error declining friend request:', error);
-                alert('Error declining friend request: ' + error.message);
-            }
-        }
-
-        // Unfriend a user
-        async function unfriendUser(userId) {
+        // Follow user - MODULAR VERSION
+        async function followUser(userId) {
             if (!currentUser) return;
             
             try {
-                // Remove from current user's friends
-                await deleteDoc(doc(db, 'users', currentUser.uid, 'friends', userId));
+                // Add to following list
+                await setDoc(doc(db, 'users', currentUser.uid, 'following', userId), {
+                    timestamp: serverTimestamp()
+                });
                 
-                // Remove from user's friends
-                await deleteDoc(doc(db, 'users', userId, 'friends', currentUser.uid));
+                // Add to user's followers list
+                await setDoc(doc(db, 'users', userId, 'followers', currentUser.uid), {
+                    timestamp: serverTimestamp()
+                });
                 
-                // Update local array
-                const index = userFriends.indexOf(userId);
+                // Update userFollowing array
+                userFollowing.push(userId);
+                
+                // Update UI
+                const followBtn = document.querySelector(`.follow-btn[data-id="${userId}"]`);
+                if (followBtn) {
+                    followBtn.textContent = 'Following';
+                    followBtn.classList.add('following');
+                }
+                
+                // Show success message
+                alert('You are now following this user!');
+            } catch (error) {
+                console.error('Error following user:', error);
+                alert('Error following user: ' + error.message);
+            }
+        }
+
+        // Unfollow user - MODULAR VERSION
+        async function unfollowUser(userId) {
+            if (!currentUser) return;
+            
+            try {
+                // Remove from following list
+                await deleteDoc(doc(db, 'users', currentUser.uid, 'following', userId));
+                
+                // Remove from user's followers list
+                await deleteDoc(doc(db, 'users', userId, 'followers', currentUser.uid));
+                
+                // Update userFollowing array
+                const index = userFollowing.indexOf(userId);
                 if (index > -1) {
-                    userFriends.splice(index, 1);
+                    userFollowing.splice(index, 1);
                 }
                 
                 // Update UI
-                renderFriends();
+                const followBtn = document.querySelector(`.follow-btn[data-id="${userId}"]`);
+                if (followBtn) {
+                    followBtn.textContent = 'Follow';
+                    followBtn.classList.remove('following');
+                }
                 
                 // Show success message
-                alert('You have unfriended this user.');
+                alert('You have unfollowed this user.');
             } catch (error) {
-                console.error('Error unfriending user:', error);
-                alert('Error unfriending user: ' + error.message);
+                console.error('Error unfollowing user:', error);
+                alert('Error unfollowing user: ' + error.message);
             }
-        }
-
-        // Toggle friend request
-        function toggleFriendRequest() {
-            if (!currentUser) {
-                alert('Please log in to send friend requests');
-                return;
-            }
-            
-            const userId = selectedChatUser.id;
-            const isFriend = userFriends.includes(userId);
-            
-            if (isFriend) {
-                unfriendUser(userId);
-            } else {
-                sendFriendRequest(userId);
-            }
-        }
-
-        // Initialize chat
-        function initializeChat() {
-            // Clear chat messages
-            chatMessages.innerHTML = '';
-            chatInput.disabled = true;
-            chatSend.disabled = true;
-            
-            // Show default message
-            const defaultMessage = document.createElement('div');
-            defaultMessage.className = 'message';
-            defaultMessage.textContent = 'Select a user to start chatting';
-            defaultMessage.style.alignSelf = 'center';
-            defaultMessage.style.textAlign = 'center';
-            defaultMessage.style.width = 'auto';
-            chatMessages.appendChild(defaultMessage);
-        }
-
-        // Select user for chat
-        function selectUser(user) {
-            selectedChatUser = user;
-            
-            // Update UI
-            document.querySelectorAll('.user-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            document.querySelector(`.user-item[data-id="${user.id}"]`).classList.add('active');
-            
-            // Update chat header
-            chatUserName.textContent = user.name || 'User';
-            
-            const firstLetter = user.name ? user.name.charAt(0).toUpperCase() : 'U';
-            const profilePicture = user.profilePicture || '';
-            chatUserAvatar.textContent = profilePicture ? '' : firstLetter;
-            chatUserAvatar.style.backgroundImage = profilePicture ? `url(${profilePicture})` : '';
-            
-            // Enable chat input
-            chatInput.disabled = false;
-            chatSend.disabled = false;
-            
-            // Update profile buttons
-            profileFollowBtn.style.display = 'inline-block';
-            profileFriendBtn.style.display = 'inline-block';
-            profileMessageBtn.style.display = 'inline-block';
-            
-            // Update follow button state
-            const isFollowing = userFollowing.includes(user.id);
-            profileFollowBtn.textContent = isFollowing ? 'Following' : 'Follow';
-            profileFollowBtn.classList.toggle('following', isFollowing);
-            
-            // Update friend button state
-            const isFriend = userFriends.includes(user.id);
-            const hasRequest = friendRequests.some(req => req.fromUid === user.id || req.toUid === user.id);
-            profileFriendBtn.textContent = isFriend ? 'Unfriend' : (hasRequest ? 'Request Sent' : 'Add Friend');
-            profileFriendBtn.classList.toggle('requested', hasRequest);
-            
-            // Load chat messages
-            loadChatMessages(user.id);
-        }
-
-        // Load chat messages
-        function loadChatMessages(userId) {
-            // Clear chat messages
-            chatMessages.innerHTML = '';
-            
-            // Get conversation ID
-            const conversationId = getConversationId(currentUser.uid, userId);
-            
-            // Set up real-time listener for messages
-            setupRealTimeMessages(conversationId);
-        }
-
-        // Display messages in the chat
-        function displayMessages(messages) {
-            // Clear chat messages
-            chatMessages.innerHTML = '';
-            
-            if (messages.length === 0) {
-                const defaultMessage = document.createElement('div');
-                defaultMessage.className = 'message';
-                defaultMessage.textContent = 'No messages yet. Start the conversation!';
-                defaultMessage.style.alignSelf = 'center';
-                defaultMessage.style.textAlign = 'center';
-                defaultMessage.style.width = 'auto';
-                chatMessages.appendChild(defaultMessage);
-                return;
-            }
-            
-            messages.forEach(message => {
-                const messageElement = document.createElement('div');
-                const isSent = message.senderUid === currentUser.uid;
-                messageElement.className = `message ${isSent ? 'sent' : 'received'}`;
-                
-                const timestamp = message.timestamp ? message.timestamp.toDate() : new Date();
-                const timeString = timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                
-                messageElement.innerHTML = `
-                    <div class="message-text">${message.message}</div>
-                    <div class="message-time">${timeString}</div>
-                `;
-                
-                chatMessages.appendChild(messageElement);
-            });
-            
-            // Scroll to bottom
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // Send message
-        async function sendMessage() {
-            if (!selectedChatUser || !chatInput.value.trim()) return;
-            
-            const messageText = chatInput.value.trim();
-            
-            // Get conversation ID
-            const conversationId = getConversationId(currentUser.uid, selectedChatUser.id);
-            
-            // Send message to Firestore
-            await sendMessageToFirestore(messageText, conversationId);
-            
-            // Clear input
-            chatInput.value = '';
         }
 
         // Toggle like on article
@@ -3929,6 +3608,166 @@
             
             // Show success message
             alert('Comment added successfully!');
+        }
+
+        // Save settings to localStorage
+        function saveSettings() {
+            const settings = {
+                blogVisibility: blogVisibility.value,
+                commentsToggle: commentsToggle.checked,
+                autoSaveToggle: autoSaveToggle.checked,
+                postSorting: postSorting.value,
+                readingTimeToggle: readingTimeToggle.checked,
+                authorInfoToggle: authorInfoToggle.checked,
+                sharingToggle: sharingToggle.checked,
+                themeMode: themeMode.value,
+                accentColor: document.querySelector('.color-option.active').getAttribute('data-color'),
+                fontStyle: document.querySelector('.font-option.active').getAttribute('data-font'),
+                layoutMode: document.querySelector('.layout-option.active').getAttribute('data-layout'),
+                cardStyle: document.querySelector('.card-style-option.active').getAttribute('data-style'),
+                followerNotificationToggle: followerNotificationToggle.checked,
+                commentNotificationToggle: commentNotificationToggle.checked,
+                publishNotificationToggle: publishNotificationToggle.checked,
+                analyticsReportToggle: analyticsReportToggle.checked,
+                soundAlertToggle: soundAlertToggle.checked,
+                followersVisibility: followersVisibility.value,
+                messagesToggle: messagesToggle.checked,
+                autoShareToggle: autoShareToggle.checked,
+                profileVisibility: profileVisibility.value,
+                commentPermissions: commentPermissions.value,
+                onlineStatusToggle: onlineStatusToggle.checked,
+                twoFactorToggle: twoFactorToggle.checked
+            };
+            
+            localStorage.setItem('bloghubSettings', JSON.stringify(settings));
+            applySettings(settings);
+        }
+
+        // Load settings from localStorage
+        function loadSettings() {
+            const savedSettings = localStorage.getItem('bloghubSettings');
+            if (savedSettings) {
+                const settings = JSON.parse(savedSettings);
+                
+                // Apply settings to form elements
+                blogVisibility.value = settings.blogVisibility || 'public';
+                commentsToggle.checked = settings.commentsToggle !== false;
+                autoSaveToggle.checked = settings.autoSaveToggle !== false;
+                postSorting.value = settings.postSorting || 'latest';
+                readingTimeToggle.checked = settings.readingTimeToggle !== false;
+                authorInfoToggle.checked = settings.authorInfoToggle !== false;
+                sharingToggle.checked = settings.sharingToggle !== false;
+                themeMode.value = settings.themeMode || 'dark';
+                
+                // Apply color option
+                const colorOption = document.querySelector(`.color-option[data-color="${settings.accentColor || '#3498db'}"]`);
+                if (colorOption) {
+                    colorOptions.forEach(opt => opt.classList.remove('active'));
+                    colorOption.classList.add('active');
+                }
+                
+                // Apply font option
+                const fontOption = document.querySelector(`.font-option[data-font="${settings.fontStyle || 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif'}"]`);
+                if (fontOption) {
+                    fontOptions.forEach(opt => opt.classList.remove('active'));
+                    fontOption.classList.add('active');
+                }
+                
+                // Apply layout option
+                const layoutOption = document.querySelector(`.layout-option[data-layout="${settings.layoutMode || 'full-width'}"]`);
+                if (layoutOption) {
+                    layoutOptions.forEach(opt => opt.classList.remove('active'));
+                    layoutOption.classList.add('active');
+                }
+                
+                // Apply card style option
+                const cardStyleOption = document.querySelector(`.card-style-option[data-style="${settings.cardStyle || 'minimal'}"]`);
+                if (cardStyleOption) {
+                    cardStyleOptions.forEach(opt => opt.classList.remove('active'));
+                    cardStyleOption.classList.add('active');
+                }
+                
+                followerNotificationToggle.checked = settings.followerNotificationToggle !== false;
+                commentNotificationToggle.checked = settings.commentNotificationToggle !== false;
+                publishNotificationToggle.checked = settings.publishNotificationToggle !== false;
+                analyticsReportToggle.checked = settings.analyticsReportToggle || false;
+                soundAlertToggle.checked = settings.soundAlertToggle !== false;
+                followersVisibility.value = settings.followersVisibility || 'public';
+                messagesToggle.checked = settings.messagesToggle !== false;
+                autoShareToggle.checked = settings.autoShareToggle || false;
+                profileVisibility.value = settings.profileVisibility || 'public';
+                commentPermissions.value = settings.commentPermissions || 'everyone';
+                onlineStatusToggle.checked = settings.onlineStatusToggle !== false;
+                twoFactorToggle.checked = settings.twoFactorToggle || false;
+                
+                // Apply visual settings
+                applySettings(settings);
+            }
+        }
+
+        // Apply settings to the UI
+        function applySettings(settings) {
+            // Apply accent color
+            if (settings.accentColor) {
+                document.documentElement.style.setProperty('--accent-color', settings.accentColor);
+                document.documentElement.style.setProperty('--hover-color', adjustColor(settings.accentColor, 20));
+            }
+            
+            // Apply font style
+            if (settings.fontStyle) {
+                document.body.style.fontFamily = settings.fontStyle;
+            }
+            
+            // Apply theme mode
+            if (settings.themeMode === 'light') {
+                document.documentElement.style.setProperty('--primary-bg', '#f5f5f5');
+                document.documentElement.style.setProperty('--secondary-bg', '#ffffff');
+                document.documentElement.style.setProperty('--card-bg', '#ffffff');
+                document.documentElement.style.setProperty('--text-color', '#333333');
+                document.documentElement.style.setProperty('--text-secondary', '#666666');
+            } else {
+                document.documentElement.style.setProperty('--primary-bg', '#0a0a1a');
+                document.documentElement.style.setProperty('--secondary-bg', '#15152b');
+                document.documentElement.style.setProperty('--card-bg', '#1e1e3a');
+                document.documentElement.style.setProperty('--text-color', '#ffffff');
+                document.documentElement.style.setProperty('--text-secondary', '#b0b0cc');
+            }
+        }
+
+        // Helper function to adjust color brightness
+        function adjustColor(color, amount) {
+            return '#' + color.replace(/^#/, '').replace(/../g, color => ('0'+Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
+        }
+
+        // Delete account
+        async function deleteAccount() {
+            if (!currentUser) return;
+            
+            const confirmDelete = confirm('Are you sure you want to delete your account? This action cannot be undone.');
+            if (!confirmDelete) return;
+            
+            try {
+                // Delete user from Firebase Auth
+                await deleteUser(currentUser);
+                console.log('User account deleted');
+                
+                // In a real app, you would also delete user data from Firestore
+                // For this demo, we'll just sign out
+                await signOut(auth);
+            } catch (error) {
+                console.error('Error deleting account:', error);
+                alert('Error deleting account: ' + error.message);
+            }
+        }
+
+        // Download data
+        function downloadData() {
+            alert('Data export feature would be implemented in a production app. This would generate a file with all your BlogHub data.');
+        }
+
+        // Manage blocked users
+        function manageBlockedUsers() {
+            alert('Blocked users management would be implemented in a production app.');
         }
 
         // Initialize the app when DOM is loaded
