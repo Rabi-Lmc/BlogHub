@@ -629,6 +629,59 @@
             background-color: #27ae60;
         }
 
+        /* Image Upload Styles */
+        .image-upload-container {
+            margin-bottom: 1rem;
+        }
+        
+        .image-upload-preview {
+            width: 100%;
+            height: 200px;
+            background-color: var(--secondary-bg);
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .image-upload-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+        
+        .image-upload-placeholder {
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        
+        .image-upload-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .image-upload-btn {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+            display: inline-block;
+            cursor: pointer;
+        }
+        
+        .image-upload-btn:hover {
+            background-color: var(--hover-color);
+        }
+        
+        .image-upload-input {
+            display: none;
+        }
+
         /* About Page */
         .about-content {
             display: flex;
@@ -796,6 +849,28 @@
         .rating-count {
             color: var(--text-secondary);
             font-size: 0.9rem;
+        }
+
+        /* Share buttons in article detail */
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .share-btn, .copy-link-btn {
+            background-color: var(--secondary-bg);
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .share-btn:hover, .copy-link-btn:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-bg);
         }
 
         .comments-section {
@@ -1366,6 +1441,151 @@
             text-align: center;
         }
 
+        /* Share Modal Styles */
+        .share-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .share-modal.active {
+            display: flex;
+        }
+        
+        .share-modal-content {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .share-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .share-modal-title {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
+        
+        .share-modal-close {
+            background: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .share-link-container {
+            display: flex;
+            margin-bottom: 1.5rem;
+        }
+        
+        .share-link-input {
+            flex: 1;
+            padding: 0.8rem;
+            background-color: var(--secondary-bg);
+            border: 1px solid #333;
+            border-radius: 4px 0 0 4px;
+            color: var(--text-color);
+        }
+        
+        .share-copy-btn {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        
+        .share-copy-btn:hover {
+            background-color: var(--hover-color);
+        }
+        
+        .share-platforms {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .share-platform {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .share-platform:hover {
+            transform: translateY(-3px);
+        }
+        
+        .share-facebook {
+            background-color: #3b5998;
+        }
+        
+        .share-twitter {
+            background-color: #1da1f2;
+        }
+        
+        .share-linkedin {
+            background-color: #0077b5;
+        }
+        
+        .share-whatsapp {
+            background-color: #25d366;
+        }
+        
+        .share-email {
+            background-color: #ea4335;
+        }
+        
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--success-color);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .toast.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .toast.error {
+            background-color: var(--error-color);
+        }
+
         /* Responsive Styles */
         @media (max-width: 768px) {
             .header-content {
@@ -1478,6 +1698,23 @@
 
             .toggle-switch {
                 align-self: flex-end;
+            }
+            
+            .share-modal-content {
+                padding: 1.5rem;
+            }
+            
+            .share-link-container {
+                flex-direction: column;
+            }
+            
+            .share-link-input {
+                border-radius: 4px;
+                margin-bottom: 0.5rem;
+            }
+            
+            .share-copy-btn {
+                border-radius: 4px;
             }
         }
 
@@ -1656,7 +1893,7 @@
             </div>
         </section>
 
-        <!-- Create Article Page -->
+        <!-- Create Article Page - Updated with image upload -->
         <section id="create-article" class="page">
             <div class="container create-article-container">
                 <div class="create-article-card">
@@ -1683,8 +1920,20 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="articleImage">Featured Image URL</label>
-                                <input type="text" id="articleImage" placeholder="Enter image URL">
+                                <label>Featured Image</label>
+                                <div class="image-upload-container">
+                                    <div class="image-upload-preview" id="imagePreview">
+                                        <div class="image-upload-placeholder">
+                                            <i class="fas fa-image"></i>
+                                            <p>No image selected</p>
+                                        </div>
+                                    </div>
+                                    <label for="articleImageUpload" class="image-upload-btn">
+                                        <i class="fas fa-upload"></i> Upload Image
+                                    </label>
+                                    <input type="file" id="articleImageUpload" class="image-upload-input" accept="image/*">
+                                    <input type="hidden" id="articleImage" value="">
+                                </div>
                             </div>
                         </div>
                         
@@ -1720,7 +1969,6 @@
                     <div class="writer-info">
                         <div class="writer-photo">
                             <img src="image/rabi.jpg" alt="Science image" width="250" height="250">
-
                         </div>
                         <div class="writer-details">
                             <h2>Rabi</h2>
@@ -1759,7 +2007,7 @@
             </div>
         </section>
 
-        <!-- Article Detail Page -->
+        <!-- Article Detail Page - Updated with share buttons -->
         <section id="article-detail" class="page">
             <div class="container">
                 <div class="article-detail">
@@ -1800,7 +2048,8 @@
                             <div class="rating-count" id="detailRatingCount">(0 ratings)</div>
                         </div>
                         <div class="share-buttons">
-                            <button class="share-btn"><i class="fas fa-share-alt"></i> Share</button>
+                            <button class="share-btn" id="shareArticleBtn"><i class="fas fa-share-alt"></i> Share</button>
+                            <button class="copy-link-btn" id="copyArticleLinkBtn"><i class="fas fa-link"></i> Copy Link</button>
                             <button class="like-btn" id="likeBtn"><i class="far fa-heart"></i> Like</button>
                         </div>
                     </div>
@@ -2311,6 +2560,40 @@
         </div>
     </footer>
 
+    <!-- Share Modal -->
+    <div class="share-modal" id="shareModal">
+        <div class="share-modal-content">
+            <div class="share-modal-header">
+                <h3 class="share-modal-title">Share Article</h3>
+                <button class="share-modal-close" id="shareModalClose">&times;</button>
+            </div>
+            <div class="share-link-container">
+                <input type="text" class="share-link-input" id="shareLinkInput" readonly>
+                <button class="share-copy-btn" id="shareCopyBtn">Copy</button>
+            </div>
+            <div class="share-platforms">
+                <div class="share-platform share-facebook" data-platform="facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </div>
+                <div class="share-platform share-twitter" data-platform="twitter">
+                    <i class="fab fa-twitter"></i>
+                </div>
+                <div class="share-platform share-linkedin" data-platform="linkedin">
+                    <i class="fab fa-linkedin-in"></i>
+                </div>
+                <div class="share-platform share-whatsapp" data-platform="whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="share-platform share-email" data-platform="email">
+                    <i class="fas fa-envelope"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
     <script type="module">
         // Import Firebase v11 Modular SDK
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
@@ -2437,6 +2720,18 @@
         const downloadDataBtn = document.getElementById('downloadDataBtn');
         const manageBlockedUsersBtn = document.getElementById('manageBlockedUsersBtn');
 
+        // New DOM Elements for Image Upload and Sharing
+        const articleImageUpload = document.getElementById('articleImageUpload');
+        const imagePreview = document.getElementById('imagePreview');
+        const shareModal = document.getElementById('shareModal');
+        const shareModalClose = document.getElementById('shareModalClose');
+        const shareLinkInput = document.getElementById('shareLinkInput');
+        const shareCopyBtn = document.getElementById('shareCopyBtn');
+        const sharePlatforms = document.querySelectorAll('.share-platform');
+        const shareArticleBtn = document.getElementById('shareArticleBtn');
+        const copyArticleLinkBtn = document.getElementById('copyArticleLinkBtn');
+        const toast = document.getElementById('toast');
+
         // Settings elements
         const blogVisibility = document.getElementById('blogVisibility');
         const commentsToggle = document.getElementById('commentsToggle');
@@ -2470,6 +2765,7 @@
         let allUsers = [];
         let articles = [];
         let articleTagsArray = [];
+        let uploadedImageUrl = '';
 
         // Initialize the app
         function initApp() {
@@ -2496,6 +2792,9 @@
             
             // Load settings from localStorage
             loadSettings();
+            
+            // Check for article parameter in URL
+            checkUrlForArticle();
         }
 
         // Set up event listeners
@@ -2851,6 +3150,30 @@
                     element.addEventListener('change', saveSettings);
                 }
             });
+
+            // New event listeners for image upload and sharing
+            articleImageUpload.addEventListener('change', handleImageUpload);
+            
+            // Share functionality
+            shareArticleBtn.addEventListener('click', openShareModal);
+            copyArticleLinkBtn.addEventListener('click', copyArticleLink);
+            shareModalClose.addEventListener('click', closeShareModal);
+            shareCopyBtn.addEventListener('click', copyShareLink);
+            
+            // Share platform buttons
+            sharePlatforms.forEach(platform => {
+                platform.addEventListener('click', () => {
+                    const platformName = platform.getAttribute('data-platform');
+                    shareToPlatform(platformName);
+                });
+            });
+            
+            // Close modal when clicking outside
+            shareModal.addEventListener('click', (e) => {
+                if (e.target === shareModal) {
+                    closeShareModal();
+                }
+            });
         }
 
         // Add tag to article
@@ -2889,6 +3212,54 @@
             });
         }
 
+        // Handle image upload for article
+        async function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            // Validate file type
+            if (!file.type.match('image.*')) {
+                showToast('Please select a valid image file', 'error');
+                return;
+            }
+            
+            // Validate file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('Image size should be less than 5MB', 'error');
+                return;
+            }
+            
+            try {
+                // Show loading state
+                imagePreview.innerHTML = '<div class="image-upload-placeholder"><i class="fas fa-spinner fa-spin"></i><p>Uploading...</p></div>';
+                
+                // Create a reference to the file location
+                const storageRef = ref(storage, `article-images/${Date.now()}_${file.name}`);
+                
+                // Upload the file
+                const snapshot = await uploadBytes(storageRef, file);
+                
+                // Get the download URL
+                const downloadURL = await getDownloadURL(snapshot.ref);
+                
+                // Update the preview
+                imagePreview.innerHTML = `<img src="${downloadURL}" alt="Article preview">`;
+                
+                // Store the URL for later use
+                uploadedImageUrl = downloadURL;
+                
+                // Update the hidden input
+                document.getElementById('articleImage').value = downloadURL;
+                
+                showToast('Image uploaded successfully!');
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                showToast('Error uploading image: ' + error.message, 'error');
+                // Reset preview
+                imagePreview.innerHTML = '<div class="image-upload-placeholder"><i class="fas fa-image"></i><p>No image selected</p></div>';
+            }
+        }
+
         // Publish article to Firebase
         async function publishArticle() {
             if (!currentUser) {
@@ -2898,7 +3269,7 @@
 
             const title = articleTitle.value.trim();
             const category = articleCategory.value;
-            const image = articleImage.value.trim();
+            const image = uploadedImageUrl || articleImage.value.trim();
             const excerpt = articleExcerpt.value.trim();
             const content = articleContent.value.trim();
             const tags = articleTagsArray;
@@ -2937,6 +3308,9 @@
                 createArticleForm.reset();
                 articleTagsArray = [];
                 renderTags();
+                // Reset image preview
+                imagePreview.innerHTML = '<div class="image-upload-placeholder"><i class="fas fa-image"></i><p>No image selected</p></div>';
+                uploadedImageUrl = '';
 
                 alert('Article published successfully!');
                 showPage('articles');
@@ -3608,6 +3982,111 @@
             
             // Show success message
             alert('Comment added successfully!');
+        }
+
+        // Open share modal
+        function openShareModal() {
+            if (!currentArticleId) return;
+            
+            const article = articles.find(a => a.id === currentArticleId);
+            if (!article) return;
+            
+            // Generate shareable link
+            const shareLink = `${window.location.origin}${window.location.pathname}?article=${currentArticleId}`;
+            shareLinkInput.value = shareLink;
+            
+            // Show modal
+            shareModal.classList.add('active');
+        }
+
+        // Close share modal
+        function closeShareModal() {
+            shareModal.classList.remove('active');
+        }
+
+        // Copy share link
+        function copyShareLink() {
+            shareLinkInput.select();
+            document.execCommand('copy');
+            showToast('Link copied to clipboard!');
+        }
+
+        // Copy article link directly
+        function copyArticleLink() {
+            if (!currentArticleId) return;
+            
+            const article = articles.find(a => a.id === currentArticleId);
+            if (!article) return;
+            
+            // Generate shareable link
+            const shareLink = `${window.location.origin}${window.location.pathname}?article=${currentArticleId}`;
+            
+            // Create a temporary input element
+            const tempInput = document.createElement('input');
+            tempInput.value = shareLink;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            
+            showToast('Article link copied to clipboard!');
+        }
+
+        // Share to specific platform
+        function shareToPlatform(platform) {
+            const article = articles.find(a => a.id === currentArticleId);
+            if (!article) return;
+            
+            const shareLink = shareLinkInput.value;
+            const title = encodeURIComponent(article.title);
+            const text = encodeURIComponent(article.excerpt);
+            
+            let shareUrl = '';
+            
+            switch (platform) {
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareLink)}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${title}&url=${encodeURIComponent(shareLink)}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareLink)}`;
+                    break;
+                case 'whatsapp':
+                    shareUrl = `https://wa.me/?text=${title}%20${encodeURIComponent(shareLink)}`;
+                    break;
+                case 'email':
+                    shareUrl = `mailto:?subject=${title}&body=${text}%0A%0ARead more: ${encodeURIComponent(shareLink)}`;
+                    break;
+            }
+            
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'width=600,height=400');
+            }
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            toast.textContent = message;
+            toast.className = 'toast';
+            toast.classList.add(type);
+            toast.classList.add('active');
+            
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 3000);
+        }
+
+        // Check for article parameter in URL
+        function checkUrlForArticle() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const articleId = urlParams.get('article');
+            
+            if (articleId) {
+                // Show the article detail page
+                showArticleDetail(articleId);
+            }
         }
 
         // Save settings to localStorage
