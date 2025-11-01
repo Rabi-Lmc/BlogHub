@@ -142,6 +142,7 @@
             font-weight: bold;
             background-size: cover;
             background-position: center;
+            border: 2px solid var(--accent-color);
         }
 
         .logout-btn {
@@ -975,6 +976,7 @@
             background-size: cover;
             background-position: center;
             position: relative;
+            border: 3px solid var(--accent-color);
         }
 
         .profile-avatar-upload {
@@ -1344,6 +1346,7 @@
             margin: 0 auto 1rem;
             background-size: cover;
             background-position: center;
+            border: 2px solid var(--accent-color);
         }
 
         .suggestion-stats {
@@ -2651,7 +2654,9 @@
             orderBy,
             serverTimestamp,
             deleteDoc,
-            increment
+            increment,
+            arrayUnion,
+            arrayRemove
         } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
         import { 
             getStorage,
@@ -2790,6 +2795,7 @@
         let articles = [];
         let articleTagsArray = [];
         let uploadedImageUrl = '';
+        let realtimeSubscriptions = [];
 
         // Initialize the app
         function initApp() {
@@ -2804,10 +2810,13 @@
                     checkFirstTimeUser(user);
                     loadAllUsers();
                     loadArticles();
+                    setupRealtimeListeners();
                 } else {
                     // User is signed out
                     currentUser = null;
                     showAuthPage();
+                    // Clean up realtime listeners
+                    cleanupRealtimeListeners();
                 }
             });
 
@@ -2819,6 +2828,62 @@
             
             // Check for article parameter in URL
             checkUrlForArticle();
+        }
+
+        // Set up real-time listeners for likes and comments
+        function setupRealtimeListeners() {
+            if (!currentUser) return;
+            
+            // Listen for real-time updates on articles
+            const articlesRef = collection(db, 'articles');
+            const articlesQuery = query(articlesRef, orderBy('publishedAt', 'desc'));
+            
+            const articlesUnsubscribe = onSnapshot(articlesQuery, (snapshot) => {
+                articles = [];
+                snapshot.forEach(doc => {
+                    const articleData = doc.data();
+                    articles.push({
+                        id: doc.id,
+                        ...articleData,
+                        date: articleData.publishedAt ? 
+                            articleData.publishedAt.toDate().toLocaleDateString() : 
+                            new Date().toLocaleDateString()
+                    });
+                });
+                
+                renderArticles();
+                
+                // If we're on the article detail page, update it
+                if (currentArticleId && articleDetailPage.classList.contains('active')) {
+                    const article = articles.find(a => a.id === currentArticleId);
+                    if (article) {
+                        updateArticleDetail(article);
+                    }
+                }
+            });
+            
+            realtimeSubscriptions.push(articlesUnsubscribe);
+            
+            // Listen for real-time updates on user data
+            const userRef = doc(db, 'users', currentUser.uid);
+            const userUnsubscribe = onSnapshot(userRef, (doc) => {
+                if (doc.exists()) {
+                    const userData = doc.data();
+                    updateProfileUI(userData);
+                }
+            });
+            
+            realtimeSubscriptions.push(userUnsubscribe);
+        }
+
+        // Clean up real-time listeners
+        function cleanupRealtimeListeners() {
+            realtimeSubscriptions.forEach(unsubscribe => {
+                if (typeof unsubscribe === 'function') {
+                    unsubscribe();
+                }
+            });
+            realtimeSubscriptions = [];
         }
 
         // Set up event listeners
@@ -2868,9 +2933,10 @@
                 try {
                     const userCredential = await signInWithEmailAndPassword(auth, email, password);
                     console.log('User logged in:', userCredential.user);
+                    showToast('Login successful!', 'success');
                 } catch (error) {
                     console.error('Login error:', error);
-                    alert('Login failed: ' + error.message);
+                    showToast('Login failed: ' + error.message, 'error');
                 }
             });
 
@@ -2898,16 +2964,17 @@
                         bio: bio,
                         joinDate: new Date().toISOString(),
                         articles: 0,
-                        followers: 0,
-                        following: 0,
+                        followers: [],
+                        following: [],
                         firstTimeUser: true,
                         profilePicture: ''
                     });
                     
                     console.log('User data saved to Firestore');
+                    showToast('Account created successfully!', 'success');
                 } catch (error) {
                     console.error('Signup error:', error);
-                    alert('Signup failed: ' + error.message);
+                    showToast('Signup failed: ' + error.message, 'error');
                 }
             });
 
@@ -2944,15 +3011,16 @@
                             bio: '',
                             joinDate: new Date().toISOString(),
                             articles: 0,
-                            followers: 0,
-                            following: 0,
+                            followers: [],
+                            following: [],
                             firstTimeUser: true,
                             profilePicture: result.user.photoURL || ''
                         });
                     }
+                    showToast('Google login successful!', 'success');
                 } catch (error) {
                     console.error('Google login error:', error);
-                    alert('Google login failed: ' + error.message);
+                    showToast('Google login failed: ' + error.message, 'error');
                 }
             });
 
@@ -2974,15 +3042,16 @@
                             bio: '',
                             joinDate: new Date().toISOString(),
                             articles: 0,
-                            followers: 0,
-                            following: 0,
+                            followers: [],
+                            following: [],
                             firstTimeUser: true,
                             profilePicture: result.user.photoURL || ''
                         });
                     }
+                    showToast('Facebook login successful!', 'success');
                 } catch (error) {
                     console.error('Facebook login error:', error);
-                    alert('Facebook login failed: ' + error.message);
+                    showToast('Facebook login failed: ' + error.message, 'error');
                 }
             });
 
@@ -2991,8 +3060,10 @@
                 try {
                     await signOut(auth);
                     console.log('User signed out');
+                    showToast('Logged out successfully', 'success');
                 } catch (error) {
                     console.error('Logout error:', error);
+                    showToast('Logout failed: ' + error.message, 'error');
                 }
             });
 
@@ -3001,8 +3072,10 @@
                 try {
                     await signOut(auth);
                     console.log('User signed out');
+                    showToast('Logged out successfully', 'success');
                 } catch (error) {
                     console.error('Logout error:', error);
+                    showToast('Logout failed: ' + error.message, 'error');
                 }
             });
 
@@ -3047,12 +3120,12 @@
                     // Handle password change if provided
                     if (newPassword && confirmPassword) {
                         if (newPassword !== confirmPassword) {
-                            alert('New passwords do not match');
+                            showToast('New passwords do not match', 'error');
                             return;
                         }
                         
                         if (!currentPassword) {
-                            alert('Please enter your current password to change it');
+                            showToast('Please enter your current password to change it', 'error');
                             return;
                         }
                         
@@ -3062,7 +3135,7 @@
                         
                         // Update password
                         await updatePassword(currentUser, newPassword);
-                        alert('Password updated successfully!');
+                        showToast('Password updated successfully!', 'success');
                         
                         // Clear password fields
                         settingsCurrentPassword.value = '';
@@ -3079,11 +3152,11 @@
                     // Save settings to localStorage
                     saveSettings();
                     
-                    alert('Profile updated successfully!');
+                    showToast('Profile updated successfully!', 'success');
                     loadUserProfile(currentUser);
                 } catch (error) {
                     console.error('Error updating profile:', error);
-                    alert('Error updating profile: ' + error.message);
+                    showToast('Error updating profile: ' + error.message, 'error');
                 }
             });
 
@@ -3287,7 +3360,7 @@
         // Publish article to Firebase
         async function publishArticle() {
             if (!currentUser) {
-                alert('Please log in to publish articles');
+                showToast('Please log in to publish articles', 'error');
                 return;
             }
 
@@ -3299,7 +3372,7 @@
             const tags = articleTagsArray;
 
             if (!title || !category || !excerpt || !content) {
-                alert('Please fill in all required fields');
+                showToast('Please fill in all required fields', 'error');
                 return;
             }
 
@@ -3316,8 +3389,8 @@
                     authorName: currentUser.displayName || 'Anonymous',
                     publishedAt: serverTimestamp(),
                     readCount: 0,
-                    likeCount: 0,
-                    commentCount: 0,
+                    likes: [],
+                    comments: [],
                     rating: 0,
                     ratingCount: 0
                 });
@@ -3336,14 +3409,14 @@
                 imagePreview.innerHTML = '<div class="image-upload-placeholder"><i class="fas fa-image"></i><p>No image selected</p></div>';
                 uploadedImageUrl = '';
 
-                alert('Article published successfully!');
+                showToast('Article published successfully!');
                 showPage('articles');
                 
                 // Reload articles to show the new one
                 loadArticles();
             } catch (error) {
                 console.error('Error publishing article:', error);
-                alert('Error publishing article: ' + error.message);
+                showToast('Error publishing article: ' + error.message, 'error');
             }
         }
 
@@ -3363,7 +3436,9 @@
                         // Convert Firestore timestamp to Date
                         date: articleData.publishedAt ? 
                             articleData.publishedAt.toDate().toLocaleDateString() : 
-                            new Date().toLocaleDateString()
+                            new Date().toLocaleDateString(),
+                        likeCount: articleData.likes ? articleData.likes.length : 0,
+                        commentCount: articleData.comments ? articleData.comments.length : 0
                     });
                 });
                 
@@ -3401,10 +3476,10 @@
                 // Update UI
                 updateUserInfo(currentUser);
                 
-                alert('Profile picture updated successfully!');
+                showToast('Profile picture updated successfully!');
             } catch (error) {
                 console.error('Error uploading profile picture:', error);
-                alert('Error uploading profile picture: ' + error.message);
+                showToast('Error uploading profile picture: ' + error.message, 'error');
             }
         }
 
@@ -3473,6 +3548,33 @@
             profileEmail.textContent = email;
         }
 
+        // Update profile UI with data from Firestore
+        function updateProfileUI(userData) {
+            profileName.textContent = userData.name || currentUser.displayName || 'User';
+            profileBio.textContent = userData.bio || 'This is where the user\'s bio will appear. They can edit this in their settings.';
+            profileArticlesCount.textContent = userData.articles || 0;
+            profileFollowersCount.textContent = userData.followers ? userData.followers.length : 0;
+            profileFollowingCount.textContent = userData.following ? userData.following.length : 0;
+            
+            if (userData.joinDate) {
+                const joinDate = new Date(userData.joinDate);
+                profileJoinDate.textContent = `Member since ${joinDate.toLocaleString('default', { month: 'long' })} ${joinDate.getFullYear()}`;
+            }
+            
+            // Update settings form
+            settingsName.value = userData.name || currentUser.displayName || '';
+            settingsEmail.value = userData.email || currentUser.email || '';
+            settingsBio.value = userData.bio || '';
+            
+            // Update profile picture if available
+            if (userData.profilePicture) {
+                userAvatar.style.backgroundImage = `url(${userData.profilePicture})`;
+                userAvatar.textContent = '';
+                profileAvatar.style.backgroundImage = `url(${userData.profilePicture})`;
+                profileAvatar.textContent = '';
+            }
+        }
+
         // Load user profile from Firestore - MODULAR VERSION
         async function loadUserProfile(user) {
             try {
@@ -3481,29 +3583,7 @@
                 
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
-                    profileName.textContent = userData.name || user.displayName || 'User';
-                    profileBio.textContent = userData.bio || 'This is where the user\'s bio will appear. They can edit this in their settings.';
-                    profileArticlesCount.textContent = userData.articles || 0;
-                    profileFollowersCount.textContent = userData.followers || 0;
-                    profileFollowingCount.textContent = userData.following || 0;
-                    
-                    if (userData.joinDate) {
-                        const joinDate = new Date(userData.joinDate);
-                        profileJoinDate.textContent = `Member since ${joinDate.toLocaleString('default', { month: 'long' })} ${joinDate.getFullYear()}`;
-                    }
-                    
-                    // Update settings form
-                    settingsName.value = userData.name || user.displayName || '';
-                    settingsEmail.value = userData.email || user.email || '';
-                    settingsBio.value = userData.bio || '';
-                    
-                    // Update profile picture if available
-                    if (userData.profilePicture) {
-                        userAvatar.style.backgroundImage = `url(${userData.profilePicture})`;
-                        userAvatar.textContent = '';
-                        profileAvatar.style.backgroundImage = `url(${userData.profilePicture})`;
-                        profileAvatar.textContent = '';
-                    }
+                    updateProfileUI(userData);
                 }
             } catch (error) {
                 console.error('Error loading user profile:', error);
@@ -3525,7 +3605,9 @@
                         ...articleData,
                         date: articleData.publishedAt ? 
                             articleData.publishedAt.toDate().toLocaleDateString() : 
-                            new Date().toLocaleDateString()
+                            new Date().toLocaleDateString(),
+                        likeCount: articleData.likes ? articleData.likes.length : 0,
+                        commentCount: articleData.comments ? articleData.comments.length : 0
                     });
                 });
                 
@@ -3669,7 +3751,20 @@
             if (!article) return;
             
             currentArticleId = articleId;
+            updateArticleDetail(article);
             
+            // Show article detail page
+            showPage('article-detail');
+            
+            // Load comments
+            loadComments(articleId);
+            
+            // Increment read count
+            incrementReadCount(articleId);
+        }
+
+        // Update article detail view
+        function updateArticleDetail(article) {
             // Update article detail page
             document.getElementById('detailTitle').textContent = article.title;
             document.getElementById('detailAuthor').textContent = article.authorName;
@@ -3700,17 +3795,23 @@
             // Update rating count
             document.getElementById('detailRatingCount').textContent = `(${article.ratingCount || 0} ratings)`;
             
+            // Update like button state
+            const isLiked = article.likes && article.likes.includes(currentUser.uid);
+            updateLikeButton(isLiked);
+            
             // Reset comment rating
             setCommentRating(0);
-            
-            // Show article detail page
-            showPage('article-detail');
-            
-            // Load comments
-            loadComments(articleId);
-            
-            // Increment read count
-            incrementReadCount(articleId);
+        }
+
+        // Update like button state
+        function updateLikeButton(isLiked) {
+            if (isLiked) {
+                likeBtn.innerHTML = '<i class="fas fa-heart"></i> Liked';
+                likeBtn.classList.add('liked');
+            } else {
+                likeBtn.innerHTML = '<i class="far fa-heart"></i> Like';
+                likeBtn.classList.remove('liked');
+            }
         }
 
         // Increment article read count
@@ -3726,46 +3827,69 @@
         }
 
         // Load comments for an article
-        function loadComments(articleId) {
-            // In a real app, you would fetch comments from a database
-            // For this demo, we'll use sample comments
-            const commentsList = document.getElementById('commentsList');
-            commentsList.innerHTML = '';
-            
-            const sampleComments = [
-                {
-                    id: 1,
-                    author: "Alex Johnson",
-                    text: "This is a great article! Very informative and well-written.",
-                    date: "2 days ago",
-                    rating: 5
-                },
-                {
-                    id: 2,
-                    author: "Sarah Miller",
-                    text: "I learned a lot from this. Thanks for sharing your insights!",
-                    date: "1 day ago",
-                    rating: 4
+        async function loadComments(articleId) {
+            try {
+                const articleRef = doc(db, 'articles', articleId);
+                const articleDoc = await getDoc(articleRef);
+                
+                const commentsList = document.getElementById('commentsList');
+                commentsList.innerHTML = '';
+                
+                if (articleDoc.exists()) {
+                    const articleData = articleDoc.data();
+                    const comments = articleData.comments || [];
+                    
+                    if (comments.length === 0) {
+                        commentsList.innerHTML = '<p>No comments yet. Be the first to comment!</p>';
+                        return;
+                    }
+                    
+                    // Sort comments by date (newest first)
+                    comments.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                    
+                    comments.forEach(comment => {
+                        const commentElement = document.createElement('div');
+                        commentElement.className = 'comment';
+                        
+                        const commentDate = new Date(comment.timestamp);
+                        const timeAgo = getTimeAgo(commentDate);
+                        
+                        commentElement.innerHTML = `
+                            <div class="comment-header">
+                                <span class="comment-author">${comment.authorName}</span>
+                                <span class="comment-date">${timeAgo}</span>
+                            </div>
+                            <p class="comment-text">${comment.text}</p>
+                            <div class="comment-rating">
+                                <div class="comment-stars">
+                                    ${createRatingStars(comment.rating)}
+                                </div>
+                            </div>
+                        `;
+                        commentsList.appendChild(commentElement);
+                    });
                 }
-            ];
+            } catch (error) {
+                console.error('Error loading comments:', error);
+            }
+        }
+
+        // Helper function to get time ago string
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diffInSeconds = Math.floor((now - date) / 1000);
             
-            sampleComments.forEach(comment => {
-                const commentElement = document.createElement('div');
-                commentElement.className = 'comment';
-                commentElement.innerHTML = `
-                    <div class="comment-header">
-                        <span class="comment-author">${comment.author}</span>
-                        <span class="comment-date">${comment.date}</span>
-                    </div>
-                    <p class="comment-text">${comment.text}</p>
-                    <div class="comment-rating">
-                        <div class="comment-stars">
-                            ${createRatingStars(comment.rating)}
-                        </div>
-                    </div>
-                `;
-                commentsList.appendChild(commentElement);
-            });
+            if (diffInSeconds < 60) {
+                return 'Just now';
+            } else if (diffInSeconds < 3600) {
+                return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+            } else if (diffInSeconds < 86400) {
+                return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+            } else if (diffInSeconds < 2592000) {
+                return `${Math.floor(diffInSeconds / 86400)} days ago`;
+            } else {
+                return date.toLocaleDateString();
+            }
         }
 
         // Filter articles based on search input
@@ -3804,7 +3928,7 @@
                     <h4>${user.name || 'User'}</h4>
                     <p>${user.bio || 'BlogHub user'}</p>
                     <div class="suggestion-stats">
-                        <span>${user.followers || 0} followers</span>
+                        <span>${user.followers ? user.followers.length : 0} followers</span>
                         <span>${user.articles || 0} articles</span>
                     </div>
                     <button class="follow-btn ${isFollowing ? 'following' : ''}" data-id="${user.id}">${isFollowing ? 'Following' : 'Follow'}</button>
@@ -3827,7 +3951,7 @@
         // Toggle follow status
         function toggleFollow() {
             if (!currentUser) {
-                alert('Please log in to follow users');
+                showToast('Please log in to follow users', 'error');
                 return;
             }
             
@@ -3847,14 +3971,16 @@
             if (!currentUser) return;
             
             try {
-                // Add to following list
-                await setDoc(doc(db, 'users', currentUser.uid, 'following', userId), {
-                    timestamp: serverTimestamp()
+                // Update current user's following list
+                const currentUserRef = doc(db, 'users', currentUser.uid);
+                await updateDoc(currentUserRef, {
+                    following: arrayUnion(userId)
                 });
                 
-                // Add to user's followers list
-                await setDoc(doc(db, 'users', userId, 'followers', currentUser.uid), {
-                    timestamp: serverTimestamp()
+                // Update target user's followers list
+                const targetUserRef = doc(db, 'users', userId);
+                await updateDoc(targetUserRef, {
+                    followers: arrayUnion(currentUser.uid)
                 });
                 
                 // Update userFollowing array
@@ -3868,10 +3994,10 @@
                 }
                 
                 // Show success message
-                alert('You are now following this user!');
+                showToast('You are now following this user!');
             } catch (error) {
                 console.error('Error following user:', error);
-                alert('Error following user: ' + error.message);
+                showToast('Error following user: ' + error.message, 'error');
             }
         }
 
@@ -3880,11 +4006,17 @@
             if (!currentUser) return;
             
             try {
-                // Remove from following list
-                await deleteDoc(doc(db, 'users', currentUser.uid, 'following', userId));
+                // Remove from current user's following list
+                const currentUserRef = doc(db, 'users', currentUser.uid);
+                await updateDoc(currentUserRef, {
+                    following: arrayRemove(userId)
+                });
                 
-                // Remove from user's followers list
-                await deleteDoc(doc(db, 'users', userId, 'followers', currentUser.uid));
+                // Remove from target user's followers list
+                const targetUserRef = doc(db, 'users', userId);
+                await updateDoc(targetUserRef, {
+                    followers: arrayRemove(currentUser.uid)
+                });
                 
                 // Update userFollowing array
                 const index = userFollowing.indexOf(userId);
@@ -3900,35 +4032,45 @@
                 }
                 
                 // Show success message
-                alert('You have unfollowed this user.');
+                showToast('You have unfollowed this user.');
             } catch (error) {
                 console.error('Error unfollowing user:', error);
-                alert('Error unfollowing user: ' + error.message);
+                showToast('Error unfollowing user: ' + error.message, 'error');
             }
         }
 
         // Toggle like on article
-        function toggleLike() {
+        async function toggleLike() {
             if (!currentUser) {
-                alert('Please log in to like articles');
+                showToast('Please log in to like articles', 'error');
                 return;
             }
             
             const article = articles.find(a => a.id === currentArticleId);
             if (!article) return;
             
-            // In a real app, you would update Firestore
-            // For this demo, we'll update the UI immediately
-            if (likeBtn.querySelector('i').classList.contains('far')) {
-                // Like the article
-                likeBtn.innerHTML = '<i class="fas fa-heart"></i> Liked';
-                article.likeCount++;
-                detailLikeCount.textContent = article.likeCount;
-            } else {
-                // Unlike the article
-                likeBtn.innerHTML = '<i class="far fa-heart"></i> Like';
-                article.likeCount--;
-                detailLikeCount.textContent = article.likeCount;
+            try {
+                const articleRef = doc(db, 'articles', currentArticleId);
+                const isLiked = article.likes && article.likes.includes(currentUser.uid);
+                
+                if (isLiked) {
+                    // Unlike the article
+                    await updateDoc(articleRef, {
+                        likes: arrayRemove(currentUser.uid)
+                    });
+                    updateLikeButton(false);
+                    showToast('Article unliked');
+                } else {
+                    // Like the article
+                    await updateDoc(articleRef, {
+                        likes: arrayUnion(currentUser.uid)
+                    });
+                    updateLikeButton(true);
+                    showToast('Article liked!');
+                }
+            } catch (error) {
+                console.error('Error toggling like:', error);
+                showToast('Error toggling like: ' + error.message, 'error');
             }
         }
 
@@ -3949,63 +4091,49 @@
         }
 
         // Submit comment
-        function submitComment() {
+        async function submitComment() {
             if (!currentUser) {
-                alert('Please log in to comment');
+                showToast('Please log in to comment', 'error');
                 return;
             }
             
             const commentText = commentInput.value.trim();
             if (!commentText) {
-                alert('Please enter a comment');
+                showToast('Please enter a comment', 'error');
                 return;
             }
             
             if (selectedRating === 0) {
-                alert('Please rate the article');
+                showToast('Please rate the article', 'error');
                 return;
             }
             
-            // In a real app, you would save the comment to Firestore
-            // For this demo, we'll update the UI immediately
-            
-            // Create comment element
-            const commentElement = document.createElement('div');
-            commentElement.className = 'comment';
-            
-            const currentDate = new Date();
-            const timeAgo = 'Just now';
-            
-            commentElement.innerHTML = `
-                <div class="comment-header">
-                    <span class="comment-author">${currentUser.displayName || 'You'}</span>
-                    <span class="comment-date">${timeAgo}</span>
-                </div>
-                <p class="comment-text">${commentText}</p>
-                <div class="comment-rating">
-                    <div class="comment-stars">
-                        ${createRatingStars(selectedRating)}
-                    </div>
-                </div>
-            `;
-            
-            // Add comment to the list
-            const commentsList = document.getElementById('commentsList');
-            commentsList.insertBefore(commentElement, commentsList.firstChild);
-            
-            // Update comment count
-            const article = articles.find(a => a.id === currentArticleId);
-            if (article) {
-                article.commentCount++;
-                detailCommentCount.textContent = article.commentCount;
+            try {
+                const articleRef = doc(db, 'articles', currentArticleId);
+                
+                // Add comment to the article
+                await updateDoc(articleRef, {
+                    comments: arrayUnion({
+                        authorId: currentUser.uid,
+                        authorName: currentUser.displayName || 'Anonymous',
+                        text: commentText,
+                        rating: selectedRating,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+                
+                // Clear comment input and rating
+                commentInput.value = '';
+                setCommentRating(0);
+                
+                showToast('Comment added successfully!');
+                
+                // Reload comments to show the new one
+                loadComments(currentArticleId);
+            } catch (error) {
+                console.error('Error submitting comment:', error);
+                showToast('Error submitting comment: ' + error.message, 'error');
             }
-            
-            // Clear comment input and rating
-            commentInput.value = '';
-            setCommentRating(0);
-            
-            // Show success message
-            alert('Comment added successfully!');
         }
 
         // Open share modal
@@ -4253,13 +4381,14 @@
                 // Delete user from Firebase Auth
                 await deleteUser(currentUser);
                 console.log('User account deleted');
+                showToast('Account deleted successfully', 'success');
                 
                 // In a real app, you would also delete user data from Firestore
                 // For this demo, we'll just sign out
                 await signOut(auth);
             } catch (error) {
                 console.error('Error deleting account:', error);
-                alert('Error deleting account: ' + error.message);
+                showToast('Error deleting account: ' + error.message, 'error');
             }
         }
 
