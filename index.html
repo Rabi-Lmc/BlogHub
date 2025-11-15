@@ -1613,7 +1613,335 @@
             100% { transform: scale(1); }
         }
 
-        /* Responsive Styles */
+        /* Enhanced Editor Styles */
+        .editor-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            padding: 10px;
+            background-color: var(--secondary-bg);
+            border: 1px solid #333;
+            border-bottom: none;
+            border-radius: 4px 4px 0 0;
+        }
+        
+        .toolbar-group {
+            display: flex;
+            gap: 5px;
+            padding-right: 10px;
+            border-right: 1px solid #333;
+        }
+        
+        .toolbar-group:last-child {
+            border-right: none;
+        }
+        
+        .toolbar-btn {
+            background-color: transparent;
+            color: var(--text-color);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .toolbar-btn:hover {
+            background-color: rgba(52, 152, 219, 0.2);
+        }
+        
+        .toolbar-btn.active {
+            background-color: var(--accent-color);
+            color: var(--primary-bg);
+        }
+        
+        .toolbar-select {
+            background-color: var(--secondary-bg);
+            color: var(--text-color);
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 5px;
+            height: 36px;
+        }
+        
+        .editor-content {
+            min-height: 400px;
+            padding: 15px;
+            background-color: var(--secondary-bg);
+            border: 1px solid #333;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-y: auto;
+            outline: none;
+        }
+        
+        .editor-content:focus {
+            border-color: var(--accent-color);
+        }
+        
+        .editor-content h1, .editor-content h2, .editor-content h3, 
+        .editor-content h4, .editor-content h5, .editor-content h6 {
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+        
+        .editor-content p {
+            margin-bottom: 1rem;
+        }
+        
+        .editor-content ul, .editor-content ol {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+        }
+        
+        .editor-content blockquote {
+            border-left: 4px solid var(--accent-color);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+        
+        .editor-content pre {
+            background-color: var(--primary-bg);
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        
+        .editor-content code {
+            background-color: var(--primary-bg);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .editor-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .editor-content table, .editor-content th, .editor-content td {
+            border: 1px solid #333;
+        }
+        
+        .editor-content th, .editor-content td {
+            padding: 8px 12px;
+            text-align: left;
+        }
+        
+        .editor-content th {
+            background-color: var(--card-bg);
+        }
+        
+        .editor-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+        
+        .editor-content a {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+        
+        .editor-placeholder {
+            color: var(--text-secondary);
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            pointer-events: none;
+        }
+        
+        .editor-status {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: var(--secondary-bg);
+            border: 1px solid #333;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .word-count {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .editor-container {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        
+        .editor-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        
+        .save-draft-btn {
+            background-color: var(--secondary-bg);
+            color: var(--text-color);
+            border: 1px solid #333;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .save-draft-btn:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+            border-color: var(--accent-color);
+        }
+        
+        .preview-btn {
+            background-color: var(--warning-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .preview-btn:hover {
+            background-color: #e67e22;
+        }
+        
+        .publish-options {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .publish-options h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+        
+        .visibility-options {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .visibility-option {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            border: 1px solid #333;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .visibility-option.active {
+            border-color: var(--accent-color);
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        
+        .visibility-option i {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .schedule-publish {
+            margin-top: 1.5rem;
+        }
+        
+        .schedule-input {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .schedule-input input {
+            flex: 1;
+            padding: 0.8rem;
+            background-color: var(--secondary-bg);
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: var(--text-color);
+        }
+        
+        /* Modal Styles for Preview */
+        .preview-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .preview-modal.active {
+            display: flex;
+        }
+        
+        .preview-content {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .preview-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .preview-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+        
+        .preview-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .preview-body {
+            line-height: 1.8;
+        }
+        
+        .preview-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            margin: 1rem 0;
+        }
+        
+        /* Responsive adjustments for editor */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -1742,6 +2070,36 @@
             
             .share-copy-btn {
                 border-radius: 4px;
+            }
+            
+            .editor-toolbar {
+                gap: 3px;
+            }
+            
+            .toolbar-group {
+                padding-right: 5px;
+            }
+            
+            .toolbar-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+            }
+            
+            .visibility-options {
+                flex-direction: column;
+            }
+            
+            .schedule-input {
+                flex-direction: column;
+            }
+            
+            .editor-actions {
+                flex-direction: column;
+            }
+            
+            .preview-content {
+                padding: 1rem;
             }
         }
 
@@ -1920,7 +2278,7 @@
             </div>
         </section>
 
-        <!-- Create Article Page - Updated with image upload -->
+        <!-- Create Article Page - Enhanced with Rich Text Editor -->
         <section id="create-article" class="page">
             <div class="container create-article-container">
                 <div class="create-article-card">
@@ -1971,7 +2329,108 @@
                         
                         <div class="form-group-full">
                             <label for="articleContent">Content</label>
-                            <textarea id="articleContent" placeholder="Write your article content here..." rows="15"></textarea>
+                            <div class="editor-container">
+                                <div class="editor-toolbar" id="editorToolbar">
+                                    <div class="toolbar-group">
+                                        <button type="button" class="toolbar-btn" data-command="bold" title="Bold">
+                                            <i class="fas fa-bold"></i>
+                                        </button>
+                                        <button type="button" class="toolbar-btn" data-command="italic" title="Italic">
+                                            <i class="fas fa-italic"></i>
+                                        </button>
+                                        <button type="button" class="toolbar-btn" data-command="underline" title="Underline">
+                                            <i class="fas fa-underline"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="toolbar-group">
+                                        <button type="button" class="toolbar-btn" data-command="insertUnorderedList" title="Bullet List">
+                                            <i class="fas fa-list-ul"></i>
+                                        </button>
+                                        <button type="button" class="toolbar-btn" data-command="insertOrderedList" title="Numbered List">
+                                            <i class="fas fa-list-ol"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="toolbar-group">
+                                        <button type="button" class="toolbar-btn" data-command="justifyLeft" title="Align Left">
+                                            <i class="fas fa-align-left"></i>
+                                        </button>
+                                        <button type="button" class="toolbar-btn" data-command="justifyCenter" title="Align Center">
+                                            <i class="fas fa-align-center"></i>
+                                        </button>
+                                        <button type="button" class="toolbar-btn" data-command="justifyRight" title="Align Right">
+                                            <i class="fas fa-align-right"></i>
+                                        </button>
+                                        <button type="button" class="toolbar-btn" data-command="justifyFull" title="Justify">
+                                            <i class="fas fa-align-justify"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="toolbar-group">
+                                        <button type="button" class="toolbar-btn" data-command="createLink" title="Insert Link">
+                                            <i class="fas fa-link"></i>
+                                        </button>
+                                        <button type="button" class="toolbar-btn" data-command="unlink" title="Remove Link">
+                                            <i class="fas fa-unlink"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="toolbar-group">
+                                        <button type="button" class="toolbar-btn" data-command="formatBlock" data-value="blockquote" title="Blockquote">
+                                            <i class="fas fa-quote-right"></i>
+                                        </button>
+                                        <button type="button" class="toolbar-btn" data-command="insertHorizontalRule" title="Horizontal Line">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="toolbar-group">
+                                        <select class="toolbar-select" id="formatSelect" title="Text Format">
+                                            <option value="p">Paragraph</option>
+                                            <option value="h1">Heading 1</option>
+                                            <option value="h2">Heading 2</option>
+                                            <option value="h3">Heading 3</option>
+                                            <option value="h4">Heading 4</option>
+                                            <option value="h5">Heading 5</option>
+                                            <option value="h6">Heading 6</option>
+                                            <option value="pre">Code</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="toolbar-group">
+                                        <button type="button" class="toolbar-btn" id="insertImageBtn" title="Insert Image">
+                                            <i class="fas fa-image"></i>
+                                        </button>
+                                        <button type="button" class="toolbar-btn" id="insertTableBtn" title="Insert Table">
+                                            <i class="fas fa-table"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="toolbar-group">
+                                        <button type="button" class="toolbar-btn" data-command="undo" title="Undo">
+                                            <i class="fas fa-undo"></i>
+                                        </button>
+                                        <button type="button" class="toolbar-btn" data-command="redo" title="Redo">
+                                            <i class="fas fa-redo"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="editor-content" id="articleContent" contenteditable="true">
+                                    <div class="editor-placeholder" id="editorPlaceholder">Start writing your article here...</div>
+                                </div>
+                                
+                                <div class="editor-status">
+                                    <div class="word-count">
+                                        <span id="wordCount">0 words</span>
+                                        <span id="charCount">0 characters</span>
+                                    </div>
+                                    <div class="editor-mode">
+                                        <span id="editorMode">Visual</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
                         <div class="form-group">
@@ -1982,11 +2441,66 @@
                             <div id="tagsList" class="tags-input"></div>
                         </div>
                         
-                        <button type="submit" class="publish-btn">Publish Article</button>
+                        <!-- Publish Options -->
+                        <div class="publish-options">
+                            <h3>Publishing Options</h3>
+                            
+                            <div class="visibility-options">
+                                <div class="visibility-option active" data-visibility="public">
+                                    <i class="fas fa-globe"></i>
+                                    <span>Public</span>
+                                    <small>Visible to everyone</small>
+                                </div>
+                                <div class="visibility-option" data-visibility="private">
+                                    <i class="fas fa-lock"></i>
+                                    <span>Private</span>
+                                    <small>Only visible to you</small>
+                                </div>
+                                <div class="visibility-option" data-visibility="draft">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>Draft</span>
+                                    <small>Save as draft</small>
+                                </div>
+                            </div>
+                            
+                            <div class="schedule-publish">
+                                <label>
+                                    <input type="checkbox" id="schedulePublish">
+                                    Schedule Publication
+                                </label>
+                                <div class="schedule-input" id="scheduleInput" style="display: none;">
+                                    <input type="datetime-local" id="publishDate">
+                                    <button type="button" class="save-draft-btn" id="clearScheduleBtn">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="editor-actions">
+                            <button type="button" class="save-draft-btn" id="saveDraftBtn">Save Draft</button>
+                            <button type="button" class="preview-btn" id="previewBtn">Preview</button>
+                            <button type="submit" class="publish-btn">Publish Article</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </section>
+
+        <!-- Preview Modal -->
+        <div class="preview-modal" id="previewModal">
+            <div class="preview-content">
+                <button class="preview-close" id="previewClose">&times;</button>
+                <h1 class="preview-title" id="previewTitle">Article Title</h1>
+                <div class="preview-meta">
+                    <span id="previewAuthor">Author Name</span>
+                    <span id="previewDate">Publish Date</span>
+                    <span id="previewCategory">Category</span>
+                </div>
+                <div class="preview-image" id="previewImage" style="height: 300px; background-color: #333; background-size: cover; background-position: center; border-radius: var(--border-radius); margin-bottom: 1.5rem;"></div>
+                <div class="preview-body" id="previewBody">
+                    <!-- Preview content will be inserted here -->
+                </div>
+            </div>
+        </div>
 
         <!-- About Us Page -->
         <section id="about" class="page">
@@ -2786,6 +3300,31 @@
         const commentPermissions = document.getElementById('commentPermissions');
         const onlineStatusToggle = document.getElementById('onlineStatusToggle');
 
+        // Enhanced Editor Elements
+        const editorToolbar = document.getElementById('editorToolbar');
+        const editorContent = document.getElementById('articleContent');
+        const editorPlaceholder = document.getElementById('editorPlaceholder');
+        const formatSelect = document.getElementById('formatSelect');
+        const insertImageBtn = document.getElementById('insertImageBtn');
+        const insertTableBtn = document.getElementById('insertTableBtn');
+        const wordCount = document.getElementById('wordCount');
+        const charCount = document.getElementById('charCount');
+        const saveDraftBtn = document.getElementById('saveDraftBtn');
+        const previewBtn = document.getElementById('previewBtn');
+        const previewModal = document.getElementById('previewModal');
+        const previewClose = document.getElementById('previewClose');
+        const previewTitle = document.getElementById('previewTitle');
+        const previewAuthor = document.getElementById('previewAuthor');
+        const previewDate = document.getElementById('previewDate');
+        const previewCategory = document.getElementById('previewCategory');
+        const previewImage = document.getElementById('previewImage');
+        const previewBody = document.getElementById('previewBody');
+        const visibilityOptions = document.querySelectorAll('.visibility-option');
+        const schedulePublish = document.getElementById('schedulePublish');
+        const scheduleInput = document.getElementById('scheduleInput');
+        const publishDate = document.getElementById('publishDate');
+        const clearScheduleBtn = document.getElementById('clearScheduleBtn');
+
         // Current User and Selected Chat User
         let currentUser = null;
         let currentArticleId = null;
@@ -2796,6 +3335,8 @@
         let articleTagsArray = [];
         let uploadedImageUrl = '';
         let realtimeSubscriptions = [];
+        let currentVisibility = 'public';
+        let scheduledDate = null;
 
         // Initialize the app
         function initApp() {
@@ -2828,6 +3369,270 @@
             
             // Check for article parameter in URL
             checkUrlForArticle();
+            
+            // Initialize enhanced editor
+            initEditor();
+        }
+
+        // Initialize enhanced editor
+        function initEditor() {
+            // Show/hide placeholder based on content
+            function updatePlaceholder() {
+                if (editorContent.textContent.trim() === '') {
+                    editorPlaceholder.style.display = 'block';
+                } else {
+                    editorPlaceholder.style.display = 'none';
+                }
+            }
+
+            // Update word and character count
+            function updateCounts() {
+                const text = editorContent.textContent || '';
+                const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+                const characters = text.length;
+                
+                wordCount.textContent = `${words} words`;
+                charCount.textContent = `${characters} characters`;
+            }
+
+            // Execute command from toolbar
+            function execCommand(command, value = null) {
+                document.execCommand(command, false, value);
+                editorContent.focus();
+            }
+
+            // Format block
+            formatSelect.addEventListener('change', function() {
+                if (this.value === 'p') {
+                    execCommand('formatBlock', '<p>');
+                } else {
+                    execCommand('formatBlock', `<${this.value}>`);
+                }
+                this.value = 'p'; // Reset to paragraph
+            });
+
+            // Toolbar button clicks
+            editorToolbar.addEventListener('click', function(e) {
+                if (e.target.classList.contains('toolbar-btn')) {
+                    const button = e.target.closest('.toolbar-btn');
+                    const command = button.getAttribute('data-command');
+                    const value = button.getAttribute('data-value');
+                    
+                    if (command === 'createLink') {
+                        const url = prompt('Enter the URL:');
+                        if (url) {
+                            execCommand(command, url);
+                        }
+                    } else {
+                        execCommand(command, value);
+                    }
+                    
+                    // Update active state for format buttons
+                    if (['bold', 'italic', 'underline'].includes(command)) {
+                        button.classList.toggle('active');
+                    }
+                }
+            });
+
+            // Insert image
+            insertImageBtn.addEventListener('click', function() {
+                const url = prompt('Enter image URL:');
+                if (url) {
+                    execCommand('insertImage', url);
+                }
+            });
+
+            // Insert table
+            insertTableBtn.addEventListener('click', function() {
+                const rows = parseInt(prompt('Number of rows:', '3')) || 3;
+                const cols = parseInt(prompt('Number of columns:', '3')) || 3;
+                
+                let tableHTML = '<table style="width: 100%; border-collapse: collapse;">';
+                for (let i = 0; i < rows; i++) {
+                    tableHTML += '<tr>';
+                    for (let j = 0; j < cols; j++) {
+                        tableHTML += `<td style="border: 1px solid #333; padding: 8px;">&nbsp;</td>`;
+                    }
+                    tableHTML += '</tr>';
+                }
+                tableHTML += '</table>';
+                
+                execCommand('insertHTML', tableHTML);
+            });
+
+            // Update counts and placeholder on input
+            editorContent.addEventListener('input', function() {
+                updatePlaceholder();
+                updateCounts();
+            });
+
+            // Initialize counts and placeholder
+            updatePlaceholder();
+            updateCounts();
+
+            // Save draft
+            saveDraftBtn.addEventListener('click', function() {
+                // In a real app, this would save to Firestore
+                showToast('Draft saved successfully!');
+            });
+
+            // Preview article
+            previewBtn.addEventListener('click', function() {
+                const title = document.getElementById('articleTitle').value || 'Untitled Article';
+                const category = document.getElementById('articleCategory').value || 'Uncategorized';
+                const image = document.getElementById('articleImage').value || '';
+                const content = editorContent.innerHTML;
+                
+                previewTitle.textContent = title;
+                previewAuthor.textContent = currentUser ? currentUser.displayName || 'Anonymous' : 'Anonymous';
+                previewDate.textContent = scheduledDate ? new Date(scheduledDate).toLocaleDateString() : 'Immediately';
+                previewCategory.textContent = category;
+                
+                if (image) {
+                    previewImage.style.backgroundImage = `url('${image}')`;
+                    previewImage.style.display = 'block';
+                } else {
+                    previewImage.style.display = 'none';
+                }
+                
+                previewBody.innerHTML = content;
+                previewModal.classList.add('active');
+            });
+
+            // Close preview
+            previewClose.addEventListener('click', function() {
+                previewModal.classList.remove('active');
+            });
+
+            // Visibility options
+            visibilityOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    visibilityOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    currentVisibility = this.getAttribute('data-visibility');
+                });
+            });
+
+            // Schedule publishing
+            schedulePublish.addEventListener('change', function() {
+                if (this.checked) {
+                    scheduleInput.style.display = 'flex';
+                    // Set minimum date to current date/time
+                    const now = new Date();
+                    const year = now.getFullYear();
+                    const month = String(now.getMonth() + 1).padStart(2, '0');
+                    const day = String(now.getDate()).padStart(2, '0');
+                    const hours = String(now.getHours()).padStart(2, '0');
+                    const minutes = String(now.getMinutes()).padStart(2, '0');
+                    
+                    publishDate.min = `${year}-${month}-${day}T${hours}:${minutes}`;
+                    publishDate.value = `${year}-${month}-${day}T${hours}:${minutes}`;
+                } else {
+                    scheduleInput.style.display = 'none';
+                    scheduledDate = null;
+                }
+            });
+
+            publishDate.addEventListener('change', function() {
+                scheduledDate = this.value;
+            });
+
+            clearScheduleBtn.addEventListener('click', function() {
+                schedulePublish.checked = false;
+                scheduleInput.style.display = 'none';
+                scheduledDate = null;
+            });
+
+            // Enhanced publish article function
+            async function publishArticleEnhanced(e) {
+                e.preventDefault();
+                
+                if (!currentUser) {
+                    showToast('Please log in to publish articles', 'error');
+                    return;
+                }
+
+                const title = document.getElementById('articleTitle').value.trim();
+                const category = document.getElementById('articleCategory').value;
+                const image = uploadedImageUrl || document.getElementById('articleImage').value.trim();
+                const excerpt = document.getElementById('articleExcerpt').value.trim();
+                const content = editorContent.innerHTML;
+                const tags = articleTagsArray;
+
+                if (!title || !category || !excerpt || !content || content === '<br>') {
+                    showToast('Please fill in all required fields', 'error');
+                    return;
+                }
+
+                try {
+                    // Create article in Firestore
+                    const articleData = {
+                        title: title,
+                        category: category,
+                        image: image || 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                        excerpt: excerpt,
+                        content: content,
+                        tags: tags,
+                        authorId: currentUser.uid,
+                        authorName: currentUser.displayName || 'Anonymous',
+                        publishedAt: scheduledDate ? new Date(scheduledDate) : serverTimestamp(),
+                        readCount: 0,
+                        likes: [],
+                        comments: [],
+                        rating: 0,
+                        ratingCount: 0,
+                        status: currentVisibility === 'draft' ? 'draft' : 'published',
+                        visibility: currentVisibility
+                    };
+
+                    const articleRef = await addDoc(collection(db, 'articles'), articleData);
+
+                    // Update user's article count if published
+                    if (currentVisibility !== 'draft') {
+                        const userRef = doc(db, 'users', currentUser.uid);
+                        await updateDoc(userRef, {
+                            articles: increment(1)
+                        });
+                    }
+
+                    // Clear form
+                    createArticleForm.reset();
+                    editorContent.innerHTML = '';
+                    articleTagsArray = [];
+                    renderTags();
+                    // Reset image preview
+                    imagePreview.innerHTML = '<div class="image-upload-placeholder"><i class="fas fa-image"></i><p>No image selected</p></div>';
+                    uploadedImageUrl = '';
+                    
+                    // Reset visibility and schedule
+                    visibilityOptions.forEach(opt => opt.classList.remove('active'));
+                    document.querySelector('.visibility-option[data-visibility="public"]').classList.add('active');
+                    currentVisibility = 'public';
+                    schedulePublish.checked = false;
+                    scheduleInput.style.display = 'none';
+                    scheduledDate = null;
+
+                    updatePlaceholder();
+                    updateCounts();
+
+                    const message = currentVisibility === 'draft' ? 'Draft saved successfully!' : 
+                                   scheduledDate ? 'Article scheduled for publication!' : 'Article published successfully!';
+                    showToast(message);
+                    
+                    if (currentVisibility !== 'draft') {
+                        showPage('articles');
+                        // Reload articles to show the new one
+                        loadArticles();
+                    }
+                } catch (error) {
+                    console.error('Error publishing article:', error);
+                    showToast('Error publishing article: ' + error.message, 'error');
+                }
+            }
+
+            // Replace the original publishArticle function
+            createArticleForm.removeEventListener('submit', publishArticle);
+            createArticleForm.addEventListener('submit', publishArticleEnhanced);
         }
 
         // Set up real-time listeners for likes and comments
@@ -2976,12 +3781,6 @@
                     console.error('Signup error:', error);
                     showToast('Signup failed: ' + error.message, 'error');
                 }
-            });
-
-            // Create article form submission
-            createArticleForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                await publishArticle();
             });
 
             // Tags input functionality
@@ -3354,69 +4153,6 @@
                 showToast('Error uploading image: ' + error.message, 'error');
                 // Reset preview
                 imagePreview.innerHTML = '<div class="image-upload-placeholder"><i class="fas fa-image"></i><p>No image selected</p></div>';
-            }
-        }
-
-        // Publish article to Firebase
-        async function publishArticle() {
-            if (!currentUser) {
-                showToast('Please log in to publish articles', 'error');
-                return;
-            }
-
-            const title = articleTitle.value.trim();
-            const category = articleCategory.value;
-            const image = uploadedImageUrl || articleImage.value.trim();
-            const excerpt = articleExcerpt.value.trim();
-            const content = articleContent.value.trim();
-            const tags = articleTagsArray;
-
-            if (!title || !category || !excerpt || !content) {
-                showToast('Please fill in all required fields', 'error');
-                return;
-            }
-
-            try {
-                // Create article in Firestore
-                const articleRef = await addDoc(collection(db, 'articles'), {
-                    title: title,
-                    category: category,
-                    image: image || 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
-                    excerpt: excerpt,
-                    content: content,
-                    tags: tags,
-                    authorId: currentUser.uid,
-                    authorName: currentUser.displayName || 'Anonymous',
-                    publishedAt: serverTimestamp(),
-                    readCount: 0,
-                    likes: [],
-                    comments: [],
-                    rating: 0,
-                    ratingCount: 0
-                });
-
-                // Update user's article count
-                const userRef = doc(db, 'users', currentUser.uid);
-                await updateDoc(userRef, {
-                    articles: increment(1)
-                });
-
-                // Clear form
-                createArticleForm.reset();
-                articleTagsArray = [];
-                renderTags();
-                // Reset image preview
-                imagePreview.innerHTML = '<div class="image-upload-placeholder"><i class="fas fa-image"></i><p>No image selected</p></div>';
-                uploadedImageUrl = '';
-
-                showToast('Article published successfully!');
-                showPage('articles');
-                
-                // Reload articles to show the new one
-                loadArticles();
-            } catch (error) {
-                console.error('Error publishing article:', error);
-                showToast('Error publishing article: ' + error.message, 'error');
             }
         }
 
